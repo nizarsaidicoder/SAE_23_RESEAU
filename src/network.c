@@ -18,11 +18,11 @@ void network_add_device(Network *network, Device *device)
 {
     // This function should add a device to the network
 }
-void network_add_link(Network *network, uint8_t device1_index, uint8_t device2_index)
+void network_add_link(Network *network, uint16_t device1_index, uint16_t device2_index)
 {
     // This function should add a link to the network
 }
-Device *network_find_device(Network *network, uint8_t device_index)
+Device *network_find_device(Network *network, uint16_t device_index)
 {
     // This function should return a pointer to the device at the given index
     return NULL;
