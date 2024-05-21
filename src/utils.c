@@ -23,22 +23,57 @@ uint16_t read_lines(char *filename, char **lines)
     fclose(file);
     return num_lines;
 }
-void write_line(char *filename, char *line)
-{
-    // Write the line to the file
-}
+
 void write_lines(char *filename, char **lines)
 {
     // Write the lines to the file
+    FILE *file;
+    file = fopen(filename, "w"); // Open the file in write mode "w"
+    if (file == NULL)
+    {
+        printf("Error opening file\n");
+        return;
+    }
+    for (int i = 0; lines[i] != NULL; i++)
+        fprintf(file, "%s\n", lines[i]);
 }
-char **split(char *string, char *delimiter)
+
+uint8_t split(char *string, char delimiter, char **output)
 {
     // Split the string into tokens using the delimiter
-    return NULL;
+    // strtok is a function that splits a string into tokens based on a delimiter and returns a pointer to the first token found in the string
+    char *token = strtok(string, &delimiter);
+    uint8_t num_tokens = 0;
+    while (token != NULL)
+    {
+        output[num_tokens] = strdup(token);
+        num_tokens++;
+        printf("%s\n", token);
+        // When strtok is called with a NULL pointer, it continues from the last token
+        token = strtok(NULL, &delimiter);
+    }
+    return num_tokens;
 }
 
 uint8_t hex_to_int(char *hex)
 {
     // Convert a hexadecimal string to an integer
-    return 0;
+    uint8_t num = 0;
+    for (int i = 0; hex[i] != '\0'; i++)
+    {
+        num = num << 4; // Shift the number <=> multiply by 16
+        if (hex[i] >= '0' && hex[i] <= '9')
+            num += hex[i] - '0';
+        else
+            num += hex[i] - 'a' + 10;
+    }
+    return num;
+}
+
+char *int_to_hex(uint8_t num)
+{
+    // Convert an integer to a hexadecimal string
+    char *hex = (char *)malloc(2 * sizeof(char));
+    sprintf(hex, "%02x", num);
+    return hex;
 }

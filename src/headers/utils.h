@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 uint16_t read_lines(char *filename, char **lines);
-void write_line(char *filename, char *line);
 void write_lines(char *filename, char **lines);
-char **split(char *string, char *delimiter);
+uint8_t split(char *string, char delimiter, char **output);
 uint8_t hex_to_int(char *hex);
+char *int_to_hex(uint8_t num);
