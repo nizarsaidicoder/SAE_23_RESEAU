@@ -25,6 +25,18 @@ typedef struct Station
     IPAddress ip_address;
 } Station;
 
+// A port has a number and a status (up or down)
+// PROBLEM : A port doesn't have a unique identifier, so we can't use it to identify a port in a switch in the network
+// IMAGINE WE HAVE A SWITCH 1 WITH 4 PORTS, AND A SWITCH 2 WITH 4 PORTS, PORT 1 IN SWITCH 1 IS NOT THE SAME AS PORT 1 IN SWITCH 2
+// SO WE NEED TO ADD A SWITCH ID TO THE PORT STRUCTURE MAYBE ??
+// OR WE CAN USE THE PORT NUMBER AND THE SWITCH MAC ADDRESS TO IDENTIFY A PORT
+// IDK, I'M JUST THINKING OUT LOUD
+typedef struct Port
+{
+    uint8_t number;
+    char status;
+} Port;
+
 // A switch has an IP address, a number of ports and a switching table and ports maybe ??
 typedef struct Switch
 {
@@ -40,18 +52,6 @@ typedef enum DeviceType
     STATION,
     SWITCH
 } DeviceType;
-
-// A port has a number and a status (up or down)
-// PROBLEM : A port doesn't have a unique identifier, so we can't use it to identify a port in a switch in the network
-// IMAGINE WE HAVE A SWITCH 1 WITH 4 PORTS, AND A SWITCH 2 WITH 4 PORTS, PORT 1 IN SWITCH 1 IS NOT THE SAME AS PORT 1 IN SWITCH 2
-// SO WE NEED TO ADD A SWITCH ID TO THE PORT STRUCTURE MAYBE ??
-// OR WE CAN USE THE PORT NUMBER AND THE SWITCH MAC ADDRESS TO IDENTIFY A PORT
-// IDK, I'M JUST THINKING OUT LOUD
-typedef struct Port
-{
-    uint8_t number;
-    char status;
-} Port;
 
 // A Device has a type (station or switch), a MAC address and a union of either a station or a switch
 typedef struct Device

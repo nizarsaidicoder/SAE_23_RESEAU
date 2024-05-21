@@ -1,19 +1,33 @@
-#include "utils.h"
-char *read_line(FILE *file)
-{
-    // Read a line from the file
-    return NULL;
-}
-char **read_lines(FILE *file)
+#include "headers/utils.h"
+uint16_t read_lines(char *filename, char **lines)
 {
     // Read all lines from the file
-    return NULL;
+    FILE *file;
+    char line[256];
+    uint16_t num_lines = 0;
+    file = fopen(filename, "r");
+
+    if (file == NULL)
+    {
+        printf("Error opening file\n");
+        return 0;
+    }
+    while (fgets(line, sizeof(line), file) != NULL)
+    {
+        size_t line_len = strlen(line);
+        if (line_len > 0 && line[line_len - 1] == '\n')
+            line[line_len - 1] = '\0'; // Remove the newline character
+        lines[num_lines] = strdup(line);
+        num_lines++;
+    }
+    fclose(file);
+    return num_lines;
 }
-void write_line(FILE *file, char *line)
+void write_line(char *filename, char *line)
 {
     // Write the line to the file
 }
-void write_lines(FILE *file, char **lines)
+void write_lines(char *filename, char **lines)
 {
     // Write the lines to the file
 }
