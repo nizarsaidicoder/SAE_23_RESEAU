@@ -83,4 +83,6 @@ typedef struct Network
     Link *links;
     uint8_t num_devices;
     uint16_t num_links;
+    uint8_t num_stations;
+    uint8_t num_switches;
 } Network;
