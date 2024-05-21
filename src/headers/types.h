@@ -28,7 +28,6 @@ typedef struct Station
 // A switch has an IP address, a number of ports and a switching table and ports maybe ??
 typedef struct Switch
 {
-    IPAddress ip_address;
     uint16_t priority;
     uint8_t num_ports;
     Port *ports;

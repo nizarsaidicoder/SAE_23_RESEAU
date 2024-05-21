@@ -22,3 +22,9 @@ char **split(char *string, char *delimiter)
     // Split the string into tokens using the delimiter
     return NULL;
 }
+
+uint8_t hex_to_int(char *hex)
+{
+    // Convert a hexadecimal string to an integer
+    return 0;
+}
