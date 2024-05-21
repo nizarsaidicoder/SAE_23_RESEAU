@@ -14,6 +14,9 @@ uint16_t network_num_links(Network *network)
     // This function should return the number of links in the network
     return 0;
 }
+
+uint16_t network_num_stations(Network *network);
+uint16_t network_num_switches(Network *network);
 void network_add_device(Network *network, Device *device)
 {
     // This function should add a device to the network

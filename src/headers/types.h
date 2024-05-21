@@ -58,6 +58,7 @@ typedef struct Device
 {
     DeviceType type;
     MACAddress mac_address;
+    uint16_t index;
     union
     {
         Station staion_info;

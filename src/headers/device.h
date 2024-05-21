@@ -1,3 +1,5 @@
+#pragma once
+
 #include "types.h"
 #include "address.h"
 
@@ -6,6 +8,8 @@ void station_init(Device *device, MACAddress mac_address, IPAddress ip_address);
 void switch_init(Device *device, uint16_t priority, uint8_t num_ports);
 bool device_is_switch(Device *device);
 bool device_is_station(Device *device);
+void print_station(Device *device);
+void print_switch(Device *device);
 void print_device(Device *device);
 void device_from_config(Device *device, char *info);
 char *device_to_config(Device *device);
