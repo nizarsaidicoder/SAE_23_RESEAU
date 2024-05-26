@@ -74,6 +74,7 @@ typedef struct Link
     // SHOULD WE USE POINTERS TO THE DEVICES OR JUST THE DEVICES INDEXES IN THE NETWORK ??
     uint8_t device1_index;
     uint8_t device2_index;
+    uint16_t weight;
 } Link;
 
 // A network has an array of devices and an array of links
@@ -81,6 +82,8 @@ typedef struct Network
 {
     Device *devices;
     Link *links;
+    uint16_t link_capacity;
+    uint16_t device_capacity;
     uint8_t num_devices;
     uint16_t num_links;
     uint8_t num_stations;

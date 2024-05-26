@@ -42,7 +42,7 @@ void print_station(Device *device)
 {
     // This function should print the station structure to the console
     // EXPECTED OUTPUT :
-    //  **************Station 1**************
+    //  ------------------Station 1------------------
     //  MAC Address : 00:1A:2B:3C:4D:5E
     //  IP Address : 130.194.30.2
 }
@@ -51,7 +51,7 @@ void print_switch(Device *device)
 {
     // This function should print the switch structure to the console
     // EXPECTED OUTPUT :
-    //  **************Switch 1**************
+    //  ------------------Switch 1--------------------
     //  MAC Address : 00:1A:2B:3C:4D:5E
     //  Priority : 100
     //  Number of Ports : 4
