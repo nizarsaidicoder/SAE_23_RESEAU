@@ -23,11 +23,14 @@ int main()
     ip_address.address[1] = 168;
     ip_address.address[2] = 1;
     ip_address.address[3] = 1;
-    Station station;
-    station.ip_address = ip_address;
-    device.type = STATION;
-    device.staion_info = station;
-    network_add_device(&network, &device);
-    network_print(&network);
+    char * out = ip_address_to_string(&ip_address);
+    printf("%s\n",out);
+    // Station station;
+    // station.ip_address = ip_address;
+    // device.type = STATION;
+    // device.staion_info = station;
+    // network_add_device(&network, &device);
+    // network_print(&network);
+
     return 0;
 }

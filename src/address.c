@@ -1,10 +1,15 @@
 #include "headers/address.h"
-
+#include <stdlib.h>
+#include <string.h>
 char *ip_address_to_string(IPAddress *ip_address)
 {
     // This function should convert the IP address to a string
     // EXPECTED INPUT : {130, 79, 80, 1}
     // EXPECTED OUTPUT : "130.79.80.1"
+    char *output;
+    sprintf(output, "%d.%d.%d.%d", ip_address->address[0], ip_address->address[1], ip_address->address[2] ,ip_address->address[3]);
+    return output;
+    
 }
 
 char *mac_address_to_string(MACAddress *mac_address)
