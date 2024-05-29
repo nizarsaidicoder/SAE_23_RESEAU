@@ -25,6 +25,7 @@ int main()
     ip_address.address[3] = 1;
     char * out = ip_address_to_string(&ip_address);
     printf("%s\n",out);
+    ip_address_from_string(out);
     // Station station;
     // station.ip_address = ip_address;
     // device.type = STATION;
