@@ -1,5 +1,7 @@
 #pragma once
 #include "types.h"
+#include <stdlib.h>
+#include <string.h>
 
 void print_ip_address(IPAddress *ip_address);
 void print_mac_address(MACAddress *mac_address);
