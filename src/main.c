@@ -29,16 +29,5 @@ int main()
     device.station_info = station;
     network_add_device(&network, &device);
     network_print(&network);
-    char hex[10];
-    char *out = ip_address_to_string(&ip_address);
-    printf("%s\n", out);
-    ip_address_from_string(out);
-    // Station station;
-    // station.ip_address = ip_address;
-    // device.type = STATION;
-    // device.staion_info = station;
-    // network_add_device(&network, &device);
-    // network_print(&network);
-
     return 0;
 }
