@@ -61,7 +61,7 @@ typedef struct Device
     uint16_t index;
     union
     {
-        Station staion_info;
+        Station station_info;
         // IT SEEMS THAT SWITCH IS A RESERVED WORD IN C SO I CHANGED IT TO switch_info
         Switch switch_info;
     };
