@@ -26,8 +26,9 @@ int main()
     Station station;
     station.ip_address = ip_address;
     device.type = STATION;
-    device.staion_info = station;
+    device.station_info = station;
     network_add_device(&network, &device);
     network_print(&network);
+    char hex[10];
     return 0;
 }
