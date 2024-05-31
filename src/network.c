@@ -61,7 +61,7 @@ void network_add_device(Network *network, Device *device)
     // This function should add a device to the network
     // Check if the devices array is full
     // If the devices array is full, reallocate memory for the devices array
-    if (network->num_devices == network->device_capacity)
+    if (network->num_devices >= network->device_capacity)
     {
         network->device_capacity *= 2;
         network->devices = (Device *)realloc(network->devices, network->device_capacity * sizeof(Device));
@@ -95,7 +95,7 @@ bool network_add_link(Network *network, Link link)
     if (network_link_exists(network, link))
         return false;
 
-    if (network->num_links == network->link_capacity)
+    if (network->num_links >= network->link_capacity)
     {
         network->link_capacity *= 2;
         network->links = (Link *)realloc(network->links, network->link_capacity * sizeof(Link));
@@ -144,17 +144,15 @@ void network_from_config(Network *network, char *filename)
     uint8_t num_devices = atoi(config_header[0]);
     uint16_t num_links = atoi(config_header[1]);
     network_init(network);
-    network->num_devices = num_devices;
-    network->num_links = num_links;
     // Read the details of each device from the file
-    for (int i = 1; i <= network->num_devices; i++)
+    for (int i = 1; i < num_devices; i++)
     {
         Device device;
         device_from_config(&device, lines[i]);
         network_add_device(network, &device);
     }
     // Read the details of each link from the file
-    for (int i = network->num_devices + 1; i < num_lines; i++)
+    for (int i = num_devices + 1; i < num_lines; i++)
     {
         Link link;
         char *link_info[3];

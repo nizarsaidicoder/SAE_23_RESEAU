@@ -33,6 +33,67 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     // Allocate memory for the switching table
     device->switch_info.switching_table = (MACAddress *)malloc(10 * sizeof(MACAddress *));
 }
+void device_from_config(Device *device, char *info)
+{
+    // This function should read the device structure from a line and populate the device structure
+
+    // EXPECTED INPUT :
+    // 2;01:45:23:a6:f7:01;8;1024" <-- Switch
+    // 1;54:d6:a6:82:c5:01;130.79.80.1 <-- Station
+
+    /**
+     * SOME SPECIFICATIONS
+     * 1. The device type is the first element in the line : 1 for station, 2 for switch
+     * 2. The MAC address is the second element in the line
+     * If the device is a station, the IP address is the third element in the line
+     * If the device is a switch, the priority and the number of ports are the third and fourth elements in the line
+     */
+
+    char **output = (char **)malloc(sizeof(char *) * 256);
+    char *info_copy = strdup(info);
+    char *delimiter = ";";
+    split(info_copy, *delimiter, output);
+
+    if (output[0][0] == '1')
+    {
+        station_init(device, mac_address_from_string(output[1]), ip_address_from_string(output[2]));
+    }
+
+    if (output[0][0] == '2')
+    {
+        switch_init(device, mac_address_from_string(output[1]), atoi(output[3]), atoi(output[2]));
+    }
+}
+
+char *device_to_config(Device *device)
+{
+    // This function should convert the device structure to a string and return it
+
+    // EXPECTED OUTPUT :
+    // 2;01:45:23:a6:f7:01;8;1024" <-- Switch
+    // 1;54:d6:a6:82:c5:01;130.79.80.1 <-- Station
+
+    char *out = (char *)malloc(sizeof(char) * 256);
+
+    if (device->type == STATION)
+    {
+        char *mac_address = mac_address_to_string(&device->mac_address);
+        char *ip_address = ip_address_to_string(&device->station_info.ip_address);
+        sprintf(out, "1;%s;%s", mac_address, ip_address);
+    }
+
+    if (device->type == SWITCH)
+    {
+        char *priority = (char *)malloc(sizeof(char) * 256);
+        sprintf(priority, "%d", device->switch_info.priority);
+        char *num_ports = (char *)malloc(sizeof(char) * 256);
+        sprintf(num_ports, "%d", device->switch_info.num_ports);
+        char *mac_address = mac_address_to_string(&device->mac_address);
+        sprintf(out, "2;%s;%s;%s", mac_address, num_ports, priority);
+    }
+
+    return out;
+}
 
 bool device_is_switch(Device *device)
 {
@@ -88,69 +149,6 @@ void print_device(Device *device)
     {
         print_switch(device);
     }
-}
-
-void device_from_config(Device *device, char *info)
-{
-    // This function should read the device structure from a line and populate the device structure
-
-    // EXPECTED INPUT :
-    // 2;01:45:23:a6:f7:01;8;1024" <-- Switch
-    // 1;54:d6:a6:82:c5:01;130.79.80.1 <-- Station
-
-    /**
-     * SOME SPECIFICATIONS
-     * 1. The device type is the first element in the line : 1 for station, 2 for switch
-     * 2. The MAC address is the second element in the line
-     * If the device is a station, the IP address is the third element in the line
-     * If the device is a switch, the priority and the number of ports are the third and fourth elements in the line
-     */
-
-    char** output = (char ** ) malloc (sizeof(char*) * 256);
-    char * info_copy = strdup(info);
-    char* delimiter = ";";
-    split(info_copy, *delimiter, output);
-
-    if(output[0][0] == '1')
-    {
-        station_init(device, mac_address_from_string(output[1]), ip_address_from_string(output[2]));
-    }
-
-    if(output[0][0] == '2')
-    {
-        switch_init(device, mac_address_from_string(output[1]), atoi(output[3]), atoi(output[2]));
-    }
-}
-
-char* device_to_config(Device *device)
-{
-    // This function should convert the device structure to a string and return it
-
-    // EXPECTED OUTPUT :
-    // 2;01:45:23:a6:f7:01;8;1024" <-- Switch
-    // 1;54:d6:a6:82:c5:01;130.79.80.1 <-- Station
-
-    char *out = (char * ) malloc (sizeof(char) * 256);
-
-    if(device->type == STATION)
-    {
-        char* mac_address = mac_address_to_string(&device->mac_address);
-        char* ip_address = ip_address_to_string(&device->station_info.ip_address);
-        sprintf(out, "1;%s;%s", mac_address, ip_address);
-    }
-
-    if(device->type == SWITCH)
-    {
-        char * priority = (char * ) malloc (sizeof(char) * 256);
-        sprintf(priority,"%d",device->switch_info.priority);
-        char * num_ports = (char * ) malloc (sizeof(char) * 256);
-        sprintf(num_ports,"%d",device->switch_info.num_ports);
-        char* mac_address = mac_address_to_string(&device->mac_address);
-        sprintf(out, "2;%s;%s;%s", mac_address, num_ports, priority);
-    }
-
-    return out;
-
 }
 
 void switch_print_table(Device *device)
