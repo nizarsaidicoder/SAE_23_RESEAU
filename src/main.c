@@ -30,5 +30,21 @@ int main()
     device.station_info = station;
     network_add_device(&network, &device);
     // network_print(&network);
+
+    Device dev2;
+    device_from_config(&dev2, "2;01:45:23:a6:f7:01;8;1024");
+    print_device(&dev2);
+
+    printf("%s\n", device_to_config(&dev2));
+
+    Device dev3;
+    device_from_config(&dev3, "1;54:d6:a6:82:c5:01;130.79.80.1");
+    print_device(&dev3);
+
+    printf("%s\n", device_to_config(&dev3));
+
+    dev2.switch_info.switching_table[0] = mac_address;
+    switch_print_table(&dev2);
+    
     return 0;
 }
