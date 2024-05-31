@@ -154,4 +154,10 @@ void print_device(Device *device)
 void switch_print_table(Device *device)
 {
     // This function should print the switch table to the console
+    printf("---------------SWITCHING TABLE---------------\n");
+    for(long unsigned int i = 0; i < sizeof(device->switch_info.switching_table); i++)
+    {
+        printf(" => Port %lu : \n", (i + 1));
+        print_mac_address(&device->switch_info.switching_table[i]);
+    }
 }
