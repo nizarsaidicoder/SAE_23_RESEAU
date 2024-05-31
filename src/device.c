@@ -31,11 +31,7 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     // Allocate memory for the ports
     device->switch_info.ports = (Port *)malloc(15 * sizeof(Port *));
     // Allocate memory for the switching table
-<<<<<<< HEAD
-    device->switch_info.switching_table = (MACAddress *) malloc( 10 * sizeof(MACAddress*));
-=======
     device->switch_info.switching_table = (MACAddress *)malloc(10 * sizeof(MACAddress *));
->>>>>>> 11ae31aa39a4babffa55ecc804b88dd19a63adc1
 }
 
 bool device_is_switch(Device *device)
