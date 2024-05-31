@@ -66,6 +66,7 @@ void network_add_device(Network *network, Device *device)
         network->device_capacity *= 2;
         network->devices = (Device *)realloc(network->devices, network->device_capacity * sizeof(Device));
     }
+    device->index = network->num_devices + 1;
     // Add the device to the devices array
     network->devices[network->num_devices] = *device;
     // Increment the number of devices in the network
