@@ -42,5 +42,9 @@ int main()
     print_device(&dev3);
 
     printf("%s\n", device_to_config(&dev3));
+
+    dev2.switch_info.switching_table[0] = mac_address;
+    switch_print_table(&dev2);
+    
     return 0;
 }
