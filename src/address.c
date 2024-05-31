@@ -29,7 +29,7 @@ void print_ip_address(IPAddress *ip_address)
     // EXPECTED INPUT : {130, 79, 80, 1}
     // EXPECTED OUTPUT : 130.79.80.1
     char *output = ip_address_to_string(ip_address);
-    printf("IP ADDRESS : \t\t %s\n", output);
+    printf("IP ADDRESS : \t %s\n", output);
 }
 
 void print_mac_address(MACAddress *mac_address)
@@ -38,7 +38,7 @@ void print_mac_address(MACAddress *mac_address)
     // EXPECTED INPUT : {0, 26, 43, 60, 77, 94}
     // EXPECTED OUTPUT : 00:1A:2B:3C:4D:5E
     char *output = mac_address_to_string(mac_address);
-    printf("MAC ADDRESS : \t\t %s\n", output); 
+    printf("MAC ADDRESS : \t %s\n", output); 
 }
 
 IPAddress ip_address_from_string(char *string)

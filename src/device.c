@@ -107,8 +107,9 @@ void device_from_config(Device *device, char *info)
      */
 
     char** output = (char ** ) malloc (sizeof(char*) * 256);
+    char * info_copy = strdup(info);
     char* delimiter = ";";
-    split(info, *delimiter, output);
+    split(info_copy, *delimiter, output);
 
     if(output[0][0] == '1')
     {
@@ -117,7 +118,7 @@ void device_from_config(Device *device, char *info)
 
     if(output[0][0] == '2')
     {
-        switch_init(device, mac_address_from_string(output[1]), atoi(output[2]), atoi(output[3]));
+        switch_init(device, mac_address_from_string(output[1]), atoi(output[3]), atoi(output[2]));
     }
 }
 
