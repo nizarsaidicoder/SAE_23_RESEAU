@@ -17,7 +17,10 @@ char *mac_address_to_string(MACAddress *mac_address)
     // This function should convert the MAC address to a string
     // EXPECTED INPUT : {0, 26, 43, 60, 77, 94}
     // EXPECTED OUTPUT : "00:1A:2B:3C:4D:5E"
-    return NULL;
+
+    char *output = (char *)malloc(16 * sizeof(char));
+    sprintf(output, "%02x:%02x:%02x:%02x:%02x:%02x", mac_address->address[0], mac_address->address[1], mac_address->address[2], mac_address->address[3], mac_address->address[4], mac_address->address[5]);
+    return output;
 }
 
 void print_ip_address(IPAddress *ip_address)
@@ -34,6 +37,8 @@ void print_mac_address(MACAddress *mac_address)
     // This function should print the MAC address to the console
     // EXPECTED INPUT : {0, 26, 43, 60, 77, 94}
     // EXPECTED OUTPUT : 00:1A:2B:3C:4D:5E
+    char *output = mac_address_to_string(mac_address);
+    printf("MAC ADDRESS : \t\t %s\n", output); 
 }
 
 IPAddress ip_address_from_string(char *string)

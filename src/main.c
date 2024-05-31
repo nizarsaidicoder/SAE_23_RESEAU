@@ -9,12 +9,13 @@ int main()
     network_init(&network);
     Device device;
     MACAddress mac_address;
-    mac_address.address[0] = 0x00;
-    mac_address.address[1] = 0x11;
-    mac_address.address[2] = 0x22;
-    mac_address.address[3] = 0x33;
-    mac_address.address[4] = 0x44;
-    mac_address.address[5] = 0x55;
+    mac_address.address[0] = 23;
+    mac_address.address[1] = 255;
+    mac_address.address[2] = 11;
+    mac_address.address[3] = 44;
+    mac_address.address[4] = 31;
+    mac_address.address[5] = 1;
+    print_mac_address(&mac_address);
     device.mac_address = mac_address;
     device.index = 0;
     device.type = STATION;
@@ -28,6 +29,6 @@ int main()
     device.type = STATION;
     device.station_info = station;
     network_add_device(&network, &device);
-    network_print(&network);
+    // network_print(&network);
     return 0;
 }
