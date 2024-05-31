@@ -51,6 +51,7 @@ uint8_t split(char *string, char delimiter, char **output)
         // When strtok is called with a NULL pointer, it continues from the last token
         token = strtok(NULL, &delimiter);
     }
+
     return num_tokens;
 }
 

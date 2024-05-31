@@ -29,9 +29,13 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     // Set the number of ports
     device->switch_info.num_ports = num_ports;
     // Allocate memory for the ports
-    device->switch_info.ports = (Port *) malloc( 15 * sizeof(Port*));
+    device->switch_info.ports = (Port *)malloc(15 * sizeof(Port *));
     // Allocate memory for the switching table
+<<<<<<< HEAD
     device->switch_info.switching_table = (MACAddress *) malloc( 10 * sizeof(MACAddress*));
+=======
+    device->switch_info.switching_table = (MACAddress *)malloc(10 * sizeof(MACAddress *));
+>>>>>>> 11ae31aa39a4babffa55ecc804b88dd19a63adc1
 }
 
 bool device_is_switch(Device *device)
@@ -56,8 +60,8 @@ void print_station(Device *device)
     //  MAC Address : 00:1A:2B:3C:4D:5E
     //  IP Address : 130.194.30.2
     printf("------------------Station %d------------------\n", device->index);
-    printf("MAC Address : %s\n", mac_address_to_string(&device->mac_address));
-    printf("IP Address : %s\n", ip_address_to_string(&device->station_info.ip_address));
+    printf("MAC Address : %d\n", device->mac_address);
+    print_ip_address(&device->station_info.ip_address);
 }
 
 void print_switch(Device *device)
@@ -79,12 +83,12 @@ void print_device(Device *device)
     // This function should print the device structure to the console
     // based on the device type, print either the station or the switch
     // If the device is a station, call print_station
-    if(device->type == STATION)
+    if (device->type == STATION)
     {
         print_station(device);
     }
     // If the device is a switch, call print_switch
-    if(device->type == SWITCH)
+    if (device->type == SWITCH)
     {
         print_switch(device);
     }
