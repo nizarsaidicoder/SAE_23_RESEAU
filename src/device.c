@@ -56,7 +56,7 @@ void print_station(Device *device)
     //  MAC Address : 00:1A:2B:3C:4D:5E
     //  IP Address : 130.194.30.2
     printf("------------------Station %d------------------\n", device->index);
-    printf("MAC Address : %d\n", device->mac_address);
+    print_mac_address(&device->mac_address);
     print_ip_address(&device->station_info.ip_address);
 }
 
@@ -69,7 +69,7 @@ void print_switch(Device *device)
     //  Priority : 100
     //  Number of Ports : 4
     printf("------------------Switch %d--------------------\n", device->index);
-    printf("MAC Address : %s\n", mac_address_to_string(&device->mac_address));
+    print_mac_address(&device->mac_address);
     printf("Priority : %d\n", device->switch_info.priority);
     printf("Number of Ports : %d\n", device->switch_info.num_ports);
 }
