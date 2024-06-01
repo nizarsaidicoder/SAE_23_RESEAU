@@ -66,7 +66,7 @@ void network_add_device(Network *network, Device *device)
         network->device_capacity *= 2;
         network->devices = (Device *)realloc(network->devices, network->device_capacity * sizeof(Device));
     }
-    device->index = network->num_devices + 1;
+    device->index = network->num_devices;
     // Add the device to the devices array
     network->devices[network->num_devices] = *device;
     // Increment the number of devices in the network
@@ -133,6 +133,11 @@ void network_print(Network *network)
     {
         print_device(&network->devices[i]);
     }
+    // Print the details of each link in the network
+    for (int i = 0; i < network->num_links; i++)
+    {
+        print_link(&network->links[i]);
+    }
 }
 void network_from_config(Network *network, char *filename)
 {
@@ -146,7 +151,7 @@ void network_from_config(Network *network, char *filename)
     uint16_t num_links = atoi(config_header[1]);
     network_init(network);
     // Read the details of each device from the file
-    for (int i = 1; i < num_devices; i++)
+    for (int i = 1; i <= num_devices; i++)
     {
         Device device;
         device_from_config(&device, lines[i]);
@@ -184,4 +189,23 @@ void network_to_config(Network *network, char *filename)
         lines[i] = strdup(link_info);
     }
     write_lines(filename, lines);
+}
+
+void print_switching_tables(Network *network)
+{
+    // This function should print the switching tables of all the switches in the network
+    printf("\033[0;32m");
+    for (int i = 0; i < network->num_devices; i++)
+    {
+        if (network->devices[i].type == SWITCH)
+        {
+            if (network->devices[i].switch_info.switching_table_entries > 0)
+            {
+                printf("------------------Switch %d--------------------\n", network->devices[i].index);
+                switch_print_table(network->devices[i].switch_info);
+            }
+        }
+    }
+    // color reset
+    printf("\033[0m");
 }

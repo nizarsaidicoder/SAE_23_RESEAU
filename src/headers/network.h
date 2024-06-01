@@ -14,3 +14,4 @@ void network_print(Network *network);
 Device *network_find_device(Network *network, MACAddress mac_address);
 void network_from_config(Network *network, char *filename);
 void network_to_config(Network *network, char *filename);
+void print_switching_tables(Network *network);

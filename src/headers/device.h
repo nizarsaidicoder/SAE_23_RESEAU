@@ -11,6 +11,7 @@ bool device_is_station(Device *device);
 void print_station(Device *device);
 void print_switch(Device *device);
 void print_device(Device *device);
+void print_link(Link *link);
 void device_from_config(Device *device, char *info);
 char *device_to_config(Device *device);
-void switch_print_table(Device *device);
+void switch_print_table(Switch switch_);

@@ -30,8 +30,8 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     device->switch_info.num_ports = num_ports;
     // Allocate memory for the ports
     device->switch_info.ports = (Port *)malloc(15 * sizeof(Port *));
-    // Allocate memory for the switching table
-    device->switch_info.switching_table = (MACAddress *)malloc(10 * sizeof(MACAddress *));
+    // Set the number of switching table entries to 0
+    device->switch_info.switching_table_entries = 0;
 }
 void device_from_config(Device *device, char *info)
 {
@@ -133,6 +133,16 @@ void print_switch(Device *device)
     print_mac_address(&device->mac_address);
     printf("Priority : %d\n", device->switch_info.priority);
     printf("Number of Ports : %d\n", device->switch_info.num_ports);
+    if (device->switch_info.switching_table_entries > 0)
+        switch_print_table(device->switch_info);
+    else if (device->switch_info.switching_table_entries == 0)
+    {
+        // In red color
+        printf("\033[1;31m");
+        printf("Switching table is empty\n");
+        // Reset color
+        printf("\033[0m");
+    }
 }
 
 void print_device(Device *device)
@@ -151,13 +161,26 @@ void print_device(Device *device)
     }
 }
 
-void switch_print_table(Device *device)
+void print_link(Link *link)
+{
+    // This function should print the link structure to the console
+    // EXPECTED OUTPUT :
+    //  Link between Station 1 and Station 2
+    //  Weight : 10
+    printf("------------------Link------------------\n");
+    printf("Link between Device %d and Device %d\n", link->device1_index, link->device2_index);
+    printf("Weight : %d\n", link->weight);
+}
+
+void switch_print_table(Switch switch_)
 {
     // This function should print the switch table to the console
-    printf("---------------SWITCHING TABLE---------------\n");
-    for(long unsigned int i = 0; i < sizeof(device->switch_info.switching_table); i++)
+    printf("+---------------------+-------+\n");
+    printf("| %-19s | %5s |\n", "MAC Address", "Port");
+    printf("+---------------------+-------+\n");
+    for (int i = 0; i < switch_.switching_table_entries; i++)
     {
-        printf(" => Port %lu : \n", (i + 1));
-        print_mac_address(&device->switch_info.switching_table[i]);
+        printf("| %-19s | %5d |\n", mac_address_to_string(&switch_.switching_table[i].mac_address), switch_.switching_table[i].port_number);
     }
+    printf("+---------------------+-------+\n");
 }
