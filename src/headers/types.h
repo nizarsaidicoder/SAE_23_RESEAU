@@ -37,13 +37,20 @@ typedef struct Port
     char status;
 } Port;
 
+typedef struct SwitchingTableEntry
+{
+    MACAddress mac_address;
+    uint8_t port_number;
+} SwitchingTableEntry;
+
 // A switch has an IP address, a number of ports and a switching table and ports maybe ??
 typedef struct Switch
 {
     uint16_t priority;
     uint8_t num_ports;
     Port *ports;
-    MACAddress *switching_table;
+    SwitchingTableEntry switching_table[256];
+    uint16_t switching_table_entries;
 } Switch;
 
 // A device can be a station or a switch
@@ -89,4 +96,3 @@ typedef struct Network
     uint8_t num_stations;
     uint8_t num_switches;
 } Network;
-
