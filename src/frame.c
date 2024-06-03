@@ -38,6 +38,15 @@ void frame_print_data_user_mode(Frame *frame)
     // The source and destination MAC addresses
     // The type of the frame
     // The data of the frame
+    printf("------------------Trame------------------\n");
+    printf("Preambule: %d.%d.%d.%d.%d.%d.%d\n", frame->preambule[0], frame->preambule[1], frame->preambule[2], frame->preambule[3], frame->preambule[4], frame->preambule[5], frame->preambule[6]);
+    printf("SFD: %d\n", frame->SFD);
+    printf("Destinataire: ");
+    print_mac_address(&frame->dest);
+    printf("Source: ");
+    print_mac_address(&frame->src);
+    printf("Type: %d\n", frame->type);
+    //printf("Data: %s", frame->data);
 }
 
 void frame_print_data_hex_mode(Frame *frame)
@@ -46,6 +55,15 @@ void frame_print_data_hex_mode(Frame *frame)
     // The source and destination MAC addresses
     // The type of the frame
     // The data of the frame
+    printf("------------------Trame------------------\n");
+    printf("Preambule: %02x.%02x.%02x.%02x.%02x.%02x.%02x\n", frame->preambule[0], frame->preambule[1], frame->preambule[2], frame->preambule[3], frame->preambule[4], frame->preambule[5], frame->preambule[6]);
+    printf("SFD: %02x\n", frame->SFD);
+    printf("Destinataire: ");
+    print_mac_address(&frame->dest);
+    printf("Source: ");
+    print_mac_address(&frame->src);
+    printf("Type: %02x\n", frame->type);
+    //printf("Data: %d", frame->data);
 }
 
 uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[])
@@ -196,11 +214,7 @@ bool receive_frame(Device *device, Frame *frame)
     // and false if the device is not the receiver
     if (compare_mac_address(&device->mac_address, &frame->dest))
     {
-        printf("\033[0;32m");
-        printf("RECEIVING FRAME\n");
-        print_mac_address(&device->mac_address);
-        printf("\n\n");
-        printf("\033[0m");
+        frame_print_data_user_mode(frame);
         return true;
     }
     return false;
