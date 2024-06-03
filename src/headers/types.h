@@ -30,17 +30,20 @@ typedef struct Station
     IPAddress ip_address;
 } Station;
 
-// A port has a number and a status (up or down)
-// PROBLEM : A port doesn't have a unique identifier, so we can't use it to identify a port in a switch in the network
-// IMAGINE WE HAVE A SWITCH 1 WITH 4 PORTS, AND A SWITCH 2 WITH 4 PORTS, PORT 1 IN SWITCH 1 IS NOT THE SAME AS PORT 1 IN SWITCH 2
-// SO WE NEED TO ADD A SWITCH ID TO THE PORT STRUCTURE MAYBE ??
-// OR WE CAN USE THE PORT NUMBER AND THE SWITCH MAC ADDRESS TO IDENTIFY A PORT
-// IDK, I'M JUST THINKING OUT LOUD
-// TODO : Modification of the port structure
+// A port has a state and a role
+// ROLES
+// R: ROOT
+// D: DESIGNATED
+// B: BLOCKING
+// STATES
+// F: FORWARDING
+// B: BLOCKING
+// D: DISABLED
+// L: LISTENING
 typedef struct Port
 {
-    char status;
-    char actvity;
+    char role;
+    char state;
 } Port;
 
 typedef struct SwitchingTableEntry
@@ -49,7 +52,6 @@ typedef struct SwitchingTableEntry
     uint8_t port_number;
 } SwitchingTableEntry;
 
-// TODO : Add a structure for BPDU (Bridge Protocol Data Unit) and assign it to the swithc
 typedef struct BPDU
 {
     uint16_t root_bridge_priority;

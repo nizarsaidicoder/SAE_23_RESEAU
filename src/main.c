@@ -15,5 +15,9 @@ int main()
         network_free(&network);
         return 1; // or appropriate error code
     }
+    // Sending BPDU frames
+    send_bpdu(&network, &network.devices[0]);    
+    network_print(&network);
+    network_free(&network);
     return 0;
 }

@@ -45,51 +45,13 @@ int compare_bpdu(BPDU *bpdu1, BPDU *bpdu2)
         }
     }
 }
-// void send_frame(Network *network, Device *new_source, Device *previous_source, Frame *frame)
-//  {
-//      if (new_source->type == STATION)
-//      {
-//          if (previous_source == NULL)
-//          {
-//              Device *connected_devices[256];
-//              uint16_t nb = find_connected_devices(network, new_source->index, connected_devices);
-//              if (nb != 0)
-//                  send_frame(network, connected_devices[0], new_source, frame);
-//          }
-//          else
-//              receive_frame(new_source, frame);
-//      }
-//      // Check if the device is a switch
-//      if (new_source->type == SWITCH)
-//      {
-//          if (previous_source != NULL)
-//          {
-//              uint8_t port = get_port_number(network, new_source, previous_source);
-//              add_entry_to_switching_table(new_source, &frame->src, port);
-//          }
-//          if (!receive_frame(new_source, frame))
-//          {
-//              int port_number = check_switching_table_entries(new_source, &frame->dest);
-//              if (port_number != -1)
-//              {
-//                  // printf("Redirecting\n");
-//                  Device *connected_devices[256];
-//                  find_connected_devices(network, new_source->index, connected_devices);
-//                  Device *reciever = connected_devices[port_number];
-//                  send_frame(network, reciever, new_source, frame);
-//              }
-//              else
-//                  flood_frame(network, new_source, previous_source, frame);
-//          }
-//      }
-//  }
 
 void bpdu_to_frame(BPDU *bpdu, Frame *frame)
 {
     MACAddress broadcast;
     for (int i = 0; i < 6; i++)
     {
-        broadcast.address[i] = 0xFF;
+        broadcast.address[i] = 255;
     }
     char bpdu_string[BPDU_BUFFER_SIZE];
     bpdu_to_string(bpdu, bpdu_string);
@@ -129,8 +91,56 @@ void print_bpdu(BPDU *bpdu)
 }
 void send_bpdu(Network *network, Device *device)
 {
-    // do not use frame
+    Frame frame;
+    bpdu_to_frame(&device->switch_info.bpdu, &frame);
+    Device *connected_devices[256];
+    uint16_t nb = find_connected_devices(network, device->index, connected_devices);
+    for (int i = 0; i < nb; i++)
+    {
+        send_frame(network, connected_devices[i], device, &frame);
+        if (receive_bpdu(network, connected_devices[i], &frame))
+        {
+            // MODIFY THE SWITCH PORT STATE FROM WHERE THE BPDU WAS RECEIVED TO LISTENING
+            Device *connected_devices[256];
+            uint16_t nb = find_connected_devices(network, connected_devices[i]->index, connected_devices);
+            for (int i = 0; i < nb; i++)
+            {
+                if (compare_mac_address(&connected_devices[i]->mac_address, &device->mac_address) == 0)
+                {
+                    device->switch_info.ports[i].state = 'L';
+                }
+            }
+            send_bpdu(network, connected_devices[i]);
+        }
+    }
 }
+bool update_bpdu(Network *network, Device *device, BPDU *new_bpdu)
+{
+    if (compare_bpdu(&device->switch_info.bpdu, new_bpdu) == -1)
+    {
+        // MODIFY ONLY THE ROOT BRIDGE INFO
+        device->switch_info.bpdu.root_bridge_priority = new_bpdu->root_bridge_priority;
+        device->switch_info.bpdu.root_bridge_mac_address = new_bpdu->root_bridge_mac_address;
+        device->switch_info.bpdu.root_path_cost = find_shortest_distance_cost(network, network_find_device(network, &new_bpdu->root_bridge_mac_address), device);
+        print_bpdu(&device->switch_info.bpdu);
+        return true;
+    }
+    return false;
+}
+int find_shortest_distance_cost(Network *network, Device *device, Device *destination)
+{
+    uint16_t distanceSommets[network_num_devices(network)];
+    dijkstra(network, *device, distanceSommets);
+    printf("Distance : %d\n", distanceSommets[destination->index]);
+    return distanceSommets[destination->index];
+}
+bool receive_bpdu(Network *network, Device *device, Frame *frame)
+{
+    BPDU bpdu;
+    frame_to_bpdu(frame, &bpdu);
+    return update_bpdu(network, device, &bpdu);
+}
+
 void elect_root_bridge(Network *network)
 {
 }
@@ -180,10 +190,6 @@ uint32_t nb_composantes_connexes(Network *network)
 
 void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
 {
-    if (nb_composantes_connexes(network) != 1)
-    {
-        return;
-    }
 
     size_t ordre = network_num_devices(network);
     bool visite[ordre];
@@ -198,7 +204,6 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
     // on fixe le "sommet" de départ
     uint16_t sommetFixe = device.index;
     distanceSommets[sommetFixe] = 0;
-
     while (!visite[sommetFixe])
     {
         visite[sommetFixe] = true;
@@ -227,7 +232,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
         double min = __INT16_MAX__;
 
         // mise à jour du sommet fixé
-        for (size_t i = 0; i < ordre; i++)
+        for (size_t i = 0; i < n; i++)
         {
             // si on ne l'a pas visité et que sa distance est la plus petite
             if (!visite[i] && distanceSommets[i] < min)
@@ -236,6 +241,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
                 sommetFixe = i;
             }
         }
+        printf("test\n");
     }
 }
 

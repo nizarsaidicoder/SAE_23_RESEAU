@@ -200,17 +200,32 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
         }
         if (!receive_frame(new_source, frame))
         {
-            int port_number = check_switching_table_entries(new_source, &frame->dest);
-            if (port_number != -1)
+            Device *connected_devices[256];
+            find_connected_devices(network, new_source->index, connected_devices);
+            MACAddress broadcast;
+            for (int i = 0; i < 6; i++)
             {
-                // printf("Redirecting\n");
-                Device *connected_devices[256];
-                find_connected_devices(network, new_source->index, connected_devices);
-                Device *reciever = connected_devices[port_number];
-                send_frame(network, reciever, new_source, frame);
+                broadcast.address[i] = 255;
+            }
+            if (compare_mac_address(&frame->dest, &broadcast) == 0)
+            {
+                flood_frame(network, new_source, previous_source, frame);
             }
             else
-                flood_frame(network, new_source, previous_source, frame);
+            {
+                int port_number = check_switching_table_entries(new_source, &frame->dest);
+                if (port_number != -1)
+                {
+                    Device *reciever = connected_devices[port_number];
+                    // CHECK IF THE PORT IS ACTIVE
+                    if (new_source->switch_info.ports[port_number].state == 'F')
+                    {
+                        send_frame(network, reciever, new_source, frame);
+                    }
+                }
+                else
+                    flood_frame(network, new_source, previous_source, frame);
+            }
         }
     }
 }
@@ -234,17 +249,25 @@ void flood_frame(Network *network, Device *source, Device *previous_source, Fram
     {
         if (connected_devices[i]->mac_address.address != previous_source->mac_address.address)
         {
-            send_frame(network, connected_devices[i], source, frame);
+            if (source->switch_info.ports[i].state == 'F')
+            {
+                send_frame(network, connected_devices[i], source, frame);
+            }
         }
     }
 }
 
 bool receive_frame(Device *device, Frame *frame)
 {
-    if (compare_mac_address(&device->mac_address, &frame->dest) == 0)
+    MACAddress broadcast;
+    for (int i = 0; i < 6; i++)
     {
-        frame_print_data_user_mode(frame);
-        frame_print_data_hex_mode(frame);
+        broadcast.address[i] = 255;
+    }
+    if (compare_mac_address(&device->mac_address, &frame->dest) == 0 || compare_mac_address(&broadcast, &frame->dest) == 0)
+    {
+        // frame_print_data_user_mode(frame);
+        // frame_print_data_hex_mode(frame);
         return true;
     }
     return false;
