@@ -9,6 +9,7 @@
 
 #define MAC_BUFFER_SIZE 18
 #define IP_BUFFER_SIZE 16
+#define BPDU_BUFFER_SIZE 256
 
 // An IP address is an array of 4 bytes (uint8_t) each representing an octet of the address
 typedef struct IPAddress
@@ -48,6 +49,14 @@ typedef struct SwitchingTableEntry
 } SwitchingTableEntry;
 
 // TODO : Add a structure for BPDU (Bridge Protocol Data Unit) and assign it to the swithc
+typedef struct BPDU
+{
+    uint16_t root_bridge_priority;
+    MACAddress root_bridge_mac_address;
+    uint16_t root_path_cost;
+    MACAddress sender_mac_address;
+    uint16_t sender_priority;
+} BPDU;
 
 // A switch has an IP address, a number of ports and a switching table and ports maybe ??
 typedef struct Switch
@@ -57,6 +66,7 @@ typedef struct Switch
     Port *ports;
     SwitchingTableEntry switching_table[256];
     uint16_t switching_table_entries;
+    BPDU bpdu;
 } Switch;
 
 // A device can be a station or a switch

@@ -42,7 +42,21 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     device->switch_info.ports = (Port *)malloc(15 * sizeof(Port *));
     // Set the number of switching table entries to 0
     device->switch_info.switching_table_entries = 0;
+    // Assign the BPDU
+    assign_bpdu(device);
 }
+
+void assign_bpdu(Device *device)
+{
+    BPDU bpdu;
+    bpdu.root_bridge_priority = device->switch_info.priority;
+    bpdu.root_bridge_mac_address = device->mac_address;
+    bpdu.root_path_cost = 0;
+    bpdu.sender_mac_address = device->mac_address;
+    bpdu.sender_priority = device->switch_info.priority;
+    device->switch_info.bpdu = bpdu;
+}
+
 void device_from_config(Device *device, char *info)
 {
     // This function should read the device structure from a line and populate the device structure

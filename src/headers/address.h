@@ -12,5 +12,5 @@ char *mac_address_to_string(MACAddress *mac_address, char *output);
 IPAddress ip_address_from_string(char *string);
 MACAddress mac_address_from_string(char *string);
 
-bool compare_mac_address(MACAddress *mac1, MACAddress *mac2);
+int compare_mac_address(MACAddress *mac1, MACAddress *mac2);
 bool compare_ip_address(IPAddress *ip1, IPAddress *ip2);

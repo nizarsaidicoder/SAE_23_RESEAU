@@ -12,6 +12,65 @@ void spanning_tree_protocol(Network *network)
 void elect_root_bridge(Network *network)
 {
 }
+int compare_bpdu(BPDU bpdu1, BPDU bpdu2)
+{
+    if (bpdu1.root_bridge_priority < bpdu2.root_bridge_priority)
+    {
+        return -1;
+    }
+    else if (bpdu1.root_bridge_priority > bpdu2.root_bridge_priority)
+    {
+        return 1;
+    }
+    else
+    {
+        if (compare_mac_address(&bpdu1.root_bridge_mac_address, &bpdu2.root_bridge_mac_address) == -1)
+        {
+            return -1;
+        }
+        else if (compare_mac_address(&bpdu1.root_bridge_mac_address, &bpdu2.root_bridge_mac_address) == 1)
+        {
+            return 1;
+        }
+        else
+        {
+            if (bpdu1.root_path_cost < bpdu2.root_path_cost)
+            {
+                return -1;
+            }
+            else if (bpdu1.root_path_cost > bpdu2.root_path_cost)
+            {
+                return 1;
+            }
+            else
+            {
+                if (compare_mac_address(&bpdu1.sender_mac_address, &bpdu2.sender_mac_address) == -1)
+                {
+                    return -1;
+                }
+                else if (compare_mac_address(&bpdu1.sender_mac_address, &bpdu2.sender_mac_address) == 1)
+                {
+                    return 1;
+                }
+                else
+                {
+                    if (bpdu1.sender_priority < bpdu2.sender_priority)
+                    {
+                        return -1;
+                    }
+                    else if (bpdu1.sender_priority > bpdu2.sender_priority)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+}
 
 void visite_composante_connexe(Network *network, Device *device, bool *visite)
 {

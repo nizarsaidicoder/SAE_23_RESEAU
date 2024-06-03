@@ -11,12 +11,12 @@ typedef struct Frame
     MACAddress dest;
     MACAddress src;
     uint16_t type;
-    uint8_t *data;
+    uint8_t data[1500];
     uint32_t FCS;
 } Frame;
 
 // TODO : REMY
-void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, uint8_t *data);
+void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, char *data);
 void frame_print_data_user_mode(Frame *frame);
 void frame_print_data_hex_mode(Frame *frame);
 uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[]);
@@ -30,6 +30,3 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
 int check_switching_table_entries(Device *switch_, MACAddress *mac_address);
 void flood_frame(Network *network, Device *source, Device *previous_source, Frame *frame);
 bool receive_frame(Device *device, Frame *frame);
-
-// TODO : REMY
-bool compare_mac_address(MACAddress *mac1, MACAddress *mac2);

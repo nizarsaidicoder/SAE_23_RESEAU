@@ -7,6 +7,7 @@ void device_init(Device *device, MACAddress mac_address, DeviceType type);
 void device_free(Device *device);
 void station_init(Device *device, MACAddress mac_address, IPAddress ip_address);
 void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint8_t num_ports);
+void assign_bpdu(Device *device);
 bool device_is_switch(Device *device);
 bool device_is_station(Device *device);
 void print_station(Device *device);

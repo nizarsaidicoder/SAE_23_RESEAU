@@ -4,19 +4,7 @@
 #include "headers/device.h"
 #include "headers/network.h"
 
-void frame_print(Frame *frame)
-{
-    printf("------------------frame------------------\n");
-    printf("Preambule: %d.%d.%d.%d.%d.%d.%d\n", frame->preambule[0], frame->preambule[1], frame->preambule[2], frame->preambule[3], frame->preambule[4], frame->preambule[5], frame->preambule[6]);
-    printf("SFD: %d\n", frame->SFD);
-    printf("Destinataire: ");
-    print_mac_address(&frame->dest);
-    printf("Source: ");
-    print_mac_address(&frame->src);
-    printf("Type: %d", frame->type);
-}
-
-void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, uint8_t *data)
+void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, char *data)
 {
     // Initialisation de preambule
     for (int i = 0; i < 7; i++)
@@ -27,9 +15,14 @@ void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, ui
     frame->src = src;
     frame->dest = dest;
     frame->type = type;
-    // Change the type of data to char *, because the data is basically a string of characters, so you should for each character of the string given
-    // in the parameter data, copy it to the frame->data[i] where i is the index of the character in the string
-    frame->data = data;
+    for (size_t i = 0; i < strlen(data); i++)
+    {
+        frame->data[i] = data[i];
+    }
+    for (size_t i = strlen(data); i < 1500; i++)
+    {
+        frame->data[i] = 0;
+    }
 }
 
 void frame_print_data_user_mode(Frame *frame)
@@ -38,15 +31,39 @@ void frame_print_data_user_mode(Frame *frame)
     // The source and destination MAC addresses
     // The type of the frame
     // The data of the frame
-    printf("------------------Trame------------------\n");
-    printf("Preambule: %d.%d.%d.%d.%d.%d.%d\n", frame->preambule[0], frame->preambule[1], frame->preambule[2], frame->preambule[3], frame->preambule[4], frame->preambule[5], frame->preambule[6]);
-    printf("SFD: %d\n", frame->SFD);
-    printf("Destinataire: ");
+    // color green
+    printf("\033[0;33m");
+    printf("------------------Trame : USER MODE------------------\n");
+    printf("Destination ");
     print_mac_address(&frame->dest);
-    printf("Source: ");
+    printf("Source ");
     print_mac_address(&frame->src);
-    printf("Type: %d\n", frame->type);
-    // printf("Data: %s", frame->data);
+    switch (frame->type)
+    {
+    case 0x0800:
+        printf("Type: IP\n");
+        break;
+    case 0x0806:
+        printf("Type: ARP\n");
+        break;
+    case 0x4242:
+        printf("Type: BPDU\n");
+        break;
+    default:
+        printf("Type: Unknown\n");
+        break;
+    }
+    printf("Data: \n");
+    for (size_t i = 0; i < 1500; i++)
+    {
+        if (frame->data[i] == 0)
+        {
+            break;
+        }
+        printf("%c", frame->data[i]);
+    }
+    printf("\n");
+    printf("\033[0m");
 }
 
 void frame_print_data_hex_mode(Frame *frame)
@@ -55,15 +72,67 @@ void frame_print_data_hex_mode(Frame *frame)
     // The source and destination MAC addresses
     // The type of the frame
     // The data of the frame
-    printf("------------------Trame------------------\n");
-    printf("Preambule: %02x.%02x.%02x.%02x.%02x.%02x.%02x\n", frame->preambule[0], frame->preambule[1], frame->preambule[2], frame->preambule[3], frame->preambule[4], frame->preambule[5], frame->preambule[6]);
-    printf("SFD: %02x\n", frame->SFD);
-    printf("Destinataire: ");
-    print_mac_address(&frame->dest);
-    printf("Source: ");
-    print_mac_address(&frame->src);
-    printf("Type: %02x\n", frame->type);
-    // printf("Data: %d", frame->data);
+    // 00 00 00 00 00 00 00 00 00 00 00 00 08 00 45 00
+    // 00 3C 00 00 40 00 40 06 00 00 7F 00 00 01 7F 00
+    // 00 01 08 00 27 10 00 02 00 00 00 00 00 00 00 00
+    // 50 02 20 00 00 00 00 00
+    printf("\033[0;34m"); // color blue
+    int printed_bytes = 0;
+    printf("------------------Trame : HEX MODE------------------\n");
+    for (int i = 0; i < 7; i++)
+    {
+        printf("%02x ", frame->preambule[i]);
+        printed_bytes++;
+        if (printed_bytes % 16 == 0)
+        {
+            printf("\n");
+        }
+    }
+    printf("%02x ", frame->SFD);
+    printed_bytes++;
+    if (printed_bytes % 16 == 0)
+    {
+        printf("\n");
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        printf("%02x ", frame->dest.address[i]);
+        printed_bytes++;
+        if (printed_bytes % 16 == 0)
+        {
+            printf("\n");
+        }
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        printf("%02x ", frame->src.address[i]);
+        printed_bytes++;
+        if (printed_bytes % 16 == 0)
+        {
+            printf("\n");
+        }
+    }
+    printf("%02x ", frame->type);
+    printed_bytes++;
+    if (printed_bytes % 16 == 0)
+    {
+        printf("\n");
+    }
+    for (size_t i = 0; i < 1500; i++)
+    {
+        if (frame->data[i] == 0)
+        {
+            break;
+        }
+        printf("%02x ", frame->data[i]);
+        printed_bytes++;
+        if (printed_bytes % 16 == 0)
+        {
+            printf("\n");
+        }
+    }
+    printf("\n");
+    printf("\033[0m");
 }
 
 uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[])
@@ -91,36 +160,11 @@ uint16_t find_connected_devices(Network *network, uint16_t device_index, Device 
     }
     return connected_devices_count;
 }
-
-void update_switching_table(Network *network, Device *switch_, Device *device)
-{
-    // This function should update the switching table of the switch
-    // with the MAC address of the device and the port number
-    // connected to the device
-    Device *connected_devices[256];
-    uint16_t num_connected_devices = find_connected_devices(network, switch_->index, connected_devices);
-    for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
-    {
-        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, &device->mac_address))
-        {
-            return;
-        }
-    }
-    for (int i = 0; i < num_connected_devices; i++)
-    {
-        if (compare_mac_address(&connected_devices[i]->mac_address, &device->mac_address))
-        {
-            switch_->switch_info.switching_table[switch_->switch_info.switching_table_entries].mac_address = device->mac_address;
-            switch_->switch_info.switching_table[switch_->switch_info.switching_table_entries].port_number = i;
-            switch_->switch_info.switching_table_entries++;
-        }
-    }
-}
 void add_entry_to_switching_table(Device *switch_, MACAddress *mac_address, uint8_t port_number)
 {
     for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
     {
-        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address))
+        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address) == 0)
         {
             return;
         }
@@ -137,7 +181,7 @@ uint8_t get_port_number(Network *network, Device *switch_, Device *device)
     uint8_t index = 0;
     for (int i = 0; i < num_connected_devices; i++)
     {
-        if (compare_mac_address(&connected_devices[i]->mac_address, &device->mac_address))
+        if (compare_mac_address(&connected_devices[i]->mac_address, &device->mac_address) == 0)
         {
             index = i;
             break;
@@ -188,7 +232,7 @@ int check_switching_table_entries(Device *switch_, MACAddress *mac_address)
 {
     for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
     {
-        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address))
+        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address) == 0)
         {
             return switch_->switch_info.switching_table[i].port_number;
         }
@@ -209,29 +253,12 @@ void flood_frame(Network *network, Device *source, Device *previous_source, Fram
     }
 }
 
-// bool send_frame_from_switch(Network *network, Device *switch_, Device *destination, Frame *frame)
-// {
-//     // Device *connected_devices[256];
-//     // uint16_t num_connected_devices = find_connected_devices(network, switch_->index, connected_devices);
-//     // for (int i = 0; i < num_connected_devices; i++)
-//     // {
-//     //     if (send_frame(network, connected_devices[i], switch_, frame))
-//     //     {
-//     //         update_switching_table(network, switch_, connected_devices[i]);
-//     //         update_switching_table_with_port(switch_, &frame->dest, i);
-//     //         return true;
-//     //     }
-//     // }
-// }
-
 bool receive_frame(Device *device, Frame *frame)
 {
-    // This function should check if the device is the receiver of the frame
-    // and return true if the device is the receiver
-    // and false if the device is not the receiver
-    if (compare_mac_address(&device->mac_address, &frame->dest))
+    if (compare_mac_address(&device->mac_address, &frame->dest) == 0)
     {
         frame_print_data_user_mode(frame);
+        frame_print_data_hex_mode(frame);
         return true;
     }
     return false;

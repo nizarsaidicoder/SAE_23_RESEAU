@@ -14,42 +14,9 @@ int main()
         network_free(&network);
         return 1; // or appropriate error code
     }
-    // TESTING THE FRAME SENDING
-    // for (int i = 0; i < network.num_devices; i++)
-    // {
-    //     if (network.devices[i].type == STATION)
-    //     {
-    //         Frame frame;
-    //         for (int j = 0; j < network.num_devices; j++)
-    //         {
-    //             if (network.devices[j].type == STATION)
-    //             {
-    //                 frame_init(&frame, network.devices[i].mac_address, network.devices[j].mac_address, 0x0800, (uint8_t *)"Hello World");
-    //                 send_frame_from_station(&network, &network.devices[i], &network.devices[j], &frame);
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Frame frame;
-    //         for (int j = 0; j < network.num_devices; j++)
-    //         {
-    //             frame_init(&frame, network.devices[i].mac_address, network.devices[j].mac_address, 0x0800, (uint8_t *)"Hello World");
-    //             send_frame_from_switch(&network, &network.devices[i], &network.devices[j], &frame);
-    //         }
-    //     }
-    // }
-    for (int i = 0; i < network.num_devices; i++)
-    {
-
-        for (int j = 0; j < network.num_devices; j++)
-        {
-
-            Frame frame;
-            frame_init(&frame, network.devices[i].mac_address, network.devices[j].mac_address, 0x0800, (uint8_t *)"Hello World");
-            send_frame(&network, &network.devices[i], NULL, &frame);
-        }
-    }
+    Frame frame;
+    frame_init(&frame, network.devices[0].mac_address, network.devices[1].mac_address, 0x00, "Finnaly it works !\nAfter a lot of debugging and testing !\nAfter drinking a lot of coffee !\nAfter drinking a lot of paracetamol !\nAfter drinking a lot of Whisky !!!!!!!!!!!!");
+    send_frame(&network, &network.devices[0], NULL, &frame);
     network_print(&network);
     network_free(&network);
     return 0;
