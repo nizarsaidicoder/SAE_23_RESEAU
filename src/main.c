@@ -36,11 +36,14 @@ int main()
     // }
     Frame frame;
     frame_init(&frame, network.devices[7].mac_address, network.devices[8].mac_address, 0x0800, (uint8_t *)"Hello World");
-    send_frame_from_station(&network, &network.devices[7], &network.devices[8], &frame);
+    send_frame(&network, &network.devices[7], NULL, &frame);
+    // send_frame(&network, &network.devices[7], NULL, &frame);
+
     Frame frame2;
     frame_init(&frame2, network.devices[8].mac_address, network.devices[7].mac_address, 0x0800, (uint8_t *)"Hello World");
-    send_frame_from_station(&network, &network.devices[8], &network.devices[7], &frame);
-    send_frame_from_station(&network, &network.devices[7], &network.devices[8], &frame);
+    // send_frame(&network, &network.devices[8], NULL, &frame2);
+    // send_frame(&network, &network.devices[8], NULL, &frame2);
+
     network_print(&network);
     network_free(&network);
     return 0;
