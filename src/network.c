@@ -78,19 +78,28 @@ void network_add_device(Network *network, Device *device)
     if (device->type == SWITCH)
         network->num_switches++;
 }
-bool network_link_exists(Network *network, Link link)
+bool network_link_exists(Network *network, Link *link)
 {
     // This function should check if a link already exists in the network
     for (int i = 0; i < network->num_links; i++)
     {
-        if (network->links[i].device1_index == link.device1_index && network->links[i].device2_index == link.device2_index)
+        if (network->links[i].device1_index == &link->device1_index && network->links[i].device2_index == &link->device2_index)
             return true;
-        if (network->links[i].device2_index == link.device1_index && network->links[i].device1_index == link.device2_index)
+        if (network->links[i].device2_index == &link->device1_index && network->links[i].device1_index == &link->device2_index)
             return true;
     }
     return false;
 }
-bool network_add_link(Network *network, Link link)
+uint8_t network_link_index(Network *network, Link *link)
+{
+    // This function should check if a link already exists in the network
+    for (int i = 0; i < network->num_links; i++)
+    {
+        if (network_link_exists(network, link))
+            return i;
+    }
+}
+bool network_add_link(Network *network, Link *link)
 {
     // This function should add a link to the network
     if (network_link_exists(network, link))
@@ -102,16 +111,16 @@ bool network_add_link(Network *network, Link link)
         network->links = (Link *)realloc(network->links, network->link_capacity * sizeof(Link));
     }
     // Add the link to the links array
-    network->links[network->num_links] = link;
+    network->links[network->num_links] = *link;
     network->num_links++;
     return true;
 }
-Device *network_find_device(Network *network, MACAddress mac_address)
+Device *network_find_device(Network *network, MACAddress *mac_address)
 {
     // This function should return a pointer to the device at the given index
     for (int i = 0; i < network->num_devices; i++)
     {
-        if (network->devices[i].mac_address.address == mac_address.address)
+        if (compare_mac_address(&network->devices[i].mac_address, mac_address))
             return &network->devices[i];
     }
     return NULL;
@@ -166,7 +175,7 @@ void network_from_config(Network *network, char *filename)
         link.device1_index = atoi(link_info[0]);
         link.device2_index = atoi(link_info[1]);
         link.weight = atoi(link_info[2]);
-        network_add_link(network, link);
+        network_add_link(network, &link);
     }
 }
 void network_to_config(Network *network, char *filename)
