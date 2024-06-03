@@ -9,19 +9,39 @@ int main()
     Network network;
     network_init(&network);
     network_from_config(&network, "../config/mylan_no_cycle.lan");
-    // network_print(&network);
     // TESTING THE FRAME SENDING
+    // for (int i = 0; i < network.num_devices; i++)
+    // {
+    //     if (network.devices[i].type == STATION)
+    //     {
+    //         Frame frame;
+    //         for (int j = 0; j < network.num_devices; j++)
+    //         {
+    //             if (network.devices[j].type == STATION)
+    //             {
+    //                 frame_init(&frame, network.devices[i].mac_address, network.devices[j].mac_address, 0x0800, (uint8_t *)"Hello World");
+    //                 send_frame_from_station(&network, &network.devices[i], &network.devices[j], &frame);
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Frame frame;
+    //         for (int j = 0; j < network.num_devices; j++)
+    //         {
+    //             frame_init(&frame, network.devices[i].mac_address, network.devices[j].mac_address, 0x0800, (uint8_t *)"Hello World");
+    //             send_frame_from_switch(&network, &network.devices[i], &network.devices[j], &frame);
+    //         }
+    //     }
+    // }
     Frame frame;
-    frame_init(&frame, network.devices[8].mac_address, network.devices[14].mac_address, 0x0800, (uint8_t *)"Hello World");
-    send_frame_from_station(&network, &network.devices[8], &network.devices[14], &frame);
-    print_switching_tables(&network);
-
+    frame_init(&frame, network.devices[7].mac_address, network.devices[8].mac_address, 0x0800, (uint8_t *)"Hello World");
+    send_frame_from_station(&network, &network.devices[7], &network.devices[8], &frame);
     Frame frame2;
-    frame_init(&frame2, network.devices[14].mac_address, network.devices[8].mac_address, 0x0800, (uint8_t *)"Hello World");
-    send_frame_from_station(&network, &network.devices[14], &network.devices[8], &frame2);
-    send_frame_from_station(&network, &network.devices[14], &network.devices[8], &frame2);
-    send_frame_from_station(&network, &network.devices[8], &network.devices[14], &frame);
-
-    print_switching_tables(&network);
+    frame_init(&frame2, network.devices[8].mac_address, network.devices[7].mac_address, 0x0800, (uint8_t *)"Hello World");
+    send_frame_from_station(&network, &network.devices[8], &network.devices[7], &frame);
+    send_frame_from_station(&network, &network.devices[7], &network.devices[8], &frame);
+    network_print(&network);
+    network_free(&network);
     return 0;
 }

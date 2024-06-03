@@ -76,3 +76,18 @@ MACAddress mac_address_from_string(char *string)
     return result;
 }
 
+bool compare_mac_address(MACAddress *mac1, MACAddress *mac2)
+{
+    // This function should compare two MAC addresses
+    // and return true if they are equal
+    // and false if they are not equal
+    for (int i = 0; i < 6; i++)
+    {
+        if (mac1->address[i] != mac2->address[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+bool compare_ip_address(IPAddress *ip1, IPAddress *ip2);

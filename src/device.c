@@ -180,7 +180,7 @@ void switch_print_table(Switch switch_)
     printf("+---------------------+-------+\n");
     for (int i = 0; i < switch_.switching_table_entries; i++)
     {
-        printf("| %-19s | %5d |\n", mac_address_to_string(&switch_.switching_table[i].mac_address), switch_.switching_table[i].port_number);
+        printf("| %-19s | %5d |\n", mac_address_to_string(&switch_.switching_table[i].mac_address), switch_.switching_table[i].port_number + 1);
     }
     printf("+---------------------+-------+\n");
 }

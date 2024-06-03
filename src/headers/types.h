@@ -31,10 +31,11 @@ typedef struct Station
 // SO WE NEED TO ADD A SWITCH ID TO THE PORT STRUCTURE MAYBE ??
 // OR WE CAN USE THE PORT NUMBER AND THE SWITCH MAC ADDRESS TO IDENTIFY A PORT
 // IDK, I'M JUST THINKING OUT LOUD
+// TODO : Modification of the port structure
 typedef struct Port
 {
-    uint8_t number;
     char status;
+    char actvity;
 } Port;
 
 typedef struct SwitchingTableEntry
@@ -42,6 +43,8 @@ typedef struct SwitchingTableEntry
     MACAddress mac_address;
     uint8_t port_number;
 } SwitchingTableEntry;
+
+// TODO : Add a structure for BPDU (Bridge Protocol Data Unit) and assign it to the swithc
 
 // A switch has an IP address, a number of ports and a switching table and ports maybe ??
 typedef struct Switch
