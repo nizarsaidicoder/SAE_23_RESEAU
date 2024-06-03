@@ -21,6 +21,7 @@ uint16_t read_lines(char *filename, char **lines)
         num_lines++;
     }
     fclose(file);
+
     return num_lines;
 }
 
@@ -38,20 +39,18 @@ void write_lines(char *filename, char **lines)
         fprintf(file, "%s\n", lines[i]);
 }
 
-uint8_t split(char *string, char delimiter, char **output)
+uint8_t split(char *string, char *delimiter, char **output)
 {
-    // Split the string into tokens using the delimiter
-    // strtok is a function that splits a string into tokens based on a delimiter and returns a pointer to the first token found in the string
-    char *token = strtok(string, &delimiter);
+    char *copie = strdup(string);
+    char *token = strtok(copie, delimiter);
     uint8_t num_tokens = 0;
     while (token != NULL)
     {
         output[num_tokens] = strdup(token);
         num_tokens++;
-        // When strtok is called with a NULL pointer, it continues from the last token
-        token = strtok(NULL, &delimiter);
+        token = strtok(NULL, delimiter);
     }
-
+    free(copie);
     return num_tokens;
 }
 
@@ -73,7 +72,12 @@ uint8_t hex_to_int(char *hex)
 char *int_to_hex(uint8_t num)
 {
     // Convert an integer to a hexadecimal string
-    char *hex = (char *)malloc(2 * sizeof(char));
+    char *hex = malloc(3);
+    if (hex == NULL)
+    {
+        printf("Error allocating memory\n");
+        return NULL;
+    }
     sprintf(hex, "%02x", num);
     return hex;
 }

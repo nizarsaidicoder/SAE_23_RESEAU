@@ -8,7 +8,12 @@ int main()
 {
     Network network;
     network_init(&network);
-    network_from_config(&network, "../config/mylan_no_cycle.lan");
+    if (network_from_config(&network, "../config/mylan_no_cycle.lan") != true)
+    {
+        // Handle error if configuration fails
+        network_free(&network);
+        return 1; // or appropriate error code
+    }
     // TESTING THE FRAME SENDING
     // for (int i = 0; i < network.num_devices; i++)
     // {
@@ -34,16 +39,17 @@ int main()
     //         }
     //     }
     // }
-    Frame frame;
-    frame_init(&frame, network.devices[7].mac_address, network.devices[8].mac_address, 0x0800, (uint8_t *)"Hello World");
-    send_frame(&network, &network.devices[7], NULL, &frame);
-    // send_frame(&network, &network.devices[7], NULL, &frame);
+    for (int i = 0; i < network.num_devices; i++)
+    {
 
-    Frame frame2;
-    frame_init(&frame2, network.devices[8].mac_address, network.devices[7].mac_address, 0x0800, (uint8_t *)"Hello World");
-    // send_frame(&network, &network.devices[8], NULL, &frame2);
-    // send_frame(&network, &network.devices[8], NULL, &frame2);
+        for (int j = 0; j < network.num_devices; j++)
+        {
 
+            Frame frame;
+            frame_init(&frame, network.devices[i].mac_address, network.devices[j].mac_address, 0x0800, (uint8_t *)"Hello World");
+            send_frame(&network, &network.devices[i], NULL, &frame);
+        }
+    }
     network_print(&network);
     network_free(&network);
     return 0;

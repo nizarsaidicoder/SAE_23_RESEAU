@@ -13,7 +13,7 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CFLAGS ?= -Wall -Wextra -Iinclude
+CFLAGS ?= -Wall -Wextra -Iinclude -O3 -Wno-unused-parameter
 $(TARGET_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)

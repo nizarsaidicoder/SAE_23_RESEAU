@@ -11,6 +11,7 @@ void network_init(Network *network)
     network->num_stations = 0;
     network->num_switches = 0;
     // Allocate memory for the devices and links
+    // Allocate memory for the devices and links
     network->devices = (Device *)malloc(10 * sizeof(Device));
     network->links = (Link *)malloc(10 * sizeof(Link));
     // Set the link capacity to 10
@@ -21,11 +22,20 @@ void network_free(Network *network)
 {
     // This function should free the memory allocated for the network structure
     // Free the memory allocated for the devices and links
-    free(network->devices);
-    free(network->links);
-    network->devices = NULL;
-    network->links = NULL;
-    // Set the number of devices and links to 0
+    if (network->devices != NULL)
+    {
+        for (int i = 0; i < network->num_devices; i++)
+        {
+            device_free(&network->devices[i]);
+        }
+        free(network->devices);
+        network->devices = NULL;
+    }
+    if (network->links != NULL)
+    {
+        free(network->links);
+        network->links = NULL;
+    }
     network->num_devices = 0;
     network->num_links = 0;
     network->num_stations = 0;
@@ -83,9 +93,9 @@ bool network_link_exists(Network *network, Link *link)
     // This function should check if a link already exists in the network
     for (int i = 0; i < network->num_links; i++)
     {
-        if (network->links[i].device1_index == &link->device1_index && network->links[i].device2_index == &link->device2_index)
+        if (network->links[i].device1_index == link->device1_index && network->links[i].device2_index == link->device2_index)
             return true;
-        if (network->links[i].device2_index == &link->device1_index && network->links[i].device1_index == &link->device2_index)
+        if (network->links[i].device2_index == link->device1_index && network->links[i].device1_index == link->device2_index)
             return true;
     }
     return false;
@@ -98,6 +108,7 @@ uint8_t network_link_index(Network *network, Link *link)
         if (network_link_exists(network, link))
             return i;
     }
+    return -1;
 }
 bool network_add_link(Network *network, Link *link)
 {
@@ -148,17 +159,17 @@ void network_print(Network *network)
         print_link(&network->links[i]);
     }
 }
-void network_from_config(Network *network, char *filename)
+bool network_from_config(Network *network, char *filename)
 {
     // This function should read the network structure from a file and populate the network structure
-    char **lines = (char **)malloc(100 * sizeof(char *));
-    int num_lines = read_lines(filename, lines);
+    char *lines[100];
+    uint16_t num_lines = read_lines(filename, lines);
     // Read the number of devices and links from the file
     char *config_header[2];
-    split(lines[0], ' ', config_header);
+    split(lines[0], " ", config_header);
     uint8_t num_devices = atoi(config_header[0]);
-    uint16_t num_links = atoi(config_header[1]);
     network_init(network);
+
     // Read the details of each device from the file
     for (int i = 1; i <= num_devices; i++)
     {
@@ -171,12 +182,13 @@ void network_from_config(Network *network, char *filename)
     {
         Link link;
         char *link_info[3];
-        split(lines[i], ';', link_info);
+        split(lines[i], ";", link_info);
         link.device1_index = atoi(link_info[0]);
         link.device2_index = atoi(link_info[1]);
         link.weight = atoi(link_info[2]);
         network_add_link(network, &link);
     }
+    return true;
 }
 void network_to_config(Network *network, char *filename)
 {
@@ -188,7 +200,8 @@ void network_to_config(Network *network, char *filename)
     lines[0] = strdup(network_header);
     for (int i = 1; i < network->num_devices; i++)
     {
-        char *device_config = device_to_config(&network->devices[i]);
+        char device_config[256];
+        device_to_config(&network->devices[i], device_config);
         lines[i] = strdup(device_config);
     }
     for (int i = network->num_devices; i < network->num_links; i++)
@@ -198,6 +211,7 @@ void network_to_config(Network *network, char *filename)
         lines[i] = strdup(link_info);
     }
     write_lines(filename, lines);
+    free(lines);
 }
 
 void print_switching_tables(Network *network)

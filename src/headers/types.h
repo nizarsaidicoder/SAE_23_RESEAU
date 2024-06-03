@@ -7,6 +7,9 @@
 #include <stdint.h>
 #include <unistd.h>
 
+#define MAC_BUFFER_SIZE 18
+#define IP_BUFFER_SIZE 16
+
 // An IP address is an array of 4 bytes (uint8_t) each representing an octet of the address
 typedef struct IPAddress
 {

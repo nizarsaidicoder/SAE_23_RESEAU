@@ -12,7 +12,7 @@ void frame_print(Frame *frame)
     printf("Destinataire: ");
     print_mac_address(&frame->dest);
     printf("Source: ");
-    print_ip_address(&frame->src);
+    print_mac_address(&frame->src);
     printf("Type: %d", frame->type);
 }
 
@@ -98,11 +98,11 @@ void update_switching_table(Network *network, Device *switch_, Device *device)
         }
     }
 }
-void update_switching_table_with_port(Device *switch_, MACAddress *mac_address, uint8_t port_number)
+void add_entry_to_switching_table(Device *switch_, MACAddress *mac_address, uint8_t port_number)
 {
     for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
     {
-        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, &mac_address))
+        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address))
         {
             return;
         }
@@ -112,82 +112,99 @@ void update_switching_table_with_port(Device *switch_, MACAddress *mac_address, 
     switch_->switch_info.switching_table_entries++;
 }
 
-bool send_frame(Network *network, Device *new_source, Device *previous_source, Frame *frame)
+uint8_t get_port_number(Network *network, Device *switch_, Device *device)
 {
-    if (receive_frame(new_source, frame))
-        return true;
+    Device *connected_devices[256];
+    uint16_t num_connected_devices = find_connected_devices(network, switch_->index, connected_devices);
+    uint8_t index = 0;
+    for (int i = 0; i < num_connected_devices; i++)
+    {
+        if (compare_mac_address(&connected_devices[i]->mac_address, &device->mac_address))
+        {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+void send_frame(Network *network, Device *new_source, Device *previous_source, Frame *frame)
+{
     if (new_source->type == STATION)
     {
-        if (compare_mac_address(&new_source->mac_address, &frame->src))
+        if (previous_source == NULL)
         {
             Device *connected_devices[256];
             uint16_t nb = find_connected_devices(network, new_source->index, connected_devices);
-            return send_frame(network, connected_devices[0], new_source, frame);
+            if (nb != 0)
+                send_frame(network, connected_devices[0], new_source, frame);
         }
+        else
+            receive_frame(new_source, frame);
     }
     // Check if the device is a switch
     if (new_source->type == SWITCH)
     {
-        // Check if the destination device is in the switching table
-        for (int i = 0; i < new_source->switch_info.switching_table_entries; i++)
+        if (previous_source != NULL)
         {
-            if (compare_mac_address(&new_source->switch_info.switching_table[i].mac_address, &frame->dest))
+            uint8_t port = get_port_number(network, new_source, previous_source);
+            add_entry_to_switching_table(new_source, &frame->src, port);
+        }
+        if (!receive_frame(new_source, frame))
+        {
+            int port_number = check_switching_table_entries(new_source, &frame->dest);
+            if (port_number != -1)
             {
-                print_device(new_source);
-                printf("OIIIIIIIIIIIIIIIIIIIIIIII\n");
-                printf("DESTINATION DEVICE FOUND IN THE SWITCHING TABLE\n");
-                printf("IN PORT NUMBER %d\n", new_source->switch_info.switching_table[i].port_number);
+                // printf("Redirecting\n");
                 Device *connected_devices[256];
-                uint16_t num_connected_devices = find_connected_devices(network, new_source->index, connected_devices);
-                Device *reciever = connected_devices[new_source->switch_info.switching_table[i].port_number];
-                return send_frame(network, reciever, new_source, frame);
+                find_connected_devices(network, new_source->index, connected_devices);
+                Device *reciever = connected_devices[port_number];
+                send_frame(network, reciever, new_source, frame);
             }
-        }
-        // If the destination device is not in the switching table
-        // Send the frame to all the devices connected to the switch except the previous source
-        Device *connected_devices[256];
-        int index;
-        uint16_t num_connected_devices = find_connected_devices(network, new_source->index, connected_devices);
-        for (int i = 0; i < num_connected_devices; i++)
-        {
-            if (compare_mac_address(&connected_devices[i]->mac_address, &previous_source->mac_address))
-            {
-                index = i;
-                update_switching_table_with_port(new_source, &frame->dest, index);
-            }
-        }
-        bool is_found = false;
-        int i = 0;
-        while (!is_found && i < num_connected_devices)
-        {
-            if (connected_devices[i]->mac_address.address != previous_source->mac_address.address)
-            {
-                is_found = send_frame(network, connected_devices[i], new_source, frame);
-            }
-            if (is_found)
-            {
-                return true;
-            }
-            i++;
+            else
+                flood_frame(network, new_source, previous_source, frame);
         }
     }
-    return false;
+}
+int check_switching_table_entries(Device *switch_, MACAddress *mac_address)
+{
+    for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
+    {
+        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address))
+        {
+            return switch_->switch_info.switching_table[i].port_number;
+        }
+    }
+    return -1;
 }
 
-bool send_frame_from_switch(Network *network, Device *switch_, Device *destination, Frame *frame)
+void flood_frame(Network *network, Device *source, Device *previous_source, Frame *frame)
 {
     Device *connected_devices[256];
-    uint16_t num_connected_devices = find_connected_devices(network, switch_->index, connected_devices);
+    uint16_t num_connected_devices = find_connected_devices(network, source->index, connected_devices);
     for (int i = 0; i < num_connected_devices; i++)
     {
-        if (send_frame(network, connected_devices[i], switch_, frame))
+        if (connected_devices[i]->mac_address.address != previous_source->mac_address.address)
         {
-            update_switching_table(network, switch_, connected_devices[i]);
-            update_switching_table_with_port(switch_, &frame->dest, i);
-            return true;
+            send_frame(network, connected_devices[i], source, frame);
         }
     }
 }
+
+// bool send_frame_from_switch(Network *network, Device *switch_, Device *destination, Frame *frame)
+// {
+//     // Device *connected_devices[256];
+//     // uint16_t num_connected_devices = find_connected_devices(network, switch_->index, connected_devices);
+//     // for (int i = 0; i < num_connected_devices; i++)
+//     // {
+//     //     if (send_frame(network, connected_devices[i], switch_, frame))
+//     //     {
+//     //         update_switching_table(network, switch_, connected_devices[i]);
+//     //         update_switching_table_with_port(switch_, &frame->dest, i);
+//     //         return true;
+//     //     }
+//     // }
+// }
 
 bool receive_frame(Device *device, Frame *frame)
 {
@@ -196,11 +213,10 @@ bool receive_frame(Device *device, Frame *frame)
     // and false if the device is not the receiver
     if (compare_mac_address(&device->mac_address, &frame->dest))
     {
-        printf("\033[0;32m");
-        printf("RECEIVING FRAME\n");
-        print_mac_address(&device->mac_address);
-        printf("\n\n");
-        printf("\033[0m");
+        // printf("\033[0;32m");
+        // printf("RECEIVING FRAME FROM :");
+        // print_mac_address(&device->mac_address);
+        // printf("\033[0m");
         return true;
     }
     return false;
