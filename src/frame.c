@@ -19,10 +19,8 @@ void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, ch
     {
         frame->data[i] = data[i];
     }
-    for (size_t i = strlen(data); i < 1500; i++)
-    {
-        frame->data[i] = 0;
-    }
+    frame->data[strlen(data)] = '\0';
+    frame->FCS = 0;
 }
 
 void frame_print_data_user_mode(Frame *frame)
@@ -53,15 +51,7 @@ void frame_print_data_user_mode(Frame *frame)
         printf("Type: Unknown\n");
         break;
     }
-    printf("Data: \n");
-    for (size_t i = 0; i < 1500; i++)
-    {
-        if (frame->data[i] == 0)
-        {
-            break;
-        }
-        printf("%c", frame->data[i]);
-    }
+    printf("Data: \n%s\n", frame->data);
     printf("\n");
     printf("\033[0m");
 }
@@ -118,12 +108,8 @@ void frame_print_data_hex_mode(Frame *frame)
     {
         printf("\n");
     }
-    for (size_t i = 0; i < 1500; i++)
+    for (size_t i = 0; frame->data[i] != '\0'; i++)
     {
-        if (frame->data[i] == 0)
-        {
-            break;
-        }
         printf("%02x ", frame->data[i]);
         printed_bytes++;
         if (printed_bytes % 16 == 0)

@@ -10,6 +10,7 @@
 #define MAC_BUFFER_SIZE 18
 #define IP_BUFFER_SIZE 16
 #define BPDU_BUFFER_SIZE 256
+#define BPDU_FRAME_TYPE 0x4242
 
 // An IP address is an array of 4 bytes (uint8_t) each representing an octet of the address
 typedef struct IPAddress

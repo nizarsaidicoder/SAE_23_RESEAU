@@ -11,7 +11,7 @@ typedef struct Frame
     MACAddress dest;
     MACAddress src;
     uint16_t type;
-    uint8_t data[1500];
+    char data[1500];
     uint32_t FCS;
 } Frame;
 
