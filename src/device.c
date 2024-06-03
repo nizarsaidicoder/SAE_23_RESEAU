@@ -40,6 +40,11 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     device->switch_info.num_ports = num_ports;
     // Allocate memory for the ports
     device->switch_info.ports = (Port *)malloc(15 * sizeof(Port *));
+    for (int i = 0; i < num_ports; i++)
+    {
+        device->switch_info.ports[i].state = 'F';
+        device->switch_info.ports[i].role = 'D';
+    }
     // Set the number of switching table entries to 0
     device->switch_info.switching_table_entries = 0;
     // Assign the BPDU
