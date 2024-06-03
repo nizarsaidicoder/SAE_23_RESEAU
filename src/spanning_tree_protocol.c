@@ -6,7 +6,7 @@
 
 void spanning_tree_protocol(Network *network)
 {
-
+    elect_root_bridge(network);
 }
 
 void elect_root_bridge(Network *network)
