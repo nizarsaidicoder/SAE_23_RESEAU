@@ -1,17 +1,16 @@
 #pragma once
-#include "types.h"
+#include "headers/types.h"
 
 typedef struct Trame
 {
-    // [170, 170, 170, 170, 170, 170, 170]
-    
+    //170
     uint8_t preambule[7];
     // 171
     uint8_t SFD;
     MACAddress dest;
     MACAddress src;
     uint16_t type;
-    uint8_t data[46];
+    uint8_t *data;
     uint32_t FCS;
 } Trame;
 
