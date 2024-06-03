@@ -6,64 +6,119 @@
 
 void spanning_tree_protocol(Network *network)
 {
+    elect_root_bridge(network);
 }
 
 void elect_root_bridge(Network *network)
 {
 }
 
-uint16_t find_shortest_path(Network *network, Device *device, Device *destination, int path[])
+void visite_composante_connexe(Network *network, Device *device, bool *visite)
+{
+    visite[device->index] = true;
+
+    Device *connectedDevices;
+    size_t n = find_connected_devices(network, device->index, &connectedDevices);
+
+    for (size_t i = 0; i < n; i++)
+    {
+        uint16_t index = connectedDevices[i].index;
+
+        if (!visite[index])
+        {
+            visite_composante_connexe(network, &connectedDevices[i], visite);
+        }
+    }
+}
+
+uint32_t nb_composantes_connexes(Network *network)
+{
+    uint32_t nbComposantes = 0;
+    uint8_t ordre = network_num_devices(network);
+    bool *visite = (bool *)malloc(sizeof(bool) * ordre);
+
+    for (size_t i = 0; i < ordre; i++)
+    {
+        visite[i] = false;
+    }
+
+    for (size_t i = 0; i < ordre; i++)
+    {
+        if (!visite[i])
+        {
+            visite_composante_connexe(network, &network->devices[i], visite);
+            nbComposantes++;
+        }
+    }
+
+    visite = NULL;
+    free(visite);
+
+    return nbComposantes;
+}
+
+void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
+{
+    if (nb_composantes_connexes(network) != 1)
+    {
+        return;
+    }
+
+    size_t ordre = network_num_devices(network);
+    bool visite[ordre];
+
+    // initialisation du tableau des "sommets" visités + distance
+    for (size_t i = 0; i < ordre; i++)
+    {
+        visite[i] = false;
+        distanceSommets[i] = __INT16_MAX__;
+    }
+
+    // on fixe le "sommet" de départ
+    uint16_t sommetFixe = device.index;
+    distanceSommets[sommetFixe] = 0;
+
+    while (!visite[sommetFixe])
+    {
+        visite[sommetFixe] = true;
+        Device *connectedDevices;
+        size_t n = find_connected_devices(network, sommetFixe, &connectedDevices);
+
+        for (size_t i = 0; i < n; i++)
+        {
+            // pour chaque "arête"
+            Link link;
+            link.device1_index = sommetFixe;
+            link.device2_index = connectedDevices[i].index;
+
+            //.. on récupère l'index dans le tableau d'"aretes"
+            uint8_t index = network_link_index(network, &link);
+
+            //..si la distance trouvée est plus petite que la distance enregistrée
+            uint16_t distanceTrouvee = distanceSommets[sommetFixe] + network->links[index].weight;
+
+            if (distanceTrouvee < distanceSommets[connectedDevices[i].index])
+            {
+                distanceSommets[connectedDevices[i].index] = distanceTrouvee;
+            }
+        }
+
+        double min = __INT16_MAX__;
+
+        // mise à jour du sommet fixé
+        for (size_t i = 0; i < ordre; i++)
+        {
+            // si on ne l'a pas visité et que sa distance est la plus petite
+            if (!visite[i] && distanceSommets[i] < min)
+            {
+                min = distanceSommets[i];
+                sommetFixe = i;
+            }
+        }
+    }
+}
+
+Device *find_shortest_path(Network *network, Device *device, Device *destination, Device *path[])
 {
     return 0;
 }
-
-// void dijkstra(graphe const *g, sommet s, double const *poids_arete, double *distance_sommet)
-//  {
-//  Initialise all distances as infinite
-//  Set all vertices as not visited
-//  Set the distance of the source vertex as 0
-//  Set the source vertex as the current vertex
-//  for each connected vertex to the source vertex
-//       if the distance of the vertex is greater than the distance of the source vertex + the weight of the edge
-//           update the distance of the vertex
-//       end if
-//       mark the vertex as visited
-//       set the current vertex as the vertex with the smallest distance
-//  end for
-//  repeat the previous steps until all vertices are visited
-//     if(nb_composantes_connexes(g) != 1) return;
-//     size_t ordre_graphe = ordre(g);
-//     bool sommets_visite[ordre_graphe];
-//     for(size_t i = 0; i < ordre_graphe; i++) sommets_visite[i] = false;
-//     for(size_t i = 0; i < ordre_graphe; i++) distance_sommet[i] = DBL_MAX;
-//     distance_sommet[s] = 0;
-//     sommet current_sommet = s;
-//     // We'll use the function index_arete to get the index of the edge
-//     // between the current vertex and the vertex we're looking at
-//     while(!sommets_visite[current_sommet])
-//     {
-//         sommets_visite[current_sommet] = true;
-//         sommet sommets_adjac[4096];
-//         size_t nb_sommets = sommets_adjacents(g, current_sommet, sommets_adjac);
-//         for(size_t i = 0; i < nb_sommets; i++)
-//         {
-//             arete a;
-//             a.s1 = current_sommet;
-//             a.s2 = sommets_adjac[i];
-//             size_t index = index_arete(g, a);
-//             if(distance_sommet[sommets_adjac[i]] > distance_sommet[current_sommet] + poids_arete[index])
-//             {
-//                 distance_sommet[sommets_adjac[i]] = distance_sommet[current_sommet] + poids_arete[index];
-//             }
-//         }
-//         double min = DBL_MAX;
-//         for(size_t i = 0; i < ordre_graphe; i++)
-//         {
-//             if(!sommets_visite[i] && distance_sommet[i] < min)
-//             {
-//                 min = distance_sommet[i];
-//                 current_sommet = i;
-//             }
-//         }
-//     }
-// }

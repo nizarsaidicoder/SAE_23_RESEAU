@@ -18,7 +18,10 @@ void spanning_tree_protocol(Network *network);
 void send_bpdu(Device *device, Device *destination, Frame *bpdu);
 void receive_bpdu(Device *device, Frame *bpdu);
 void elect_root_bridge(Network *network);
-Device * find_shortest_path_djikstra(Network * network, Device *device, Device *destination, Device * path[]);
+void visite_composante_connexe(Network *network, Device *device, bool *visite);
+uint32_t nb_composantes_connexes(Network *network);
+void dijkstra(Network *network, Device device, uint16_t *distance_sommet);
+Device * find_shortest_path(Network * network, Device *device, Device *destination, Device * path[]);
 void update_ports_state(Device *device, Device *destination, Device * path[]);
 // uint8_t compare_bpdu(BPDU *bpdu1, BPDU *bpdu2);
 

@@ -9,7 +9,7 @@ uint8_t network_num_stations(Network *network);
 uint8_t network_num_switches(Network *network);
 void network_add_device(Network *network, Device *device);
 bool network_link_exists(Network *network, Link *link);
-uint8_t netword_link_index(Network *network, Link *link);
+uint8_t network_link_index(Network *network, Link *link);
 bool network_add_link(Network *network, Link *link);
 void network_print(Network *network);
 Device *network_find_device(Network *network, MACAddress *mac_address);
