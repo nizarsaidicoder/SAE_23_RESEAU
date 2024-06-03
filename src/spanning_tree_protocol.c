@@ -17,7 +17,7 @@ void visite_composante_connexe(Network *network, Device *device, bool *visite)
 {
     visite[device->index] = true;
 
-    Device connectedDevices[256];
+    Device *connectedDevices;
     size_t n = find_connected_devices(network, device->index, &connectedDevices);
 
     for(size_t i = 0 ; i < n ; i++)
@@ -72,7 +72,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
     for(size_t i = 0 ; i < ordre ; i++)
     {
         visite[i] = false;
-        distanceSommets[i] = __DBL_MAX__;
+        distanceSommets[i] = __INT16_MAX__;
     }
 
     //on fixe le "sommet" de départ
@@ -82,7 +82,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
     while(!visite[sommetFixe])
     {
         visite[sommetFixe] = true;
-        Device connectedDevices[256];
+        Device *connectedDevices;
         size_t n = find_connected_devices(network, sommetFixe, &connectedDevices);
 
         for(size_t i = 0 ; i < n ; i++)
@@ -96,7 +96,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
             uint8_t index = network_link_index(network, &link);
 
             //..si la distance trouvée est plus petite que la distance enregistrée
-            uint16_t distanceTrouvee = distanceSommets[sommetFixe] + &network->links[index].weight;
+            uint16_t distanceTrouvee = distanceSommets[sommetFixe] + network->links[index].weight;
 
             if(distanceTrouvee < distanceSommets[connectedDevices[i].index])
             {
@@ -104,7 +104,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
             }
         }
 
-        double min = __DBL_MAX__;
+        double min = __INT16_MAX__;
 
         //mise à jour du sommet fixé
         for(size_t i = 0; i < ordre ; i++)
@@ -120,7 +120,7 @@ void dijkstra(Network *network, Device device, uint16_t *distanceSommets)
 
 }
 
-Device * find_shortest_path(Network *network, Device *device, Device *destination, int path[])
+Device * find_shortest_path(Network *network, Device *device, Device *destination, Device * path[])
 {
     return 0;
 }
