@@ -19,7 +19,6 @@ typedef struct Frame
 void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, uint8_t *data);
 void frame_print_data_user_mode(Frame *frame);
 void frame_print_data_hex_mode(Frame *frame);
-
 uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[]);
 void update_switching_table(Network *network, Device *switch_, Device *device);
 bool send_frame_from_station(Network *network, Device *source, Device *destination, Frame *frame);
