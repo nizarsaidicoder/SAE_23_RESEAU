@@ -53,6 +53,10 @@ IPAddress ip_address_from_string(char *string)
     {
         result.address[i] = atoi(out[i]);
     }
+    for (int i = num; i < 4; i++)
+    {
+        free(out[i]);
+    }
     return result;
 }
 
@@ -69,6 +73,10 @@ MACAddress mac_address_from_string(char *string)
     for (int i = 0; i < num; i++)
     {
         result.address[i] = hex_to_int(out[i]);
+    }
+    for (int i = num; i < 6; i++)
+    {
+        free(out[i]);
     }
     return result;
 }

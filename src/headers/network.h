@@ -16,3 +16,4 @@ Device *network_find_device(Network *network, MACAddress *mac_address);
 bool network_from_config(Network *network, char *filename);
 void network_to_config(Network *network, char *filename);
 void print_switching_tables(Network *network);
+uint16_t network_link_weight(Network *network, uint8_t device1_index, uint8_t device2_index);

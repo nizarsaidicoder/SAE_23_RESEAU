@@ -3,6 +3,7 @@
 #include "headers/address.h"
 #include "headers/device.h"
 #include "headers/network.h"
+#include "headers/spanning_tree_protocol.h"
 
 void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, char *data)
 {
@@ -128,6 +129,7 @@ uint16_t find_connected_devices(Network *network, uint16_t device_index, Device 
     // (excluding the given device)
     if (device_index >= network->num_devices)
     {
+        printf("Device index out of bounds\n");
         return 0;
     }
     uint16_t connected_devices_count = 0;
@@ -178,6 +180,7 @@ uint8_t get_port_number(Network *network, Device *switch_, Device *device)
 
 void send_frame(Network *network, Device *new_source, Device *previous_source, Frame *frame)
 {
+
     if (new_source->type == STATION)
     {
         if (previous_source == NULL)
@@ -188,20 +191,32 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
                 send_frame(network, connected_devices[0], new_source, frame);
         }
         else
-            receive_frame(new_source, frame);
+            receive_frame(network, new_source, previous_source, frame);
     }
     // Check if the device is a switch
     if (new_source->type == SWITCH)
     {
+        Device *connected_devices[256];
+        int nb = find_connected_devices(network, new_source->index, connected_devices);
+        bool is_blocked = false;
+        for (int i = 0; i < nb; i++)
+        {
+            if (compare_mac_address(&connected_devices[i]->mac_address, &new_source->mac_address) == 0)
+            {
+                if (new_source->switch_info.ports[i].state == 'B')
+                    is_blocked = true;
+            }
+        }
+        if (is_blocked)
+            return;
         if (previous_source != NULL)
         {
             uint8_t port = get_port_number(network, new_source, previous_source);
             add_entry_to_switching_table(new_source, &frame->src, port);
         }
-        if (!receive_frame(new_source, frame))
+        if (!receive_frame(network, new_source, previous_source, frame))
         {
-            Device *connected_devices[256];
-            find_connected_devices(network, new_source->index, connected_devices);
+
             MACAddress broadcast;
             for (int i = 0; i < 6; i++)
             {
@@ -223,7 +238,16 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
                         send_frame(network, reciever, new_source, frame);
                     }
                 }
-                else
+                bool is_root = false;
+                for (int i = 0; i < nb; i++)
+                {
+                    if (new_source->switch_info.ports[i].role == 'R')
+                    {
+                        is_root = true;
+                        send_frame(network, connected_devices[i], new_source, frame);
+                    }
+                }
+                if (!is_root)
                     flood_frame(network, new_source, previous_source, frame);
             }
         }
@@ -257,17 +281,62 @@ void flood_frame(Network *network, Device *source, Device *previous_source, Fram
     }
 }
 
-bool receive_frame(Device *device, Frame *frame)
+bool receive_frame(Network *network, Device *device, Device *previous_device, Frame *frame)
 {
     MACAddress broadcast;
     for (int i = 0; i < 6; i++)
     {
         broadcast.address[i] = 255;
     }
+
     if (compare_mac_address(&device->mac_address, &frame->dest) == 0 || compare_mac_address(&broadcast, &frame->dest) == 0)
     {
-        // frame_print_data_user_mode(frame);
-        // frame_print_data_hex_mode(frame);
+        if (frame->type == 0x4242 && device->type == SWITCH)
+        {
+            BPDU bpdu;
+            frame_to_bpdu(frame, &bpdu);
+            if (update_bpdu(network, device, previous_device, &bpdu))
+            {
+                Device *neighbour_switches[256];
+                uint16_t nb = find_connected_devices(network, previous_device->index, neighbour_switches);
+                for (int i = 0; i < nb; i++)
+                {
+
+                    if (compare_mac_address(&neighbour_switches[i]->mac_address, &device->mac_address) == 0)
+                    {
+                        for (int j = 0; j < device->switch_info.num_ports; j++)
+                        {
+                            if (device->switch_info.ports[j].state == 'L')
+                            {
+                                device->switch_info.ports[j].state = 'F';
+                            }
+                        }
+                        device->switch_info.ports[i].state = 'L';
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (frame->type != 0x4242)
+            {
+                printf("I am device %d\n", device->index);
+                frame_print_data_user_mode(frame);
+                frame_print_data_hex_mode(frame);
+            }
+        }
+        return true;
+    }
+    return false;
+}
+bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU *new_bpdu)
+{
+    if (compare_bpdu(&device->switch_info.bpdu, new_bpdu) == -1)
+    {
+        // MODIFY ONLY THE ROOT BRIDGE INFO
+        device->switch_info.bpdu.root_bridge_priority = new_bpdu->root_bridge_priority;
+        device->switch_info.bpdu.root_bridge_mac_address = new_bpdu->root_bridge_mac_address;
+        device->switch_info.bpdu.root_path_cost = new_bpdu->root_path_cost + network_link_weight(network, device->index, previous_device->index);
         return true;
     }
     return false;

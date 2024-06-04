@@ -39,7 +39,7 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     // Set the number of ports
     device->switch_info.num_ports = num_ports;
     // Allocate memory for the ports
-    device->switch_info.ports = (Port *)malloc(15 * sizeof(Port *));
+    device->switch_info.ports = (Port *)malloc(sizeof(Port) * num_ports);
     for (int i = 0; i < num_ports; i++)
     {
         device->switch_info.ports[i].state = 'F';
@@ -79,8 +79,7 @@ void device_from_config(Device *device, char *info)
      */
 
     char *output[4];
-    char *info_copy = strdup(info);
-    split(info_copy, ";", output);
+    split(info, ";", output);
 
     if (output[0][0] == '1')
     {
@@ -212,4 +211,17 @@ void switch_print_table(Switch switch_)
         printf("| %-19s | %5d |\n", mac_address_to_string(&switch_.switching_table[i].mac_address, output), switch_.switching_table[i].port_number + 1);
     }
     printf("+---------------------+-------+\n");
+}
+
+void switch_print_ports(Switch switch_)
+{
+    // This function should print the switch ports to the console
+    printf("+-------+-------+-------+\n");
+    printf("| Port  | State | Role  |\n");
+    printf("+-------+-------+-------+\n");
+    for (int i = 0; i < switch_.num_ports; i++)
+    {
+        printf("| %5d | %5c | %5c |\n", i + 1, switch_.ports[i].state, switch_.ports[i].role);
+    }
+    printf("+-------+-------+-------+\n");
 }

@@ -2,6 +2,9 @@
 #include "headers/network.h"
 #include "headers/device.h"
 #include "headers/utils.h"
+
+#define MAX_CAPACITY 10
+
 void network_init(Network *network)
 {
     // This function should initialize the network structure
@@ -10,32 +13,27 @@ void network_init(Network *network)
     network->num_links = 0;
     network->num_stations = 0;
     network->num_switches = 0;
-    // Allocate memory for the devices and links
-    // Allocate memory for the devices and links
-    network->devices = (Device *)malloc(10 * sizeof(Device));
-    network->links = (Link *)malloc(10 * sizeof(Link));
     // Set the link capacity to 10
-    network->link_capacity = 10;
-    network->device_capacity = 10;
+    network->link_capacity = MAX_CAPACITY;
+    network->device_capacity = MAX_CAPACITY;
+    // Allocate memory for the devices and links
+    // Allocate memory for the devices and links
+    network->devices = (Device *)malloc(network->device_capacity * sizeof(Device));
+    network->links = (Link *)malloc(network->link_capacity * sizeof(Link));
 }
 void network_free(Network *network)
 {
     // This function should free the memory allocated for the network structure
     // Free the memory allocated for the devices and links
-    if (network->devices != NULL)
+    for (int i = 0; i < network->num_devices; i++)
     {
-        for (int i = 0; i < network->num_devices; i++)
-        {
-            device_free(&network->devices[i]);
-        }
-        free(network->devices);
-        network->devices = NULL;
+        if (network->devices[i].type == SWITCH)
+            free(network->devices[i].switch_info.ports);
     }
-    if (network->links != NULL)
-    {
-        free(network->links);
-        network->links = NULL;
-    }
+    free(network->devices);
+    network->devices = NULL;
+    free(network->links);
+    network->links = NULL;
     network->num_devices = 0;
     network->num_links = 0;
     network->num_stations = 0;
@@ -110,6 +108,18 @@ uint8_t network_link_index(Network *network, Link *link)
     }
     return -1;
 }
+uint16_t network_link_weight(Network *network, uint8_t device1_index, uint8_t device2_index)
+{
+    // This function should return the weight of the link between two devices
+    for (int i = 0; i < network->num_links; i++)
+    {
+        if (network->links[i].device1_index == device1_index && network->links[i].device2_index == device2_index)
+            return network->links[i].weight;
+        if (network->links[i].device2_index == device1_index && network->links[i].device1_index == device2_index)
+            return network->links[i].weight;
+    }
+    return -1;
+}
 bool network_add_link(Network *network, Link *link)
 {
     // This function should add a link to the network
@@ -168,7 +178,6 @@ bool network_from_config(Network *network, char *filename)
     char *config_header[2];
     split(lines[0], " ", config_header);
     uint8_t num_devices = atoi(config_header[0]);
-    network_init(network);
 
     // Read the details of each device from the file
     for (int i = 1; i <= num_devices; i++)
@@ -188,30 +197,34 @@ bool network_from_config(Network *network, char *filename)
         link.weight = atoi(link_info[2]);
         network_add_link(network, &link);
     }
+    for (int i = 0; i < num_lines; i++)
+    {
+        free(lines[i]);
+    }
     return true;
 }
 void network_to_config(Network *network, char *filename)
 {
     // This function should write the network structure to a file
     // Write the number of devices and links to the file
-    char network_header[256];
-    sprintf(network_header, "%d;%d", network->num_devices, network->num_links);
-    char **lines = (char **)malloc((network->num_devices + network->num_links + 1) * sizeof(char *));
-    lines[0] = strdup(network_header);
-    for (int i = 1; i < network->num_devices; i++)
-    {
-        char device_config[256];
-        device_to_config(&network->devices[i], device_config);
-        lines[i] = strdup(device_config);
-    }
-    for (int i = network->num_devices; i < network->num_links; i++)
-    {
-        char link_info[256];
-        sprintf(link_info, "%d;%d;%d", network->links[i].device1_index, network->links[i].device2_index, network->links[i].weight);
-        lines[i] = strdup(link_info);
-    }
-    write_lines(filename, lines);
-    free(lines);
+    // char network_header[256];
+    // sprintf("%d;%d", network->num_devices, network->num_links);
+    // char **lines = (char **)malloc((network->num_devices + network->num_links + 1) * sizeof(char *));
+    // lines[0] = strdup(network_header);
+    // for (int i = 1; i < network->num_devices; i++)
+    // {
+    //     char device_config[256];
+    //     device_to_config(&network->devices[i], device_config);
+    //     lines[i] = strdup(device_config);
+    // }
+    // for (int i = network->num_devices; i < network->num_links; i++)
+    // {
+    //     char link_info[256];
+    //     sprintf(link_info, "%d;%d;%d", network->links[i].device1_index, network->links[i].device2_index, network->links[i].weight);
+    //     lines[i] = strdup(link_info);
+    // }
+    // write_lines(filename, lines);
+    // free(lines);
 }
 
 void print_switching_tables(Network *network)
