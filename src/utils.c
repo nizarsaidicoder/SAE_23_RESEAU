@@ -21,7 +21,6 @@ uint16_t read_lines(char *filename, char **lines)
         num_lines++;
     }
     fclose(file);
-
     return num_lines;
 }
 
@@ -41,16 +40,36 @@ void write_lines(char *filename, char **lines)
 
 uint8_t split(char *string, char *delimiter, char **output)
 {
-    char *copie = strdup(string);
-    char *token = strtok(copie, delimiter);
+    // char *copie = strdup(string);
+    // char *token = strtok(copie, delimiter);
+    // uint8_t num_tokens = 0;
+    // while (token != NULL)
+    // {
+    //     output[num_tokens] = strdup(token);
+    //     num_tokens++;
+    //     token = strtok(NULL, delimiter);
+    // }
+    // free(copie);
+    // return num_tokens;
+    // DO NOT USE strtok() IN THIS FUNCTION
+    // Split the string using the delimiter
     uint8_t num_tokens = 0;
-    while (token != NULL)
+    // WITH NO STRTOK THE FUNCTION WILL BE LIKE
+    char *token = string;
+    char *end = string;
+    while (*end != '\0')
     {
-        output[num_tokens] = strdup(token);
-        num_tokens++;
-        token = strtok(NULL, delimiter);
+        if (*end == *delimiter)
+        {
+            *end = '\0';
+            output[num_tokens] = token;
+            num_tokens++;
+            token = end + 1;
+        }
+        end++;
     }
-    free(copie);
+    output[num_tokens] = token;
+    num_tokens++;
     return num_tokens;
 }
 

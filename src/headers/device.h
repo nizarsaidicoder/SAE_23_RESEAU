@@ -17,3 +17,4 @@ void print_link(Link *link);
 void device_from_config(Device *device, char *info);
 char *device_to_config(Device *device, char *out);
 void switch_print_table(Switch switch_);
+void switch_print_ports(Switch switch_);

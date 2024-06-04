@@ -29,4 +29,5 @@ uint8_t get_port_number(Network *network, Device *switch_, Device *device);
 void send_frame(Network *network, Device *new_source, Device *previous_source, Frame *frame);
 int check_switching_table_entries(Device *switch_, MACAddress *mac_address);
 void flood_frame(Network *network, Device *source, Device *previous_source, Frame *frame);
-bool receive_frame(Device *device, Frame *frame);
+bool receive_frame(Network *network, Device *device, Device *previous_device, Frame *frame);
+bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU *new_bpdu);
