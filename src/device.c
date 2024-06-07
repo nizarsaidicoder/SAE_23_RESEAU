@@ -1,32 +1,48 @@
 #include "headers/device.h"
 #include "headers/utils.h"
 
+/**
+ * @brief Initializes a device
+ * @param device The device to initialize
+ * @param mac_address The MAC address of the device
+ * @param type The type of the device (STATION or SWITCH)
+ */
 void device_init(Device *device, MACAddress mac_address, DeviceType type)
 {
-    // This function should initialize the device structure
     device->mac_address = mac_address;
     device->type = type;
 }
-
+/**
+ * @brief Frees the memory allocated for a device
+ * @param device The device to free
+ */
 void device_free(Device *device)
 {
-    // This function should free the memory allocated for the device structure
     if (device->type == SWITCH)
     {
         free(device->switch_info.ports);
     }
 }
-
+/**
+ * @brief Initializes a station
+ * @param device The device to initialize
+ * @param mac_address The MAC address of the station
+ * @param ip_address The IP address of the station
+ */
 void station_init(Device *device, MACAddress mac_address, IPAddress ip_address)
 {
-    // This function should initialize the station structure
     device_init(device, mac_address, STATION);
     device->station_info.ip_address = ip_address;
 }
-
+/**
+ * @brief Initializes a switch
+ * @param device The device to initialize
+ * @param mac_address The MAC address of the switch
+ * @param priority The priority of the switch
+ * @param num_ports The number of ports on the switch
+ */
 void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint8_t num_ports)
 {
-    // This function should initialize the device structure
     device_init(device, mac_address, SWITCH);
     device->switch_info.priority = priority;
     device->switch_info.num_ports = num_ports;
@@ -39,10 +55,14 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     device->switch_info.switching_table_entries = 0;
     assign_bpdu(device);
 }
-
+/**
+ * @brief Initialise a device from a configuration string
+ * @param device The device to initialize
+ * @param info The configuration string
+ * @note The configuration string is of the format "type;mac_address;ip_address" for stations and "type;mac_address;num_ports;priority" for switches
+ */
 void device_from_config(Device *device, char *info)
 {
-    // This function should read the device structure from a line and populate the device structure
     char *output[4];
     split(info, ";", output);
 
@@ -57,10 +77,15 @@ void device_from_config(Device *device, char *info)
     }
 }
 
+/**
+ * @brief Converts a device to a configuration string
+ * @param device The device to convert
+ * @param out The string to output the device to
+ * @return The device as a string
+ * @note This function is to use for advanced debugging purposes like saving the network to a file and viewing it later
+ */
 char *device_to_config(Device *device, char *out)
 {
-    // This function should convert the device structure to a string and return it
-
     if (device->type == STATION)
     {
         char mac_address[MAC_BUFFER_SIZE];
@@ -83,32 +108,40 @@ char *device_to_config(Device *device, char *out)
     return out;
 }
 
+/**
+ * @brief Checks if a device is a switch
+ * @param device The device to check
+ * @return true if the device is a switch
+ */
 bool device_is_switch(Device *device)
 {
-    // This function should return true if the device is a switch
-    // return true if the device is a switch
     return device->type == SWITCH;
 }
-
+/**
+ * @brief Checks if a device is a station
+ * @param device The device to check
+ * @return true if the device is a station
+ */
 bool device_is_station(Device *device)
 {
-    // This function should return true if the device is a station
-    // return true if the device is a station
     return device->type == STATION;
 }
-
+/**
+ * @brief Prints a station
+ * @param device The station to print
+ */
 void print_station(Device *device)
 {
-    // This function should print the station structure to the console
     printf("------------------Station %d------------------\n", device->index);
     print_mac_address(&device->mac_address);
     print_ip_address(&device->station_info.ip_address);
 }
-
+/**
+ * @brief Prints a switch
+ * @param device The switch to print
+ */
 void print_switch(Device *device)
 {
-    // This function should print the switch structure to the console
-
     printf("------------------Switch %d--------------------\n", device->index + 1);
     print_mac_address(&device->mac_address);
     printf("Priority : %d\n", device->switch_info.priority);
@@ -117,7 +150,6 @@ void print_switch(Device *device)
         switch_print_table(device->switch_info);
     else if (device->switch_info.switching_table_entries == 0)
     {
-        // In red color INSIDE a rectangle
         printf("\033[1;31m");
         printf("\t+---------------------+-------+\n");
         printf("\t| %-19s | %5s |\n", "MAC Address", "Port");
@@ -127,7 +159,11 @@ void print_switch(Device *device)
     }
     switch_print_ports(device->switch_info);
 }
-
+/**
+ * @brief Prints a device
+ * @param device The device to print
+ * @note this function call either print_station or print_switch based on the device type
+ */
 void print_device(Device *device)
 {
     // This function should print the device structure to the console
@@ -141,7 +177,10 @@ void print_device(Device *device)
         print_switch(device);
     }
 }
-
+/**
+ * @brief prints a link
+ * @param link The link to print
+ */
 void print_link(Link *link)
 {
     // This function should print the link structure to the console
@@ -168,15 +207,15 @@ void print_link(Link *link)
     }
     printf("\n");
 }
-
+/**
+ * @brief prints the switch mac address table
+ * @param switch_ The switch to print the table of
+ */
 void switch_print_table(Switch switch_)
 {
-    // This function should print the switch table to the console
     printf("+---------------------+-------+\n");
     printf("| %-19s | %5s |\n", "MAC Address", "Port");
     printf("+---------------------+-------+\n");
-    // In green color mac address
-    // In yellow color port
     char out[MAC_BUFFER_SIZE];
     for (int i = 0; i < switch_.switching_table_entries; i++)
     {
@@ -192,20 +231,17 @@ void switch_print_table(Switch switch_)
     }
     printf("+---------------------+-------+\n");
 }
-
+/**
+ * @brief prints the switch ports
+ * @param switch_ The switch to print the ports of
+ */
 void switch_print_ports(Switch switch_)
 {
-    // This function should print the switch ports to the console
     printf("+-------+-------+-------+\n");
     printf("| Port  | State | Role  |\n");
     printf("+-------+-------+-------+\n");
     for (int i = 0; i < switch_.num_ports; i++)
     {
-        // if state is F, print in green color
-        // if state is B, print in red color
-        // if role is D, print in blue color
-        // if role is R, print in yellow color
-        // if role is B, print in red color
         printf("|   %d   |   ", i + 1);
         if (switch_.ports[i].state == 'F')
         {

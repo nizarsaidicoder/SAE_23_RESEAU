@@ -1,6 +1,11 @@
 #include <stdbool.h>
 #include "headers/bpdu.h"
 
+/**
+ * @brief Converts a BPDU to a string
+ * @param bpdu The BPDU to convert
+ * @param output The string to output the BPDU to
+ */
 void bpdu_to_string(BPDU *bpdu, char *output)
 {
     char root_bridge_mac_address[MAC_BUFFER_SIZE];
@@ -9,7 +14,11 @@ void bpdu_to_string(BPDU *bpdu, char *output)
     mac_address_to_string(&bpdu->sender_mac_address, sender_mac_address);
     sprintf(output, "%d;%s;%d;%s;%d", bpdu->root_bridge_priority, root_bridge_mac_address, bpdu->root_path_cost, sender_mac_address, bpdu->sender_priority);
 }
-
+/**
+ * @brief Converts a BPDU to a frame
+ * @param bpdu The BPDU to convert
+ * @param frame The frame to output the BPDU to
+ */
 void bpdu_to_frame(BPDU *bpdu, Frame *frame)
 {
     MACAddress broadcast;
@@ -21,6 +30,11 @@ void bpdu_to_frame(BPDU *bpdu, Frame *frame)
     bpdu_to_string(bpdu, bpdu_string);
     frame_init(frame, bpdu->sender_mac_address, broadcast, BPDU_FRAME_TYPE, bpdu_string);
 }
+/**
+ * @brief Converts a frame to a BPDU
+ * @param frame The frame to convert
+ * @param bpdu The BPDU to output the frame to
+ */
 void frame_to_bpdu(Frame *frame, BPDU *bpdu)
 {
     char *output[5];
@@ -33,6 +47,10 @@ void frame_to_bpdu(Frame *frame, BPDU *bpdu)
     bpdu->sender_priority = atoi(output[4]);
     bpdu->sender_mac_address = sender_mac_address;
 }
+/**
+ * @brief Prints a BPDU
+ * @param bpdu The BPDU to print
+ */
 void print_bpdu(BPDU *bpdu)
 {
     printf("BPDU : \n");
@@ -44,6 +62,10 @@ void print_bpdu(BPDU *bpdu)
     print_mac_address(&bpdu->sender_mac_address);
     printf("Sender Priority : %d\n", bpdu->sender_priority);
 }
+/**
+ * @brief Assigns a BPDU to a device
+ * @param device The device to assign the BPDU to
+ */
 void assign_bpdu(Device *device)
 {
     if (device->type != SWITCH)
@@ -56,9 +78,12 @@ void assign_bpdu(Device *device)
     bpdu.sender_priority = device->switch_info.priority;
     device->switch_info.bpdu = bpdu;
 }
-// Returns 1 if bpdu1 is better than bpdu2
-// Returns -1 if bpdu2 is better than bpdu1
-// Returns 0 if they are equal
+/**
+ * @brief Compares two BPDUs
+ * @param bpdu1 The first BPDU
+ * @param bpdu2 The second BPDU
+ * @return 1 if bpdu1 is greater, -1 if bpdu2 is greater, 0 if they are equal
+ */
 int compare_bpdu(BPDU *bpdu1, BPDU *bpdu2)
 {
     if (bpdu1->root_bridge_priority < bpdu2->root_bridge_priority)
@@ -95,7 +120,14 @@ int compare_bpdu(BPDU *bpdu1, BPDU *bpdu2)
     }
     return 0;
 }
-// Returns true if the bpdu was updated
+/**
+ * @brief Updates a BPDU
+ * @param network The network
+ * @param device The device to update the BPDU of
+ * @param previous_device The previous device that sent the BPDU
+ * @param new_bpdu The new BPDU
+ * @return true if the BPDU was updated, false otherwise
+ */
 bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU *new_bpdu)
 {
     BPDU bpdu;
@@ -114,6 +146,11 @@ bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU
     }
     return false;
 }
+/**
+ * @brief Sends a BPDU
+ * @param network The network
+ * @param device The device to send the BPDU from
+ */
 void send_bpdu(Network *network, Device *device)
 {
     Device *connected_devices[256];
