@@ -203,7 +203,6 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
         {
             if (compare_mac_address(&connected_devices[i]->mac_address, &new_source->mac_address) == 0)
             {
-                printf("I am the switch %d\n", new_source->index);
                 if (new_source->switch_info.ports[i].state == 'B')
                     is_blocked = true;
             }
@@ -284,13 +283,14 @@ bool receive_frame(Network *network, Device *device, Device *previous_device, Fr
                 int current_distance = device->switch_info.bpdu.root_path_cost;
                 for (int i = 0; i < nb; i++)
                 {
-                    if (device->switch_info.ports[i].state == 'L' && neighbour_switches[i]->switch_info.bpdu.root_path_cost < current_distance)
+                    if (device->switch_info.ports[i].state == 'L')
                     {
                         device->switch_info.ports[i].state = 'D';
                     }
                 }
                 // MAKE THE PORT FROM WHICH THE BPDU WAS RECEIVED A ROOT PORT
                 device->switch_info.ports[get_port_number(network, device, previous_device)].state = 'L';
+                send_bpdu(network, device);
             }
         }
         else if (frame->type != BPDU_FRAME_TYPE)

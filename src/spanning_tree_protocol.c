@@ -18,6 +18,7 @@ void elect_root_bridge(Network *network)
     {
         send_bpdu(network, &network->devices[i]);
     }
+
     // MODIFYING THE PORTS OF NON-ROOT BRIDGES FROM LISTENING STATE TO FORWARDING
     for (int i = 0; i < network->num_switches; i++)
     {

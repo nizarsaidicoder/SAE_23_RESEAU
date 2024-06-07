@@ -56,6 +56,9 @@ void assign_bpdu(Device *device)
     bpdu.sender_priority = device->switch_info.priority;
     device->switch_info.bpdu = bpdu;
 }
+// Returns 1 if bpdu1 is better than bpdu2
+// Returns -1 if bpdu2 is better than bpdu1
+// Returns 0 if they are equal
 int compare_bpdu(BPDU *bpdu1, BPDU *bpdu2)
 {
     if (bpdu1->root_bridge_priority < bpdu2->root_bridge_priority)
@@ -92,7 +95,7 @@ int compare_bpdu(BPDU *bpdu1, BPDU *bpdu2)
     }
     return 0;
 }
-
+// Returns true if the bpdu was updated
 bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU *new_bpdu)
 {
     BPDU bpdu;
@@ -119,6 +122,7 @@ void send_bpdu(Network *network, Device *device)
     {
         if (connected_devices[i]->type != STATION && device->switch_info.ports[i].state == 'F')
         {
+            printf("\t%d <-> Sending BPDU to %d\n", device->index + 1, connected_devices[i]->index + 1);
             Frame frame;
             bpdu_to_frame(&device->switch_info.bpdu, &frame);
             send_frame(network, connected_devices[i], device, &frame);

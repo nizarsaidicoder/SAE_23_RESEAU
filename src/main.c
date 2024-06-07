@@ -35,7 +35,7 @@ void network_cycle()
     spanning_tree_protocol(&network);
     Frame frame;
     frame_init(&frame, network.devices[7].mac_address, network.devices[14].mac_address, 0x900, "Well ! This SAE proved that switches are very dumb!");
-    send_frame(&network, &network.devices[7], NULL, &frame);
+    // send_frame(&network, &network.devices[7], NULL, &frame);
     network_print(&network);
     network_free(&network);
 }
