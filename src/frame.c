@@ -203,6 +203,7 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
         {
             if (compare_mac_address(&connected_devices[i]->mac_address, &new_source->mac_address) == 0)
             {
+                printf("I am the switch %d\n", new_source->index);
                 if (new_source->switch_info.ports[i].state == 'B')
                     is_blocked = true;
             }
@@ -214,41 +215,22 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
             uint8_t port = get_port_number(network, new_source, previous_source);
             add_entry_to_switching_table(new_source, &frame->src, port);
         }
+
         if (!receive_frame(network, new_source, previous_source, frame))
         {
-
-            MACAddress broadcast;
-            for (int i = 0; i < 6; i++)
+            int port_number = check_switching_table_entries(new_source, &frame->dest);
+            if (port_number != -1)
             {
-                broadcast.address[i] = 255;
-            }
-            if (compare_mac_address(&frame->dest, &broadcast) == 0)
-            {
-                flood_frame(network, new_source, previous_source, frame);
+                Device *reciever = connected_devices[port_number];
+                // CHECK IF THE PORT IS ACTIVE
+                if (new_source->switch_info.ports[port_number].state == 'F')
+                {
+                    send_frame(network, reciever, new_source, frame);
+                }
             }
             else
             {
-                int port_number = check_switching_table_entries(new_source, &frame->dest);
-                if (port_number != -1)
-                {
-                    Device *reciever = connected_devices[port_number];
-                    // CHECK IF THE PORT IS ACTIVE
-                    if (new_source->switch_info.ports[port_number].state == 'F')
-                    {
-                        send_frame(network, reciever, new_source, frame);
-                    }
-                }
-                bool is_root = false;
-                for (int i = 0; i < nb; i++)
-                {
-                    if (new_source->switch_info.ports[i].role == 'R')
-                    {
-                        is_root = true;
-                        send_frame(network, connected_devices[i], new_source, frame);
-                    }
-                }
-                if (!is_root)
-                    flood_frame(network, new_source, previous_source, frame);
+                flood_frame(network, new_source, previous_source, frame);
             }
         }
     }
@@ -291,7 +273,7 @@ bool receive_frame(Network *network, Device *device, Device *previous_device, Fr
 
     if (compare_mac_address(&device->mac_address, &frame->dest) == 0 || compare_mac_address(&broadcast, &frame->dest) == 0)
     {
-        if (frame->type == 0x4242 && device->type == SWITCH)
+        if (frame->type == BPDU_FRAME_TYPE && device->type == SWITCH)
         {
             BPDU bpdu;
             frame_to_bpdu(frame, &bpdu);
@@ -299,44 +281,25 @@ bool receive_frame(Network *network, Device *device, Device *previous_device, Fr
             {
                 Device *neighbour_switches[256];
                 uint16_t nb = find_connected_devices(network, previous_device->index, neighbour_switches);
+                int current_distance = device->switch_info.bpdu.root_path_cost;
                 for (int i = 0; i < nb; i++)
                 {
-
-                    if (compare_mac_address(&neighbour_switches[i]->mac_address, &device->mac_address) == 0)
+                    if (device->switch_info.ports[i].state == 'L' && neighbour_switches[i]->switch_info.bpdu.root_path_cost < current_distance)
                     {
-                        for (int j = 0; j < device->switch_info.num_ports; j++)
-                        {
-                            if (device->switch_info.ports[j].state == 'L')
-                            {
-                                device->switch_info.ports[j].state = 'F';
-                            }
-                        }
-                        device->switch_info.ports[i].state = 'L';
+                        device->switch_info.ports[i].state = 'D';
                     }
                 }
+                // MAKE THE PORT FROM WHICH THE BPDU WAS RECEIVED A ROOT PORT
+                device->switch_info.ports[get_port_number(network, device, previous_device)].state = 'L';
             }
         }
-        else
+        else if (frame->type != BPDU_FRAME_TYPE)
         {
-            if (frame->type != 0x4242)
-            {
-                printf("I am device %d\n", device->index);
-                frame_print_data_user_mode(frame);
-                frame_print_data_hex_mode(frame);
-            }
+
+            printf("I am device %d\n", device->index);
+            frame_print_data_user_mode(frame);
+            frame_print_data_hex_mode(frame);
         }
-        return true;
-    }
-    return false;
-}
-bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU *new_bpdu)
-{
-    if (compare_bpdu(&device->switch_info.bpdu, new_bpdu) == -1)
-    {
-        // MODIFY ONLY THE ROOT BRIDGE INFO
-        device->switch_info.bpdu.root_bridge_priority = new_bpdu->root_bridge_priority;
-        device->switch_info.bpdu.root_bridge_mac_address = new_bpdu->root_bridge_mac_address;
-        device->switch_info.bpdu.root_path_cost = new_bpdu->root_path_cost + network_link_weight(network, device->index, previous_device->index);
         return true;
     }
     return false;

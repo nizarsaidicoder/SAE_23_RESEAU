@@ -17,14 +17,7 @@ int main()
     }
     // Sending BPDU frames
     spanning_tree_protocol(&network);
-
     printf("---------------------------------------------------------------------------------\n");
-
-    Frame frame;
-    frame_init(&frame, network.devices[7].mac_address, network.devices[14].mac_address, 0x800, "Hello");
-    // frame_print_data_user_mode(&frame);
-    send_frame(&network, &network.devices[7], NULL, &frame);
-    // network_print(&network);
     network_free(&network);
     return 0;
 }
