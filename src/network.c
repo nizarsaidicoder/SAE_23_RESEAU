@@ -4,27 +4,28 @@
 #include "headers/utils.h"
 
 #define MAX_CAPACITY 10
-
+/**
+ * @brief Initializes a network
+ * @param network The network to initialize
+ */
 void network_init(Network *network)
 {
-    // This function should initialize the network structure
-    // Initialize the number of devices and links to 0
+
     network->num_devices = 0;
     network->num_links = 0;
     network->num_stations = 0;
     network->num_switches = 0;
-    // Set the link capacity to 10
     network->link_capacity = MAX_CAPACITY;
     network->device_capacity = MAX_CAPACITY;
-    // Allocate memory for the devices and links
-    // Allocate memory for the devices and links
     network->devices = (Device *)malloc(network->device_capacity * sizeof(Device));
     network->links = (Link *)malloc(network->link_capacity * sizeof(Link));
 }
+/**
+ * @brief Frees the memory allocated for a network
+ * @param network The network to free
+ */
 void network_free(Network *network)
 {
-    // This function should free the memory allocated for the network structure
-    // Free the memory allocated for the devices and links
     for (int i = 0; i < network->num_devices; i++)
     {
         if (network->devices[i].type == SWITCH)
@@ -41,32 +42,48 @@ void network_free(Network *network)
     network->link_capacity = 0;
     network->device_capacity = 0;
 }
-
+/**
+ * @brief Returns the number of devices in the network
+ * @param network The network
+ */
 uint8_t network_num_devices(Network *network)
 {
-    // This function should return the number of devices in the network
     return network->num_devices;
 }
+/**
+ * @brief Returns the number of stations in the network
+ * @param network The network
+
+ */
 uint8_t network_num_stations(Network *network)
 {
-    // This function should return the number of stations in the network
     return network->num_stations;
 }
+/**
+ * @brief Returns the number of switches in the network
+ * @param network The network
+ */
 uint8_t network_num_switches(Network *network)
 {
-    // This function should return the number of switches in the network
     return network->num_switches;
 }
-
+/**
+ * @brief Returns the number of links in the network
+ * @param network The network
+ */
 uint16_t network_num_links(Network *network)
 {
     // This function should return the number of links in the network
     return network->num_links;
 }
-
+/**
+ * @brief Adds a device to the network
+ * @param network The network
+ * @param device The device to add
+ * @note The device should be already initialized
+ */
 void network_add_device(Network *network, Device *device)
 {
-    // This function should add a device to the network
     // Check if the devices array is full
     // If the devices array is full, reallocate memory for the devices array
     if (network->num_devices >= network->device_capacity)
@@ -86,9 +103,14 @@ void network_add_device(Network *network, Device *device)
     if (device->type == SWITCH)
         network->num_switches++;
 }
+/**
+ * @brief Checks if a link already exists in the network
+ * @param network The network
+ * @param link The link to check
+ * @return true if the link already exists in the network
+ */
 bool network_link_exists(Network *network, Link *link)
 {
-    // This function should check if a link already exists in the network
     for (int i = 0; i < network->num_links; i++)
     {
         if (network->links[i].device1_index == link->device1_index && network->links[i].device2_index == link->device2_index)
@@ -98,9 +120,14 @@ bool network_link_exists(Network *network, Link *link)
     }
     return false;
 }
+/**
+ * @brief Returns the index of a link in the network
+ * @param network The network
+ * @param link The link to find
+ * @return The index of the link in the network
+ */
 uint8_t network_link_index(Network *network, Link *link)
 {
-    // This function should check if a link already exists in the network
     for (int i = 0; i < network->num_links; i++)
     {
         if (network_link_exists(network, link))
@@ -108,9 +135,15 @@ uint8_t network_link_index(Network *network, Link *link)
     }
     return -1;
 }
+/**
+ * @brief Returns the weight of the link between two devices
+ * @param network The network
+ * @param device1_index The index of the first device
+ * @param device2_index The index of the second device
+ * @return The weight of the link between the two devices
+ */
 uint16_t network_link_weight(Network *network, uint8_t device1_index, uint8_t device2_index)
 {
-    // This function should return the weight of the link between two devices
     for (int i = 0; i < network->num_links; i++)
     {
         if (network->links[i].device1_index == device1_index && network->links[i].device2_index == device2_index)
@@ -120,12 +153,17 @@ uint16_t network_link_weight(Network *network, uint8_t device1_index, uint8_t de
     }
     return -1;
 }
+/**
+ * @brief Adds a link to the network
+ * @param network The network
+ * @param link The link to add
+ * @return true if the link was added successfully
+ */
 bool network_add_link(Network *network, Link *link)
 {
-    // This function should add a link to the network
     if (network_link_exists(network, link))
         return false;
-
+    // Reallocate memory for the links array if it is full
     if (network->num_links >= network->link_capacity)
     {
         network->link_capacity *= 2;
@@ -136,6 +174,12 @@ bool network_add_link(Network *network, Link *link)
     network->num_links++;
     return true;
 }
+/**
+ * @brief Finds a device in the network by its MAC address
+ * @param network The network
+ * @param mac_address The MAC address of the device to find
+ * @return A pointer to the device if found, NULL otherwise
+ */
 Device *network_find_device(Network *network, MACAddress *mac_address)
 {
     // This function should return a pointer to the device at the given index
@@ -146,10 +190,13 @@ Device *network_find_device(Network *network, MACAddress *mac_address)
     }
     return NULL;
 }
+/**
+ * @brief Prints the network structure
+ * @param network The network to print
+ */
 void network_print(Network *network)
 {
-    // This function should print the network structure to the console
-    // Print the number of devices, stations, switches, and links
+
     printf("+---------------------+-------+\n");
     printf("| %-19s | %5s |\n", "Category", "Count");
     printf("+---------------------+-------+\n");
@@ -169,9 +216,14 @@ void network_print(Network *network)
         print_link(&network->links[i]);
     }
 }
+/**
+ * @brief Configure a network structure from a file
+ * @param network The network to read into
+ * @param filename The name of the file to read from
+ * @return true if the network was read successfully
+ */
 bool network_from_config(Network *network, char *filename)
 {
-    // This function should read the network structure from a file and populate the network structure
     char *lines[100];
     uint16_t num_lines = read_lines(filename, lines);
     // Read the number of devices and links from the file
@@ -203,45 +255,33 @@ bool network_from_config(Network *network, char *filename)
     }
     return true;
 }
-void network_to_config(Network *network, char *filename)
+/**
+ * @brief Finds the devices connected to a device
+ * @param network The network
+ * @param device_index The index of the device
+ * @param connected_devices The array of connected devices to fill
+ * @return The number of connected devices
+ */
+uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[])
 {
-    // This function should write the network structure to a file
-    // Write the number of devices and links to the file
-    // char network_header[256];
-    // sprintf("%d;%d", network->num_devices, network->num_links);
-    // char **lines = (char **)malloc((network->num_devices + network->num_links + 1) * sizeof(char *));
-    // lines[0] = strdup(network_header);
-    // for (int i = 1; i < network->num_devices; i++)
-    // {
-    //     char device_config[256];
-    //     device_to_config(&network->devices[i], device_config);
-    //     lines[i] = strdup(device_config);
-    // }
-    // for (int i = network->num_devices; i < network->num_links; i++)
-    // {
-    //     char link_info[256];
-    //     sprintf(link_info, "%d;%d;%d", network->links[i].device1_index, network->links[i].device2_index, network->links[i].weight);
-    //     lines[i] = strdup(link_info);
-    // }
-    // write_lines(filename, lines);
-    // free(lines);
-}
-
-void print_switching_tables(Network *network)
-{
-    // This function should print the switching tables of all the switches in the network
-    printf("\033[0;32m");
-    for (int i = 0; i < network->num_devices; i++)
+    if (device_index >= network->num_devices)
     {
-        if (network->devices[i].type == SWITCH)
+        printf("Device index out of bounds\n");
+        return 0;
+    }
+    uint16_t connected_devices_count = 0;
+    for (int i = 0; i < network->num_links; i++)
+    {
+        if (network->links[i].device1_index == device_index)
         {
-            if (network->devices[i].switch_info.switching_table_entries > 0)
-            {
-                printf("------------------Switch %d--------------------\n", network->devices[i].index);
-                switch_print_table(network->devices[i].switch_info);
-            }
+            connected_devices[connected_devices_count] = &network->devices[network->links[i].device2_index];
+            connected_devices_count++;
+        }
+        else if (network->links[i].device2_index == device_index)
+        {
+            connected_devices[connected_devices_count] = &network->devices[network->links[i].device1_index];
+            connected_devices_count++;
         }
     }
-    // color reset
-    printf("\033[0m");
+    return connected_devices_count;
 }

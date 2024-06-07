@@ -3,14 +3,22 @@
 #include "headers/utils.h"
 #include "headers/frame.h"
 #include "headers/network.h"
-
+/**
+ * @brief This function activates the Spanning Tree Protocol
+ * @param network The network
+ * @note This function should be called after the network has been initialized and the devices have been added to the network
+ */
 void spanning_tree_protocol(Network *network)
 {
     elect_root_bridge(network);
-    block_ports(network);
-    designated_ports(network);
+    set_block_ports(network);
+    set_designated_ports(network);
 }
 
+/**
+ * @brief Elects the root bridge
+ * @param network The network
+ */
 void elect_root_bridge(Network *network)
 {
     // SENDING BPDUS
@@ -32,10 +40,12 @@ void elect_root_bridge(Network *network)
         }
     }
 }
-
-void block_ports(Network *network)
+/**
+ * @brief Blocks the ports of non-root bridges that are not root ports
+ * @param network The network
+ */
+void set_block_ports(Network *network)
 {
-    // BLOCKING PORTS OF NON-ROOT BRIDGES THAT ARE NOT ROOT PORTS
     for (int i = 0; i < network->num_switches; i++)
     {
         if (network->devices[i].switch_info.bpdu.root_bridge_priority == network->devices[i].switch_info.priority && compare_mac_address(&network->devices[i].switch_info.bpdu.root_bridge_mac_address, &network->devices[i].mac_address) == 0)
@@ -51,8 +61,10 @@ void block_ports(Network *network)
         }
     }
 }
-
-void designated_ports(Network *network)
+/**
+ * @brief Set the designated ports of the non-root bridges
+ */
+void set_designated_ports(Network *network)
 {
     for (int i = 0; i < network->num_switches; i++)
     {

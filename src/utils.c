@@ -1,7 +1,12 @@
 #include "headers/utils.h"
+/**
+ * @brief Reads the lines from a file
+ * @param filename The name of the file
+ * @param lines The array of lines
+ * @return The number of lines of the file
+ */
 uint16_t read_lines(char *filename, char **lines)
 {
-    // Read all lines from the file
     FILE *file;
     char line[256];
     uint16_t num_lines = 0;
@@ -23,10 +28,13 @@ uint16_t read_lines(char *filename, char **lines)
     fclose(file);
     return num_lines;
 }
-
+/**
+ * @brief Writes the lines to a file
+ * @param filename The name of the file
+ * @param lines The array of lines
+ */
 void write_lines(char *filename, char **lines)
 {
-    // Write the lines to the file
     FILE *file;
     file = fopen(filename, "w"); // Open the file in write mode "w"
     if (file == NULL)
@@ -37,24 +45,17 @@ void write_lines(char *filename, char **lines)
     for (int i = 0; lines[i] != NULL; i++)
         fprintf(file, "%s\n", lines[i]);
 }
-
+/**
+ * @brief Splits a string into tokens
+ * @param string The string to split
+ * @param delimiter The delimiter
+ * @param output The output tokens
+ * @return The number of tokens
+ */
 uint8_t split(char *string, char *delimiter, char **output)
 {
-    // char *copie = strdup(string);
-    // char *token = strtok(copie, delimiter);
-    // uint8_t num_tokens = 0;
-    // while (token != NULL)
-    // {
-    //     output[num_tokens] = strdup(token);
-    //     num_tokens++;
-    //     token = strtok(NULL, delimiter);
-    // }
-    // free(copie);
-    // return num_tokens;
-    // DO NOT USE strtok() IN THIS FUNCTION
-    // Split the string using the delimiter
+
     uint8_t num_tokens = 0;
-    // WITH NO STRTOK THE FUNCTION WILL BE LIKE
     char *token = string;
     char *end = string;
     while (*end != '\0')
@@ -72,7 +73,11 @@ uint8_t split(char *string, char *delimiter, char **output)
     num_tokens++;
     return num_tokens;
 }
-
+/**
+ * @brief Converts a hexadecimal string to an integer
+ * @param hex The hexadecimal string
+ * @return The integer
+ */
 uint8_t hex_to_int(char *hex)
 {
     // Convert a hexadecimal string to an integer
@@ -86,17 +91,4 @@ uint8_t hex_to_int(char *hex)
             num += hex[i] - 'a' + 10;
     }
     return num;
-}
-
-char *int_to_hex(uint8_t num)
-{
-    // Convert an integer to a hexadecimal string
-    char *hex = malloc(3);
-    if (hex == NULL)
-    {
-        printf("Error allocating memory\n");
-        return NULL;
-    }
-    sprintf(hex, "%02x", num);
-    return hex;
 }

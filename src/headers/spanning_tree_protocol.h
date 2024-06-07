@@ -6,5 +6,5 @@
 #include "network.h"
 void spanning_tree_protocol(Network *network);
 void elect_root_bridge(Network *network);
-void block_ports(Network *network);
-void designated_ports(Network *network);
+void set_block_ports(Network *network);
+void set_designated_ports(Network *network);

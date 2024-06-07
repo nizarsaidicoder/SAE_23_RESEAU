@@ -13,7 +13,6 @@ void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, ch
 void frame_print_data_user_mode(Frame *frame);
 void frame_print_data_hex_mode(Frame *frame);
 
-uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[]);
 void add_entry_to_switching_table(Device *switch_, MACAddress *mac_address, uint8_t port_number);
 uint8_t get_port_number(Network *network, Device *switch_, Device *device);
 

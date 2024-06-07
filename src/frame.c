@@ -121,36 +121,7 @@ void frame_print_data_hex_mode(Frame *frame)
     printf("\n");
     printf("\033[0m");
 }
-/**
- * @brief Finds the devices connected to a device
- * @param network The network
- * @param device_index The index of the device
- * @param connected_devices The array of connected devices to fill
- * @return The number of connected devices
- */
-uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[])
-{
-    if (device_index >= network->num_devices)
-    {
-        printf("Device index out of bounds\n");
-        return 0;
-    }
-    uint16_t connected_devices_count = 0;
-    for (int i = 0; i < network->num_links; i++)
-    {
-        if (network->links[i].device1_index == device_index)
-        {
-            connected_devices[connected_devices_count] = &network->devices[network->links[i].device2_index];
-            connected_devices_count++;
-        }
-        else if (network->links[i].device2_index == device_index)
-        {
-            connected_devices[connected_devices_count] = &network->devices[network->links[i].device1_index];
-            connected_devices_count++;
-        }
-    }
-    return connected_devices_count;
-}
+
 /**
  * @brief Adds an entry to the switching table of a switch
  * @param switch_ The switch
@@ -325,7 +296,6 @@ bool receive_frame(Network *network, Device *device, Device *previous_device, Fr
             {
                 Device *neighbour_switches[256];
                 uint16_t nb = find_connected_devices(network, previous_device->index, neighbour_switches);
-                int current_distance = device->switch_info.bpdu.root_path_cost;
                 for (int i = 0; i < nb; i++)
                 {
                     if (device->switch_info.ports[i].state == 'L')
