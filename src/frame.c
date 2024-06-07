@@ -295,8 +295,6 @@ bool receive_frame(Network *network, Device *device, Device *previous_device, Fr
         }
         else if (frame->type != BPDU_FRAME_TYPE)
         {
-
-            printf("I am device %d\n", device->index);
             frame_print_data_user_mode(frame);
             frame_print_data_hex_mode(frame);
         }
