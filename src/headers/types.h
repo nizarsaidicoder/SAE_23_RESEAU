@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +29,19 @@ typedef struct Station
     IPAddress ip_address;
 } Station;
 
+typedef struct Frame
+{
+    // [170, 170, 170, 170, 170, 170, 170]
+
+    uint8_t preambule[7];
+    // 171
+    uint8_t SFD;
+    MACAddress dest;
+    MACAddress src;
+    uint16_t type;
+    char data[1500];
+    uint32_t FCS;
+} Frame;
 // A port has a state and a role
 // ROLES
 // R: ROOT
@@ -46,12 +58,6 @@ typedef struct Port
     char state;
 } Port;
 
-typedef struct SwitchingTableEntry
-{
-    MACAddress mac_address;
-    uint8_t port_number;
-} SwitchingTableEntry;
-
 typedef struct BPDU
 {
     uint16_t root_bridge_priority;
@@ -60,6 +66,12 @@ typedef struct BPDU
     MACAddress sender_mac_address;
     uint16_t sender_priority;
 } BPDU;
+
+typedef struct SwitchingTableEntry
+{
+    MACAddress mac_address;
+    uint8_t port_number;
+} SwitchingTableEntry;
 
 // A switch has an IP address, a number of ports and a switching table and ports maybe ??
 typedef struct Switch

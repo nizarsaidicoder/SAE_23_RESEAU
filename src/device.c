@@ -51,16 +51,7 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     assign_bpdu(device);
 }
 
-void assign_bpdu(Device *device)
-{
-    BPDU bpdu;
-    bpdu.root_bridge_priority = device->switch_info.priority;
-    bpdu.root_bridge_mac_address = device->mac_address;
-    bpdu.root_path_cost = 0;
-    bpdu.sender_mac_address = device->mac_address;
-    bpdu.sender_priority = device->switch_info.priority;
-    device->switch_info.bpdu = bpdu;
-}
+
 
 void device_from_config(Device *device, char *info)
 {
@@ -156,7 +147,7 @@ void print_switch(Device *device)
     //  MAC Address : 00:1A:2B:3C:4D:5E
     //  Priority : 100
     //  Number of Ports : 4
-    printf("------------------Switch %d--------------------\n", device->index);
+    printf("------------------Switch %d--------------------\n", device->index + 1);
     print_mac_address(&device->mac_address);
     printf("Priority : %d\n", device->switch_info.priority);
     printf("Number of Ports : %d\n", device->switch_info.num_ports);
