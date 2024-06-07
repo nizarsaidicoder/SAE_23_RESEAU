@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include "headers/bpdu.h"
 
 /**
@@ -159,7 +158,6 @@ void send_bpdu(Network *network, Device *device)
     {
         if (connected_devices[i]->type != STATION && device->switch_info.ports[i].state == 'F')
         {
-            printf("\t%d <-> Sending BPDU to %d\n", device->index + 1, connected_devices[i]->index + 1);
             Frame frame;
             bpdu_to_frame(&device->switch_info.bpdu, &frame);
             send_frame(network, connected_devices[i], device, &frame);

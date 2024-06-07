@@ -1,7 +1,4 @@
-#include "headers/types.h"
 #include "headers/network.h"
-#include "headers/device.h"
-#include "headers/utils.h"
 
 #define MAX_CAPACITY 10
 /**
@@ -174,22 +171,7 @@ bool network_add_link(Network *network, Link *link)
     network->num_links++;
     return true;
 }
-/**
- * @brief Finds a device in the network by its MAC address
- * @param network The network
- * @param mac_address The MAC address of the device to find
- * @return A pointer to the device if found, NULL otherwise
- */
-Device *network_find_device(Network *network, MACAddress *mac_address)
-{
-    // This function should return a pointer to the device at the given index
-    for (int i = 0; i < network->num_devices; i++)
-    {
-        if (compare_mac_address(&network->devices[i].mac_address, mac_address))
-            return &network->devices[i];
-    }
-    return NULL;
-}
+
 /**
  * @brief Prints the network structure
  * @param network The network to print
@@ -216,6 +198,53 @@ void network_print(Network *network)
         print_link(&network->links[i]);
     }
 }
+/**
+ * @brief Finds a device in the network by its MAC address
+ * @param network The network
+ * @param mac_address The MAC address of the device to find
+ * @return A pointer to the device if found, NULL otherwise
+ */
+Device *network_find_device(Network *network, MACAddress *mac_address)
+{
+    // This function should return a pointer to the device at the given index
+    for (int i = 0; i < network->num_devices; i++)
+    {
+        if (compare_mac_address(&network->devices[i].mac_address, mac_address))
+            return &network->devices[i];
+    }
+    return NULL;
+}
+/**
+ * @brief Finds the devices connected to a device
+ * @param network The network
+ * @param device_index The index of the device
+ * @param connected_devices The array of connected devices to fill
+ * @return The number of connected devices
+ */
+uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[])
+{
+    if (device_index >= network->num_devices)
+    {
+        printf("Device index out of bounds\n");
+        return 0;
+    }
+    uint16_t connected_devices_count = 0;
+    for (int i = 0; i < network->num_links; i++)
+    {
+        if (network->links[i].device1_index == device_index)
+        {
+            connected_devices[connected_devices_count] = &network->devices[network->links[i].device2_index];
+            connected_devices_count++;
+        }
+        else if (network->links[i].device2_index == device_index)
+        {
+            connected_devices[connected_devices_count] = &network->devices[network->links[i].device1_index];
+            connected_devices_count++;
+        }
+    }
+    return connected_devices_count;
+}
+
 /**
  * @brief Configure a network structure from a file
  * @param network The network to read into
@@ -254,34 +283,4 @@ bool network_from_config(Network *network, char *filename)
         free(lines[i]);
     }
     return true;
-}
-/**
- * @brief Finds the devices connected to a device
- * @param network The network
- * @param device_index The index of the device
- * @param connected_devices The array of connected devices to fill
- * @return The number of connected devices
- */
-uint16_t find_connected_devices(Network *network, uint16_t device_index, Device *connected_devices[])
-{
-    if (device_index >= network->num_devices)
-    {
-        printf("Device index out of bounds\n");
-        return 0;
-    }
-    uint16_t connected_devices_count = 0;
-    for (int i = 0; i < network->num_links; i++)
-    {
-        if (network->links[i].device1_index == device_index)
-        {
-            connected_devices[connected_devices_count] = &network->devices[network->links[i].device2_index];
-            connected_devices_count++;
-        }
-        else if (network->links[i].device2_index == device_index)
-        {
-            connected_devices[connected_devices_count] = &network->devices[network->links[i].device1_index];
-            connected_devices_count++;
-        }
-    }
-    return connected_devices_count;
 }

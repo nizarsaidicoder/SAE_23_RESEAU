@@ -1,6 +1,4 @@
 #include "headers/device.h"
-#include "headers/utils.h"
-
 /**
  * @brief Initializes a device
  * @param device The device to initialize

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include "utils.h"
 #include "address.h"
 
 void device_init(Device *device, MACAddress mac_address, DeviceType type);

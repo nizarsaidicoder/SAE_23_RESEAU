@@ -1,5 +1,7 @@
 #pragma once
 #include "types.h"
+#include "device.h"
+#include "utils.h"
 
 void network_init(Network *network);
 void network_free(Network *network);

@@ -1,9 +1,4 @@
-#include "headers/types.h"
 #include "headers/frame.h"
-#include "headers/address.h"
-#include "headers/device.h"
-#include "headers/network.h"
-#include "headers/spanning_tree_protocol.h"
 /**
  * @brief Initializes a frame
  * @param frame The frame to initialize
@@ -143,6 +138,23 @@ void add_entry_to_switching_table(Device *switch_, MACAddress *mac_address, uint
     switch_->switch_info.switching_table_entries++;
 }
 /**
+ * @brief Checks if a MAC address is in the switching table of a switch
+ * @param switch_ The switch
+ * @param mac_address The MAC address to check
+ * @return The port number if the MAC address is in the switching table, -1 otherwise
+ */
+int check_switching_table_entries(Device *switch_, MACAddress *mac_address)
+{
+    for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
+    {
+        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address) == 0)
+        {
+            return switch_->switch_info.switching_table[i].port_number;
+        }
+    }
+    return -1;
+}
+/**
  * @brief Gets the port number of a device connected to a switch
  * @param network The network
  * @param switch_ The switch
@@ -231,23 +243,7 @@ void send_frame(Network *network, Device *new_source, Device *previous_source, F
         }
     }
 }
-/**
- * @brief Checks if a MAC address is in the switching table of a switch
- * @param switch_ The switch
- * @param mac_address The MAC address to check
- * @return The port number if the MAC address is in the switching table, -1 otherwise
- */
-int check_switching_table_entries(Device *switch_, MACAddress *mac_address)
-{
-    for (int i = 0; i < switch_->switch_info.switching_table_entries; i++)
-    {
-        if (compare_mac_address(&switch_->switch_info.switching_table[i].mac_address, mac_address) == 0)
-        {
-            return switch_->switch_info.switching_table[i].port_number;
-        }
-    }
-    return -1;
-}
+
 /**
  * @brief Floods a frame in all the ports of a switch except the port from which the frame was received
  * @param network The network

@@ -1,8 +1,4 @@
 #include "headers/spanning_tree_protocol.h"
-#include "headers/device.h"
-#include "headers/utils.h"
-#include "headers/frame.h"
-#include "headers/network.h"
 /**
  * @brief This function activates the Spanning Tree Protocol
  * @param network The network

@@ -5,9 +5,8 @@
 #include "address.h"
 #include "utils.h"
 #include "bpdu.h"
+#include "spanning_tree_protocol.h"
 #include <stdbool.h>
-
-
 
 void frame_init(Frame *frame, MACAddress src, MACAddress dest, uint16_t type, char *data);
 void frame_print_data_user_mode(Frame *frame);
