@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "frame.h"
 #include "network.h"
-
 void spanning_tree_protocol(Network *network);
 void elect_root_bridge(Network *network);
+void block_ports(Network *network);
+void designated_ports(Network *network);
