@@ -152,8 +152,9 @@ void print_switch(Device *device)
         printf("\t+---------------------+-------+\n");
         printf("\t| %-19s | %5s |\n", "MAC Address", "Port");
         printf("\t+---------------------+-------+\n");
-        printf("\t| %-19s | %5s |\n", "No entries", "No entries");
+        printf("\t| %-19s | %5s |\n", "No entries", "");
         printf("\t+---------------------+-------+\n");
+        printf("\033[0m");
     }
     switch_print_ports(device->switch_info);
 }
