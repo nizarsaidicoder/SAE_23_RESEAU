@@ -1,0 +1,99 @@
+\doxysection{headers/utils.h File Reference}
+\hypertarget{utils_8h}{}\label{utils_8h}\index{headers/utils.h@{headers/utils.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{utils_8h_a6cc7a3ec83c1cab8ce472f5db02f13ba}{read\+\_\+lines}} (char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}lines)
+\begin{DoxyCompactList}\small\item\em Reads the lines from a file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utils_8h_a98140dd275aa841404eddafcd4885af0}{write\+\_\+lines}} (char \texorpdfstring{$\ast$}{*}filename, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}lines)
+\begin{DoxyCompactList}\small\item\em Writes the lines to a file. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{utils_8h_a0ab6b9603112b24ccffc0af3d2d0e8bd}{split}} (char \texorpdfstring{$\ast$}{*}string, char \texorpdfstring{$\ast$}{*}delimiter, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Splits a string into tokens. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{utils_8h_a72043e928b1bf67dbe3cc43ad093cdaa}{hex\+\_\+to\+\_\+int}} (char \texorpdfstring{$\ast$}{*}hex)
+\begin{DoxyCompactList}\small\item\em Converts a hexadecimal string to an integer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utils_8h_a72043e928b1bf67dbe3cc43ad093cdaa}\index{utils.h@{utils.h}!hex\_to\_int@{hex\_to\_int}}
+\index{hex\_to\_int@{hex\_to\_int}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{hex\_to\_int()}{hex\_to\_int()}}
+{\footnotesize\ttfamily \label{utils_8h_a72043e928b1bf67dbe3cc43ad093cdaa} 
+uint8\+\_\+t hex\+\_\+to\+\_\+int (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{hex}{}\end{DoxyParamCaption})}
+
+
+
+Converts a hexadecimal string to an integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hex} & The hexadecimal string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The integer 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_a6cc7a3ec83c1cab8ce472f5db02f13ba}\index{utils.h@{utils.h}!read\_lines@{read\_lines}}
+\index{read\_lines@{read\_lines}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{read\_lines()}{read\_lines()}}
+{\footnotesize\ttfamily \label{utils_8h_a6cc7a3ec83c1cab8ce472f5db02f13ba} 
+uint16\+\_\+t read\+\_\+lines (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{lines}{}\end{DoxyParamCaption})}
+
+
+
+Reads the lines from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file \\
+\hline
+{\em lines} & The array of lines \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of lines of the file 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_a0ab6b9603112b24ccffc0af3d2d0e8bd}\index{utils.h@{utils.h}!split@{split}}
+\index{split@{split}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{split()}{split()}}
+{\footnotesize\ttfamily \label{utils_8h_a0ab6b9603112b24ccffc0af3d2d0e8bd} 
+uint8\+\_\+t split (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{string}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{delimiter}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{output}{}\end{DoxyParamCaption})}
+
+
+
+Splits a string into tokens. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & The string to split \\
+\hline
+{\em delimiter} & The delimiter \\
+\hline
+{\em output} & The output tokens \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of tokens 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_a98140dd275aa841404eddafcd4885af0}\index{utils.h@{utils.h}!write\_lines@{write\_lines}}
+\index{write\_lines@{write\_lines}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{write\_lines()}{write\_lines()}}
+{\footnotesize\ttfamily \label{utils_8h_a98140dd275aa841404eddafcd4885af0} 
+void write\+\_\+lines (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{lines}{}\end{DoxyParamCaption})}
+
+
+
+Writes the lines to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file \\
+\hline
+{\em lines} & The array of lines \\
+\hline
+\end{DoxyParams}

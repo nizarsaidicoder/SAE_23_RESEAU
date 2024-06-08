@@ -1,0 +1,27 @@
+\doxysection{device.\+h}
+\hypertarget{device_8h_source}{}\label{device_8h_source}\index{headers/device.h@{headers/device.h}}
+\mbox{\hyperlink{device_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{address_8h}{address.h}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_ae261a9e1c56a6a269c3936abf6a01500}{device\_init}}(\mbox{\hyperlink{struct_device}{Device}}\ *device,\ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ mac\_address,\ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{DeviceType}}\ type);}
+\DoxyCodeLine{00008\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_a44d64913927aa057ca758d297ee1abe5}{device\_free}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00009\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_af569b8bb3cff2b4fb73a7989974c1c9d}{station\_init}}(\mbox{\hyperlink{struct_device}{Device}}\ *device,\ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ mac\_address,\ \mbox{\hyperlink{struct_i_p_address}{IPAddress}}\ ip\_address);}
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_acab0a54b1f044aeb309abf3dc1bd2888}{switch\_init}}(\mbox{\hyperlink{struct_device}{Device}}\ *device,\ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ mac\_address,\ uint16\_t\ priority,\ uint8\_t\ num\_ports);}
+\DoxyCodeLine{00011\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_afd525f1d89b60f8bbf019deb47fcf5ea}{assign\_bpdu}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{device_8h_a4c1f961fa6303644d6d09d491bcda395}{device\_is\_switch}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00013\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{device_8h_ac3a83e745f572f95fa7a16716ef7635e}{device\_is\_station}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_ab32ae20cfee5906b90ee97fdaf6c9c98}{print\_station}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_a0923e9ac81cdef71a2f4d49d30bba7cf}{print\_switch}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_a54d6b731882a5ca79e4e8b7617a69510}{print\_device}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00017\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_ab9e8bc0ad502a3ce98e437b6b662159a}{print\_link}}(\mbox{\hyperlink{struct_link}{Link}}\ *link);}
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_a014097ae0c97e8fb08a7e7a6e08d95b0}{device\_from\_config}}(\mbox{\hyperlink{struct_device}{Device}}\ *device,\ \textcolor{keywordtype}{char}\ *info);}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{device_8h_a23f55326f14b36c4b899920a75e11a97}{device\_to\_config}}(\mbox{\hyperlink{struct_device}{Device}}\ *device,\ \textcolor{keywordtype}{char}\ *out);}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_a30bc82f519b56a62c08bbfead43343e7}{switch\_print\_table}}(\mbox{\hyperlink{struct_switch}{Switch}}\ switch\_);}
+\DoxyCodeLine{00021\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{device_8h_a9218680b892ff697b50aacc15bc62601}{switch\_print\_ports}}(\mbox{\hyperlink{struct_switch}{Switch}}\ switch\_);}
+
+\end{DoxyCode}

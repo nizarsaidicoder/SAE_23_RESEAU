@@ -1,0 +1,199 @@
+\doxysection{headers/types.h File Reference}
+\hypertarget{types_8h}{}\label{types_8h}\index{headers/types.h@{headers/types.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_i_p_address}{IPAddress}}
+\item 
+struct \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}
+\item 
+struct \mbox{\hyperlink{struct_station}{Station}}
+\item 
+struct \mbox{\hyperlink{struct_frame}{Frame}}
+\item 
+struct \mbox{\hyperlink{struct_port}{Port}}
+\item 
+struct \mbox{\hyperlink{struct_b_p_d_u}{BPDU}}
+\item 
+struct \mbox{\hyperlink{struct_switching_table_entry}{Switching\+Table\+Entry}}
+\item 
+struct \mbox{\hyperlink{struct_switch}{Switch}}
+\item 
+struct \mbox{\hyperlink{struct_device}{Device}}
+\item 
+struct \mbox{\hyperlink{struct_link}{Link}}
+\item 
+struct \mbox{\hyperlink{struct_network}{Network}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{types_8h_af429cf293f2947ad40368aa126f14e43}{MAC\+\_\+\+BUFFER\+\_\+\+SIZE}}~18
+\item 
+\#define \mbox{\hyperlink{types_8h_afe047d2fbb2a0c3f7b78cad96bdab323}{IP\+\_\+\+BUFFER\+\_\+\+SIZE}}~16
+\item 
+\#define \mbox{\hyperlink{types_8h_a0ed2facbbbca6abc2addf01898f8950b}{BPDU\+\_\+\+BUFFER\+\_\+\+SIZE}}~256
+\item 
+\#define \mbox{\hyperlink{types_8h_a07f2cfe23fb57262e1a80a39c905aae5}{BPDU\+\_\+\+FRAME\+\_\+\+TYPE}}~0x4242
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct IPAddress \mbox{\hyperlink{types_8h_a024fa5fb50879de3cba5985b06ab636c}{IPAddress}}
+\item 
+typedef struct MACAddress \mbox{\hyperlink{types_8h_a59479c2d3e3d85f4ac4f0df98a469712}{MACAddress}}
+\item 
+typedef struct Station \mbox{\hyperlink{types_8h_ae61f219c5dc542fb4f96c7795dda5d7c}{Station}}
+\item 
+typedef struct Frame \mbox{\hyperlink{types_8h_a8bed1e36372ccc1470e37e91647cce20}{Frame}}
+\item 
+typedef struct Port \mbox{\hyperlink{types_8h_ab8a34c2ba1bce23340aa699773be24d0}{Port}}
+\item 
+typedef struct BPDU \mbox{\hyperlink{types_8h_a525c452821448f53cb43175f131d3557}{BPDU}}
+\item 
+typedef struct Switching\+Table\+Entry \mbox{\hyperlink{types_8h_ab8fd1cf17a41f38aea71edcb2dd2e99a}{Switching\+Table\+Entry}}
+\item 
+typedef struct Switch \mbox{\hyperlink{types_8h_a95849d3f8e0b92836fdbdfb5615ada36}{Switch}}
+\item 
+typedef enum \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{Device\+Type}} \mbox{\hyperlink{types_8h_aa008e5ee08e4ea407a921ddd4b85b974}{Device\+Type}}
+\item 
+typedef struct Device \mbox{\hyperlink{types_8h_a33b368418b6d04ff10d8eda0810269ed}{Device}}
+\item 
+typedef struct Link \mbox{\hyperlink{types_8h_a1228b3911a2b6c63936223c2606f8b6a}{Link}}
+\item 
+typedef struct Network \mbox{\hyperlink{types_8h_a5e783e42eddc16b9eb807fe441e845e9}{Network}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{Device\+Type}} \{ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9abe1ce018b886341a69d81ead8cffc786}{STATION}}
+, \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9a53396ea1193548270407675ea4eeee2b}{SWITCH}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{types_8h_a0ed2facbbbca6abc2addf01898f8950b}\index{types.h@{types.h}!BPDU\_BUFFER\_SIZE@{BPDU\_BUFFER\_SIZE}}
+\index{BPDU\_BUFFER\_SIZE@{BPDU\_BUFFER\_SIZE}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{BPDU\_BUFFER\_SIZE}{BPDU\_BUFFER\_SIZE}}
+{\footnotesize\ttfamily \label{types_8h_a0ed2facbbbca6abc2addf01898f8950b} 
+\#define BPDU\+\_\+\+BUFFER\+\_\+\+SIZE~256}
+
+\Hypertarget{types_8h_a07f2cfe23fb57262e1a80a39c905aae5}\index{types.h@{types.h}!BPDU\_FRAME\_TYPE@{BPDU\_FRAME\_TYPE}}
+\index{BPDU\_FRAME\_TYPE@{BPDU\_FRAME\_TYPE}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{BPDU\_FRAME\_TYPE}{BPDU\_FRAME\_TYPE}}
+{\footnotesize\ttfamily \label{types_8h_a07f2cfe23fb57262e1a80a39c905aae5} 
+\#define BPDU\+\_\+\+FRAME\+\_\+\+TYPE~0x4242}
+
+\Hypertarget{types_8h_afe047d2fbb2a0c3f7b78cad96bdab323}\index{types.h@{types.h}!IP\_BUFFER\_SIZE@{IP\_BUFFER\_SIZE}}
+\index{IP\_BUFFER\_SIZE@{IP\_BUFFER\_SIZE}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{IP\_BUFFER\_SIZE}{IP\_BUFFER\_SIZE}}
+{\footnotesize\ttfamily \label{types_8h_afe047d2fbb2a0c3f7b78cad96bdab323} 
+\#define IP\+\_\+\+BUFFER\+\_\+\+SIZE~16}
+
+\Hypertarget{types_8h_af429cf293f2947ad40368aa126f14e43}\index{types.h@{types.h}!MAC\_BUFFER\_SIZE@{MAC\_BUFFER\_SIZE}}
+\index{MAC\_BUFFER\_SIZE@{MAC\_BUFFER\_SIZE}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{MAC\_BUFFER\_SIZE}{MAC\_BUFFER\_SIZE}}
+{\footnotesize\ttfamily \label{types_8h_af429cf293f2947ad40368aa126f14e43} 
+\#define MAC\+\_\+\+BUFFER\+\_\+\+SIZE~18}
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{types_8h_a525c452821448f53cb43175f131d3557}\index{types.h@{types.h}!BPDU@{BPDU}}
+\index{BPDU@{BPDU}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{BPDU}{BPDU}}
+{\footnotesize\ttfamily \label{types_8h_a525c452821448f53cb43175f131d3557} 
+typedef struct BPDU BPDU}
+
+\Hypertarget{types_8h_a33b368418b6d04ff10d8eda0810269ed}\index{types.h@{types.h}!Device@{Device}}
+\index{Device@{Device}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Device}{Device}}
+{\footnotesize\ttfamily \label{types_8h_a33b368418b6d04ff10d8eda0810269ed} 
+typedef struct Device Device}
+
+\Hypertarget{types_8h_aa008e5ee08e4ea407a921ddd4b85b974}\index{types.h@{types.h}!DeviceType@{DeviceType}}
+\index{DeviceType@{DeviceType}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{DeviceType}{DeviceType}}
+{\footnotesize\ttfamily \label{types_8h_aa008e5ee08e4ea407a921ddd4b85b974} 
+typedef enum \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{Device\+Type}} \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{Device\+Type}}}
+
+\Hypertarget{types_8h_a8bed1e36372ccc1470e37e91647cce20}\index{types.h@{types.h}!Frame@{Frame}}
+\index{Frame@{Frame}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Frame}{Frame}}
+{\footnotesize\ttfamily \label{types_8h_a8bed1e36372ccc1470e37e91647cce20} 
+typedef struct Frame Frame}
+
+\Hypertarget{types_8h_a024fa5fb50879de3cba5985b06ab636c}\index{types.h@{types.h}!IPAddress@{IPAddress}}
+\index{IPAddress@{IPAddress}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{IPAddress}{IPAddress}}
+{\footnotesize\ttfamily \label{types_8h_a024fa5fb50879de3cba5985b06ab636c} 
+typedef struct IPAddress IPAddress}
+
+\Hypertarget{types_8h_a1228b3911a2b6c63936223c2606f8b6a}\index{types.h@{types.h}!Link@{Link}}
+\index{Link@{Link}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Link}{Link}}
+{\footnotesize\ttfamily \label{types_8h_a1228b3911a2b6c63936223c2606f8b6a} 
+typedef struct Link Link}
+
+\Hypertarget{types_8h_a59479c2d3e3d85f4ac4f0df98a469712}\index{types.h@{types.h}!MACAddress@{MACAddress}}
+\index{MACAddress@{MACAddress}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{MACAddress}{MACAddress}}
+{\footnotesize\ttfamily \label{types_8h_a59479c2d3e3d85f4ac4f0df98a469712} 
+typedef struct MACAddress MACAddress}
+
+\Hypertarget{types_8h_a5e783e42eddc16b9eb807fe441e845e9}\index{types.h@{types.h}!Network@{Network}}
+\index{Network@{Network}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Network}{Network}}
+{\footnotesize\ttfamily \label{types_8h_a5e783e42eddc16b9eb807fe441e845e9} 
+typedef struct Network Network}
+
+\Hypertarget{types_8h_ab8a34c2ba1bce23340aa699773be24d0}\index{types.h@{types.h}!Port@{Port}}
+\index{Port@{Port}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Port}{Port}}
+{\footnotesize\ttfamily \label{types_8h_ab8a34c2ba1bce23340aa699773be24d0} 
+typedef struct Port Port}
+
+\Hypertarget{types_8h_ae61f219c5dc542fb4f96c7795dda5d7c}\index{types.h@{types.h}!Station@{Station}}
+\index{Station@{Station}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Station}{Station}}
+{\footnotesize\ttfamily \label{types_8h_ae61f219c5dc542fb4f96c7795dda5d7c} 
+typedef struct Station Station}
+
+\Hypertarget{types_8h_a95849d3f8e0b92836fdbdfb5615ada36}\index{types.h@{types.h}!Switch@{Switch}}
+\index{Switch@{Switch}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{Switch}{Switch}}
+{\footnotesize\ttfamily \label{types_8h_a95849d3f8e0b92836fdbdfb5615ada36} 
+typedef struct Switch Switch}
+
+\Hypertarget{types_8h_ab8fd1cf17a41f38aea71edcb2dd2e99a}\index{types.h@{types.h}!SwitchingTableEntry@{SwitchingTableEntry}}
+\index{SwitchingTableEntry@{SwitchingTableEntry}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{SwitchingTableEntry}{SwitchingTableEntry}}
+{\footnotesize\ttfamily \label{types_8h_ab8fd1cf17a41f38aea71edcb2dd2e99a} 
+typedef struct Switching\+Table\+Entry Switching\+Table\+Entry}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{types_8h_ad258d4c51629346fceac4679b3209ad9}\index{types.h@{types.h}!DeviceType@{DeviceType}}
+\index{DeviceType@{DeviceType}!types.h@{types.h}}
+\doxysubsubsection{\texorpdfstring{DeviceType}{DeviceType}}
+{\footnotesize\ttfamily \label{types_8h_ad258d4c51629346fceac4679b3209ad9} 
+enum \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{Device\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATION@{STATION}!types.h@{types.h}}\index{types.h@{types.h}!STATION@{STATION}}}\Hypertarget{types_8h_ad258d4c51629346fceac4679b3209ad9abe1ce018b886341a69d81ead8cffc786}\label{types_8h_ad258d4c51629346fceac4679b3209ad9} 
+STATION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SWITCH@{SWITCH}!types.h@{types.h}}\index{types.h@{types.h}!SWITCH@{SWITCH}}}\Hypertarget{types_8h_ad258d4c51629346fceac4679b3209ad9a53396ea1193548270407675ea4eeee2b}\label{types_8h_ad258d4c51629346fceac4679b3209ad9} 
+SWITCH&\\
+\hline
+
+\end{DoxyEnumFields}

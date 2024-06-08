@@ -1,0 +1,152 @@
+\doxysection{headers/address.h File Reference}
+\hypertarget{address_8h}{}\label{address_8h}\index{headers/address.h@{headers/address.h}}
+{\ttfamily \#include "{}types.\+h"{}}\newline
+{\ttfamily \#include "{}utils.\+h"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{address_8h_aa3bfbd76bee01c01d776e7491f08935e}{print\+\_\+ip\+\_\+address}} (\mbox{\hyperlink{struct_i_p_address}{IPAddress}} \texorpdfstring{$\ast$}{*}ip\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Prints an IP address. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{address_8h_a3c9eabcfeda2dedd242ba9653ad9533f}{print\+\_\+mac\+\_\+address}} (\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Prints a MAC address. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{address_8h_a2578cd2aa6fde3f7889579839b655228}{ip\+\_\+address\+\_\+to\+\_\+string}} (\mbox{\hyperlink{struct_i_p_address}{IPAddress}} \texorpdfstring{$\ast$}{*}ip\+\_\+address, char \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Converts an IP address to a string. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{address_8h_af2a775cb854a85d598dca8f90634fb16}{mac\+\_\+address\+\_\+to\+\_\+string}} (\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac\+\_\+address, char \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Converts a MAC address to a string. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_i_p_address}{IPAddress}} \mbox{\hyperlink{address_8h_adf8b9f11c9eaf03132144f95d2796934}{ip\+\_\+address\+\_\+from\+\_\+string}} (char \texorpdfstring{$\ast$}{*}string)
+\begin{DoxyCompactList}\small\item\em Converts a string to an IP address. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \mbox{\hyperlink{address_8h_ab2c100360ed89232b14d2bd70819fb36}{mac\+\_\+address\+\_\+from\+\_\+string}} (char \texorpdfstring{$\ast$}{*}string)
+\begin{DoxyCompactList}\small\item\em Converts a string to a MAC address. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{address_8h_a1844893fa09b50d264d196ebce5f6c90}{compare\+\_\+mac\+\_\+address}} (\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac1, \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac2)
+\begin{DoxyCompactList}\small\item\em Compares two MAC addresses. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{address_8h_a1844893fa09b50d264d196ebce5f6c90}\index{address.h@{address.h}!compare\_mac\_address@{compare\_mac\_address}}
+\index{compare\_mac\_address@{compare\_mac\_address}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{compare\_mac\_address()}{compare\_mac\_address()}}
+{\footnotesize\ttfamily \label{address_8h_a1844893fa09b50d264d196ebce5f6c90} 
+int compare\+\_\+mac\+\_\+address (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac1}{, }\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac2}{}\end{DoxyParamCaption})}
+
+
+
+Compares two MAC addresses. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mac1} & The first MAC address \\
+\hline
+{\em mac2} & The second MAC address \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if mac1 \texorpdfstring{$>$}{>} mac2, -\/1 if mac1 \texorpdfstring{$<$}{<} mac2, 0 if mac1 == mac2 
+\end{DoxyReturn}
+\Hypertarget{address_8h_adf8b9f11c9eaf03132144f95d2796934}\index{address.h@{address.h}!ip\_address\_from\_string@{ip\_address\_from\_string}}
+\index{ip\_address\_from\_string@{ip\_address\_from\_string}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{ip\_address\_from\_string()}{ip\_address\_from\_string()}}
+{\footnotesize\ttfamily \label{address_8h_adf8b9f11c9eaf03132144f95d2796934} 
+\mbox{\hyperlink{struct_i_p_address}{IPAddress}} ip\+\_\+address\+\_\+from\+\_\+string (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{string}{}\end{DoxyParamCaption})}
+
+
+
+Converts a string to an IP address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & The string to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The IP address 
+\end{DoxyReturn}
+\Hypertarget{address_8h_a2578cd2aa6fde3f7889579839b655228}\index{address.h@{address.h}!ip\_address\_to\_string@{ip\_address\_to\_string}}
+\index{ip\_address\_to\_string@{ip\_address\_to\_string}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{ip\_address\_to\_string()}{ip\_address\_to\_string()}}
+{\footnotesize\ttfamily \label{address_8h_a2578cd2aa6fde3f7889579839b655228} 
+char \texorpdfstring{$\ast$}{*} ip\+\_\+address\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_p_address}{IPAddress}} \texorpdfstring{$\ast$}{*}}]{ip\+\_\+address}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{}\end{DoxyParamCaption})}
+
+
+
+Converts an IP address to a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip\+\_\+address} & The IP address to convert \\
+\hline
+{\em output} & The string to output the IP address to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The IP address as a string 
+\end{DoxyReturn}
+\Hypertarget{address_8h_ab2c100360ed89232b14d2bd70819fb36}\index{address.h@{address.h}!mac\_address\_from\_string@{mac\_address\_from\_string}}
+\index{mac\_address\_from\_string@{mac\_address\_from\_string}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{mac\_address\_from\_string()}{mac\_address\_from\_string()}}
+{\footnotesize\ttfamily \label{address_8h_ab2c100360ed89232b14d2bd70819fb36} 
+\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} mac\+\_\+address\+\_\+from\+\_\+string (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{string}{}\end{DoxyParamCaption})}
+
+
+
+Converts a string to a MAC address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & The string to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The MAC address 
+\end{DoxyReturn}
+\Hypertarget{address_8h_af2a775cb854a85d598dca8f90634fb16}\index{address.h@{address.h}!mac\_address\_to\_string@{mac\_address\_to\_string}}
+\index{mac\_address\_to\_string@{mac\_address\_to\_string}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{mac\_address\_to\_string()}{mac\_address\_to\_string()}}
+{\footnotesize\ttfamily \label{address_8h_af2a775cb854a85d598dca8f90634fb16} 
+char \texorpdfstring{$\ast$}{*} mac\+\_\+address\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac\+\_\+address}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{}\end{DoxyParamCaption})}
+
+
+
+Converts a MAC address to a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mac\+\_\+address} & The MAC address to convert \\
+\hline
+{\em output} & The string to output the MAC address to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The mac address as a string 
+\end{DoxyReturn}
+\Hypertarget{address_8h_aa3bfbd76bee01c01d776e7491f08935e}\index{address.h@{address.h}!print\_ip\_address@{print\_ip\_address}}
+\index{print\_ip\_address@{print\_ip\_address}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{print\_ip\_address()}{print\_ip\_address()}}
+{\footnotesize\ttfamily \label{address_8h_aa3bfbd76bee01c01d776e7491f08935e} 
+void print\+\_\+ip\+\_\+address (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_i_p_address}{IPAddress}} \texorpdfstring{$\ast$}{*}}]{ip\+\_\+address}{}\end{DoxyParamCaption})}
+
+
+
+Prints an IP address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip\+\_\+address} & The IP address to print \\
+\hline
+\end{DoxyParams}
+\Hypertarget{address_8h_a3c9eabcfeda2dedd242ba9653ad9533f}\index{address.h@{address.h}!print\_mac\_address@{print\_mac\_address}}
+\index{print\_mac\_address@{print\_mac\_address}!address.h@{address.h}}
+\doxysubsubsection{\texorpdfstring{print\_mac\_address()}{print\_mac\_address()}}
+{\footnotesize\ttfamily \label{address_8h_a3c9eabcfeda2dedd242ba9653ad9533f} 
+void print\+\_\+mac\+\_\+address (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac\+\_\+address}{}\end{DoxyParamCaption})}
+
+
+
+Prints a MAC address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mac\+\_\+address} & The MAC address to print \\
+\hline
+\end{DoxyParams}

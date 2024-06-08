@@ -1,0 +1,210 @@
+\doxysection{frame.\+c File Reference}
+\hypertarget{frame_8c}{}\label{frame_8c}\index{frame.c@{frame.c}}
+{\ttfamily \#include "{}headers/frame.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{frame_8c_a6aa72b132660b87ac462414a7eb61085}{frame\+\_\+init}} (\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame, \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} src, \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} dest, uint16\+\_\+t type, char \texorpdfstring{$\ast$}{*}data)
+\begin{DoxyCompactList}\small\item\em Initializes a frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frame_8c_a221e81d7fd8e454d984f729b43cac7b2}{frame\+\_\+print\+\_\+data\+\_\+user\+\_\+mode}} (\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame)
+\begin{DoxyCompactList}\small\item\em Prints the data of a frame in user mode. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frame_8c_a328879cab89fb76b974781e07a07e2a2}{frame\+\_\+print\+\_\+data\+\_\+hex\+\_\+mode}} (\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame)
+\begin{DoxyCompactList}\small\item\em Prints the data of a frame in hexadecimal mode. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frame_8c_aeec995ab824e01f4846ceedc0c070433}{add\+\_\+entry\+\_\+to\+\_\+switching\+\_\+table}} (\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}switch\+\_\+, \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac\+\_\+address, uint8\+\_\+t port\+\_\+number)
+\begin{DoxyCompactList}\small\item\em Adds an entry to the switching table of a switch. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{frame_8c_aa283ac0a211d2f0ed80e51f61e2ce268}{check\+\_\+switching\+\_\+table\+\_\+entries}} (\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}switch\+\_\+, \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Checks if a MAC address is in the switching table of a switch. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{frame_8c_ae7158b82327f18a0cd12d5cfab088f38}{get\+\_\+port\+\_\+number}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}switch\+\_\+, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Gets the port number of a device connected to a switch. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frame_8c_a3a7a1f61399384cd692b519a4e1125da}{send\+\_\+frame}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}new\+\_\+source, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}previous\+\_\+source, \mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame)
+\begin{DoxyCompactList}\small\item\em Sends a frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frame_8c_a4af2e3766460af4889427a52832a7cfd}{flood\+\_\+frame}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}source, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}previous\+\_\+source, \mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame)
+\begin{DoxyCompactList}\small\item\em Floods a frame in all the ports of a switch except the port from which the frame was received. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{frame_8c_a8e2f640bad6f1f870059efa6316b57a0}{receive\+\_\+frame}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}device, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}previous\+\_\+device, \mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame)
+\begin{DoxyCompactList}\small\item\em Receives a frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{frame_8c_aeec995ab824e01f4846ceedc0c070433}\index{frame.c@{frame.c}!add\_entry\_to\_switching\_table@{add\_entry\_to\_switching\_table}}
+\index{add\_entry\_to\_switching\_table@{add\_entry\_to\_switching\_table}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{add\_entry\_to\_switching\_table()}{add\_entry\_to\_switching\_table()}}
+{\footnotesize\ttfamily \label{frame_8c_aeec995ab824e01f4846ceedc0c070433} 
+void add\+\_\+entry\+\_\+to\+\_\+switching\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{switch\+\_\+}{, }\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac\+\_\+address}{, }\item[{uint8\+\_\+t}]{port\+\_\+number}{}\end{DoxyParamCaption})}
+
+
+
+Adds an entry to the switching table of a switch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em switch\+\_\+} & The switch \\
+\hline
+{\em mac\+\_\+address} & The MAC address to add \\
+\hline
+{\em port\+\_\+number} & The port number to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+You should pass in a pointer to the device not to the switch itself 
+\end{DoxyNote}
+\Hypertarget{frame_8c_aa283ac0a211d2f0ed80e51f61e2ce268}\index{frame.c@{frame.c}!check\_switching\_table\_entries@{check\_switching\_table\_entries}}
+\index{check\_switching\_table\_entries@{check\_switching\_table\_entries}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{check\_switching\_table\_entries()}{check\_switching\_table\_entries()}}
+{\footnotesize\ttfamily \label{frame_8c_aa283ac0a211d2f0ed80e51f61e2ce268} 
+int check\+\_\+switching\+\_\+table\+\_\+entries (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{switch\+\_\+}{, }\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac\+\_\+address}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a MAC address is in the switching table of a switch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em switch\+\_\+} & The switch \\
+\hline
+{\em mac\+\_\+address} & The MAC address to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The port number if the MAC address is in the switching table, -\/1 otherwise 
+\end{DoxyReturn}
+\Hypertarget{frame_8c_a4af2e3766460af4889427a52832a7cfd}\index{frame.c@{frame.c}!flood\_frame@{flood\_frame}}
+\index{flood\_frame@{flood\_frame}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{flood\_frame()}{flood\_frame()}}
+{\footnotesize\ttfamily \label{frame_8c_a4af2e3766460af4889427a52832a7cfd} 
+void flood\+\_\+frame (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{previous\+\_\+source}{, }\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Floods a frame in all the ports of a switch except the port from which the frame was received. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em source} & The source device \\
+\hline
+{\em previous\+\_\+source} & The previous source device \\
+\hline
+{\em frame} & The frame to flood \\
+\hline
+\end{DoxyParams}
+\Hypertarget{frame_8c_a6aa72b132660b87ac462414a7eb61085}\index{frame.c@{frame.c}!frame\_init@{frame\_init}}
+\index{frame\_init@{frame\_init}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{frame\_init()}{frame\_init()}}
+{\footnotesize\ttfamily \label{frame_8c_a6aa72b132660b87ac462414a7eb61085} 
+void frame\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{, }\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}}]{src}{, }\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}}]{dest}{, }\item[{uint16\+\_\+t}]{type}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{data}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The frame to initialize \\
+\hline
+{\em src} & The source MAC address \\
+\hline
+{\em dest} & The destination MAC address \\
+\hline
+{\em type} & The type of the frame \\
+\hline
+{\em data} & The data of the frame \\
+\hline
+\end{DoxyParams}
+\Hypertarget{frame_8c_a328879cab89fb76b974781e07a07e2a2}\index{frame.c@{frame.c}!frame\_print\_data\_hex\_mode@{frame\_print\_data\_hex\_mode}}
+\index{frame\_print\_data\_hex\_mode@{frame\_print\_data\_hex\_mode}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{frame\_print\_data\_hex\_mode()}{frame\_print\_data\_hex\_mode()}}
+{\footnotesize\ttfamily \label{frame_8c_a328879cab89fb76b974781e07a07e2a2} 
+void frame\+\_\+print\+\_\+data\+\_\+hex\+\_\+mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Prints the data of a frame in hexadecimal mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The frame to print \\
+\hline
+\end{DoxyParams}
+\Hypertarget{frame_8c_a221e81d7fd8e454d984f729b43cac7b2}\index{frame.c@{frame.c}!frame\_print\_data\_user\_mode@{frame\_print\_data\_user\_mode}}
+\index{frame\_print\_data\_user\_mode@{frame\_print\_data\_user\_mode}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{frame\_print\_data\_user\_mode()}{frame\_print\_data\_user\_mode()}}
+{\footnotesize\ttfamily \label{frame_8c_a221e81d7fd8e454d984f729b43cac7b2} 
+void frame\+\_\+print\+\_\+data\+\_\+user\+\_\+mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Prints the data of a frame in user mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The frame to print \\
+\hline
+\end{DoxyParams}
+\Hypertarget{frame_8c_ae7158b82327f18a0cd12d5cfab088f38}\index{frame.c@{frame.c}!get\_port\_number@{get\_port\_number}}
+\index{get\_port\_number@{get\_port\_number}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{get\_port\_number()}{get\_port\_number()}}
+{\footnotesize\ttfamily \label{frame_8c_ae7158b82327f18a0cd12d5cfab088f38} 
+uint8\+\_\+t get\+\_\+port\+\_\+number (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{switch\+\_\+}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
+
+
+
+Gets the port number of a device connected to a switch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em switch\+\_\+} & The switch \\
+\hline
+{\em device} & The device \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The port number 
+\end{DoxyReturn}
+\Hypertarget{frame_8c_a8e2f640bad6f1f870059efa6316b57a0}\index{frame.c@{frame.c}!receive\_frame@{receive\_frame}}
+\index{receive\_frame@{receive\_frame}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{receive\_frame()}{receive\_frame()}}
+{\footnotesize\ttfamily \label{frame_8c_a8e2f640bad6f1f870059efa6316b57a0} 
+bool receive\+\_\+frame (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{previous\+\_\+device}{, }\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Receives a frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em device} & The device that received the frame \\
+\hline
+{\em previous\+\_\+device} & The previous device that sent the frame \\
+\hline
+{\em frame} & The frame to receive \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the frame was received, false otherwise 
+\end{DoxyReturn}
+\Hypertarget{frame_8c_a3a7a1f61399384cd692b519a4e1125da}\index{frame.c@{frame.c}!send\_frame@{send\_frame}}
+\index{send\_frame@{send\_frame}!frame.c@{frame.c}}
+\doxysubsubsection{\texorpdfstring{send\_frame()}{send\_frame()}}
+{\footnotesize\ttfamily \label{frame_8c_a3a7a1f61399384cd692b519a4e1125da} 
+void send\+\_\+frame (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{new\+\_\+source}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{previous\+\_\+source}{, }\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Sends a frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em new\+\_\+source} & The new source device that received the frame \\
+\hline
+{\em previous\+\_\+source} & The previous source device that sent the frame \\
+\hline
+{\em frame} & The frame to send \\
+\hline
+\end{DoxyParams}

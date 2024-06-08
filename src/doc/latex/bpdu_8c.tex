@@ -1,0 +1,167 @@
+\doxysection{bpdu.\+c File Reference}
+\hypertarget{bpdu_8c}{}\label{bpdu_8c}\index{bpdu.c@{bpdu.c}}
+{\ttfamily \#include "{}headers/bpdu.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{bpdu_8c_af2b676c55f46cb52bdb251c16f46119f}{bpdu\+\_\+to\+\_\+string}} (\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}bpdu, char \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Converts a \doxylink{struct_b_p_d_u}{BPDU} to a string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bpdu_8c_a0dd7d536c44c9a366f114b02e484ae14}{bpdu\+\_\+to\+\_\+frame}} (\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}bpdu, \mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame)
+\begin{DoxyCompactList}\small\item\em Converts a \doxylink{struct_b_p_d_u}{BPDU} to a frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bpdu_8c_a977692b3c8656a73ed8ccd6739fdedab}{frame\+\_\+to\+\_\+bpdu}} (\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}frame, \mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}bpdu)
+\begin{DoxyCompactList}\small\item\em Converts a frame to a \doxylink{struct_b_p_d_u}{BPDU}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bpdu_8c_ab792f754b001d98b9f08c31bac41431b}{print\+\_\+bpdu}} (\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}bpdu)
+\begin{DoxyCompactList}\small\item\em Prints a \doxylink{struct_b_p_d_u}{BPDU}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bpdu_8c_afd525f1d89b60f8bbf019deb47fcf5ea}{assign\+\_\+bpdu}} (\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Assigns a \doxylink{struct_b_p_d_u}{BPDU} to a device. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{bpdu_8c_a64c131b71ee3af29afe047bca342493e}{compare\+\_\+bpdu}} (\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}bpdu1, \mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}bpdu2)
+\begin{DoxyCompactList}\small\item\em Compares two BPDUs. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{bpdu_8c_a9d503c89f9c42545797001950bc3804a}{update\+\_\+bpdu}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}device, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}previous\+\_\+device, \mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}new\+\_\+bpdu)
+\begin{DoxyCompactList}\small\item\em Updates a \doxylink{struct_b_p_d_u}{BPDU}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bpdu_8c_a2c84d271d3ac67b2f8a07e1fa6e5af56}{send\+\_\+bpdu}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Sends a \doxylink{struct_b_p_d_u}{BPDU}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bpdu_8c_afd525f1d89b60f8bbf019deb47fcf5ea}\index{bpdu.c@{bpdu.c}!assign\_bpdu@{assign\_bpdu}}
+\index{assign\_bpdu@{assign\_bpdu}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{assign\_bpdu()}{assign\_bpdu()}}
+{\footnotesize\ttfamily \label{bpdu_8c_afd525f1d89b60f8bbf019deb47fcf5ea} 
+void assign\+\_\+bpdu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
+
+
+
+Assigns a \doxylink{struct_b_p_d_u}{BPDU} to a device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em device} & The device to assign the \doxylink{struct_b_p_d_u}{BPDU} to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bpdu_8c_a0dd7d536c44c9a366f114b02e484ae14}\index{bpdu.c@{bpdu.c}!bpdu\_to\_frame@{bpdu\_to\_frame}}
+\index{bpdu\_to\_frame@{bpdu\_to\_frame}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{bpdu\_to\_frame()}{bpdu\_to\_frame()}}
+{\footnotesize\ttfamily \label{bpdu_8c_a0dd7d536c44c9a366f114b02e484ae14} 
+void bpdu\+\_\+to\+\_\+frame (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{bpdu}{, }\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Converts a \doxylink{struct_b_p_d_u}{BPDU} to a frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpdu} & The \doxylink{struct_b_p_d_u}{BPDU} to convert \\
+\hline
+{\em frame} & The frame to output the \doxylink{struct_b_p_d_u}{BPDU} to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bpdu_8c_af2b676c55f46cb52bdb251c16f46119f}\index{bpdu.c@{bpdu.c}!bpdu\_to\_string@{bpdu\_to\_string}}
+\index{bpdu\_to\_string@{bpdu\_to\_string}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{bpdu\_to\_string()}{bpdu\_to\_string()}}
+{\footnotesize\ttfamily \label{bpdu_8c_af2b676c55f46cb52bdb251c16f46119f} 
+void bpdu\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{bpdu}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{}\end{DoxyParamCaption})}
+
+
+
+Converts a \doxylink{struct_b_p_d_u}{BPDU} to a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpdu} & The \doxylink{struct_b_p_d_u}{BPDU} to convert \\
+\hline
+{\em output} & The string to output the \doxylink{struct_b_p_d_u}{BPDU} to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bpdu_8c_a64c131b71ee3af29afe047bca342493e}\index{bpdu.c@{bpdu.c}!compare\_bpdu@{compare\_bpdu}}
+\index{compare\_bpdu@{compare\_bpdu}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{compare\_bpdu()}{compare\_bpdu()}}
+{\footnotesize\ttfamily \label{bpdu_8c_a64c131b71ee3af29afe047bca342493e} 
+int compare\+\_\+bpdu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{bpdu1}{, }\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{bpdu2}{}\end{DoxyParamCaption})}
+
+
+
+Compares two BPDUs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpdu1} & The first \doxylink{struct_b_p_d_u}{BPDU} \\
+\hline
+{\em bpdu2} & The second \doxylink{struct_b_p_d_u}{BPDU} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if bpdu1 is greater, -\/1 if bpdu2 is greater, 0 if they are equal 
+\end{DoxyReturn}
+\Hypertarget{bpdu_8c_a977692b3c8656a73ed8ccd6739fdedab}\index{bpdu.c@{bpdu.c}!frame\_to\_bpdu@{frame\_to\_bpdu}}
+\index{frame\_to\_bpdu@{frame\_to\_bpdu}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{frame\_to\_bpdu()}{frame\_to\_bpdu()}}
+{\footnotesize\ttfamily \label{bpdu_8c_a977692b3c8656a73ed8ccd6739fdedab} 
+void frame\+\_\+to\+\_\+bpdu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_frame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame}{, }\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{bpdu}{}\end{DoxyParamCaption})}
+
+
+
+Converts a frame to a \doxylink{struct_b_p_d_u}{BPDU}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The frame to convert \\
+\hline
+{\em bpdu} & The \doxylink{struct_b_p_d_u}{BPDU} to output the frame to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bpdu_8c_ab792f754b001d98b9f08c31bac41431b}\index{bpdu.c@{bpdu.c}!print\_bpdu@{print\_bpdu}}
+\index{print\_bpdu@{print\_bpdu}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{print\_bpdu()}{print\_bpdu()}}
+{\footnotesize\ttfamily \label{bpdu_8c_ab792f754b001d98b9f08c31bac41431b} 
+void print\+\_\+bpdu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{bpdu}{}\end{DoxyParamCaption})}
+
+
+
+Prints a \doxylink{struct_b_p_d_u}{BPDU}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpdu} & The \doxylink{struct_b_p_d_u}{BPDU} to print \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bpdu_8c_a2c84d271d3ac67b2f8a07e1fa6e5af56}\index{bpdu.c@{bpdu.c}!send\_bpdu@{send\_bpdu}}
+\index{send\_bpdu@{send\_bpdu}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{send\_bpdu()}{send\_bpdu()}}
+{\footnotesize\ttfamily \label{bpdu_8c_a2c84d271d3ac67b2f8a07e1fa6e5af56} 
+void send\+\_\+bpdu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
+
+
+
+Sends a \doxylink{struct_b_p_d_u}{BPDU}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em device} & The device to send the \doxylink{struct_b_p_d_u}{BPDU} from \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bpdu_8c_a9d503c89f9c42545797001950bc3804a}\index{bpdu.c@{bpdu.c}!update\_bpdu@{update\_bpdu}}
+\index{update\_bpdu@{update\_bpdu}!bpdu.c@{bpdu.c}}
+\doxysubsubsection{\texorpdfstring{update\_bpdu()}{update\_bpdu()}}
+{\footnotesize\ttfamily \label{bpdu_8c_a9d503c89f9c42545797001950bc3804a} 
+bool update\+\_\+bpdu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{device}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{previous\+\_\+device}{, }\item[{\mbox{\hyperlink{struct_b_p_d_u}{BPDU}} \texorpdfstring{$\ast$}{*}}]{new\+\_\+bpdu}{}\end{DoxyParamCaption})}
+
+
+
+Updates a \doxylink{struct_b_p_d_u}{BPDU}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em device} & The device to update the \doxylink{struct_b_p_d_u}{BPDU} of \\
+\hline
+{\em previous\+\_\+device} & The previous device that sent the \doxylink{struct_b_p_d_u}{BPDU} \\
+\hline
+{\em new\+\_\+bpdu} & The new \doxylink{struct_b_p_d_u}{BPDU} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the \doxylink{struct_b_p_d_u}{BPDU} was updated, false otherwise 
+\end{DoxyReturn}

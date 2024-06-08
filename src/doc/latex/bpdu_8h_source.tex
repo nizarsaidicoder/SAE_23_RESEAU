@@ -1,0 +1,21 @@
+\doxysection{bpdu.\+h}
+\hypertarget{bpdu_8h_source}{}\label{bpdu_8h_source}\index{headers/bpdu.h@{headers/bpdu.h}}
+\mbox{\hyperlink{bpdu_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{network_8h}{network.h}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{device_8h}{device.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{frame_8h}{frame.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{bpdu_8h_a9d503c89f9c42545797001950bc3804a}{update\_bpdu}}(\mbox{\hyperlink{struct_network}{Network}}\ *network,\ \mbox{\hyperlink{struct_device}{Device}}\ *device,\ \mbox{\hyperlink{struct_device}{Device}}\ *previous\_device,\ \mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *new\_bpdu);}
+\DoxyCodeLine{00009\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bpdu_8h_a2c84d271d3ac67b2f8a07e1fa6e5af56}{send\_bpdu}}(\mbox{\hyperlink{struct_network}{Network}}\ *network,\ \mbox{\hyperlink{struct_device}{Device}}\ *device);}
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bpdu_8h_ab792f754b001d98b9f08c31bac41431b}{print\_bpdu}}(\mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *bpdu);}
+\DoxyCodeLine{00011\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bpdu_8h_a0dd7d536c44c9a366f114b02e484ae14}{bpdu\_to\_frame}}(\mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *bpdu,\ \mbox{\hyperlink{struct_frame}{Frame}}\ *frame);}
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bpdu_8h_a977692b3c8656a73ed8ccd6739fdedab}{frame\_to\_bpdu}}(\mbox{\hyperlink{struct_frame}{Frame}}\ *frame,\ \mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *bpdu);}
+\DoxyCodeLine{00013\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bpdu_8h_af2b676c55f46cb52bdb251c16f46119f}{bpdu\_to\_string}}(\mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *bpdu,\ \textcolor{keywordtype}{char}\ *output);}
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{bpdu_8h_a64c131b71ee3af29afe047bca342493e}{compare\_bpdu}}(\mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *bpdu1,\ \mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ *bpdu2);}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bpdu_8h_afd525f1d89b60f8bbf019deb47fcf5ea}{assign\_bpdu}}(\mbox{\hyperlink{struct_device}{Device}}\ *device);}
+
+\end{DoxyCode}

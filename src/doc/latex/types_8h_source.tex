@@ -1,0 +1,135 @@
+\doxysection{types.\+h}
+\hypertarget{types_8h_source}{}\label{types_8h_source}\index{headers/types.h@{headers/types.h}}
+\mbox{\hyperlink{types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ MAC\_BUFFER\_SIZE\ 18}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ IP\_BUFFER\_SIZE\ 16}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ BPDU\_BUFFER\_SIZE\ 256}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ BPDU\_FRAME\_TYPE\ 0x4242}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ An\ IP\ address\ is\ an\ array\ of\ 4\ bytes\ (uint8\_t)\ each\ representing\ an\ octet\ of\ the\ address}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_i_p_address}{IPAddress}}}
+\DoxyCodeLine{00016\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_i_p_address_addf23a7962e43c9ba2ed54c76bd937d3}{address}}[4];}
+\DoxyCodeLine{00018\ \}\ \mbox{\hyperlink{types_8h_a024fa5fb50879de3cba5985b06ab636c}{IPAddress}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ A\ MAC\ address\ is\ an\ array\ of\ 6\ bytes\ (uint8\_t)\ each\ representing\ an\ octet\ of\ the\ address}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_m_a_c_address_a3859a5a24fa98fcde6ab0e29800d2318}{address}}[6];}
+\DoxyCodeLine{00024\ \}\ \mbox{\hyperlink{types_8h_a59479c2d3e3d85f4ac4f0df98a469712}{MACAddress}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ A\ station\ has\ an\ IP\ address}}
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_station}{Station}}}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{struct_i_p_address}{IPAddress}}\ \mbox{\hyperlink{struct_station_a37377cea9219b1f442c465827713b00e}{ip\_address}};}
+\DoxyCodeLine{00030\ \}\ \mbox{\hyperlink{types_8h_ae61f219c5dc542fb4f96c7795dda5d7c}{Station}};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_frame}{Frame}}}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ [170,\ 170,\ 170,\ 170,\ 170,\ 170,\ 170]}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_frame_a60c6852a93f32c670ebc254c1fc03ddd}{preambule}}[7];}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ 171}}
+\DoxyCodeLine{00038\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_frame_afc4ee4198bd729e055daa455ac15fc7b}{SFD}};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ \mbox{\hyperlink{struct_frame_a85227d192d1ae4139177fcd1b4adb2f4}{dest}};}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ \mbox{\hyperlink{struct_frame_a7c4c33e6065f12b3db4b547ecd7678a9}{src}};}
+\DoxyCodeLine{00041\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_frame_acb5cfd209ba75c853d03f701e7f91679}{type}};}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_frame_a74aa95c087046084f6bd0d4bf91c5985}{data}}[1500];}
+\DoxyCodeLine{00043\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{struct_frame_a23b97c686e33adf3cc3b3de50b9d0951}{FCS}};}
+\DoxyCodeLine{00044\ \}\ \mbox{\hyperlink{types_8h_a8bed1e36372ccc1470e37e91647cce20}{Frame}};}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ A\ port\ has\ a\ state\ and\ a\ role}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ ROLES}}
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ R:\ ROOT}}
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ D:\ DESIGNATED}}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ B:\ BLOCKING}}
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ STATES}}
+\DoxyCodeLine{00051\ \textcolor{comment}{//\ F:\ FORWARDING}}
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ B:\ BLOCKING}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ D:\ DISABLED}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ L:\ LISTENING}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_port}{Port}}}
+\DoxyCodeLine{00056\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_port_ae71f2ec2ec97bc1837b4edebd77ecfb4}{role}};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{struct_port_afc09df66e4e1131bad27f84d29bd8726}{state}};}
+\DoxyCodeLine{00059\ \}\ \mbox{\hyperlink{types_8h_ab8a34c2ba1bce23340aa699773be24d0}{Port}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_b_p_d_u}{BPDU}}}
+\DoxyCodeLine{00062\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_b_p_d_u_a7782fdf578e684c12eb664bd4321790a}{root\_bridge\_priority}};}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ \mbox{\hyperlink{struct_b_p_d_u_a76717d209b6827e0ed668576195f7e59}{root\_bridge\_mac\_address}};}
+\DoxyCodeLine{00065\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_b_p_d_u_a853b2090bc636db4f6119c076ee3f07b}{root\_path\_cost}};}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ \mbox{\hyperlink{struct_b_p_d_u_ab4078590e33b30ace2b92f6662117847}{sender\_mac\_address}};}
+\DoxyCodeLine{00067\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_b_p_d_u_a8b729b390fd226dcf84c5932a5826a67}{sender\_priority}};}
+\DoxyCodeLine{00068\ \}\ \mbox{\hyperlink{types_8h_a525c452821448f53cb43175f131d3557}{BPDU}};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_switching_table_entry}{SwitchingTableEntry}}}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ \mbox{\hyperlink{struct_switching_table_entry_afe0346872e94753ab0f141e200093c38}{mac\_address}};}
+\DoxyCodeLine{00073\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_switching_table_entry_add1c9449f0d271348b8621a262ca822b}{port\_number}};}
+\DoxyCodeLine{00074\ \}\ \mbox{\hyperlink{types_8h_ab8fd1cf17a41f38aea71edcb2dd2e99a}{SwitchingTableEntry}};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ A\ switch\ has\ an\ IP\ address,\ a\ number\ of\ ports\ and\ a\ switching\ table\ and\ ports\ maybe\ ??}}
+\DoxyCodeLine{00077\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_switch}{Switch}}}
+\DoxyCodeLine{00078\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_switch_a0815784d41b3c13d42ce22367abfba1d}{priority}};}
+\DoxyCodeLine{00080\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_switch_a8584c5e1f2a1ec30387f93538bdf2b00}{num\_ports}};}
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{struct_port}{Port}}\ *\mbox{\hyperlink{struct_switch_a3f4aca8d432ab64b2d089713216f5c3f}{ports}};}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{struct_switching_table_entry}{SwitchingTableEntry}}\ \mbox{\hyperlink{struct_switch_a9fa9d12b433c6537441feaa83be37c34}{switching\_table}}[256];}
+\DoxyCodeLine{00083\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_switch_adebc56f3c0cdb6eb25641cfe980f770b}{switching\_table\_entries}};}
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{struct_b_p_d_u}{BPDU}}\ \mbox{\hyperlink{struct_switch_aa8576e233fce9925282ee7eda43d75df}{bpdu}};}
+\DoxyCodeLine{00085\ \}\ \mbox{\hyperlink{types_8h_a95849d3f8e0b92836fdbdfb5615ada36}{Switch}};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{comment}{//\ A\ device\ can\ be\ a\ station\ or\ a\ switch}}
+\DoxyCodeLine{00088\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{DeviceType}}}
+\DoxyCodeLine{00089\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9abe1ce018b886341a69d81ead8cffc786}{STATION}},}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9a53396ea1193548270407675ea4eeee2b}{SWITCH}}}
+\DoxyCodeLine{00092\ \}\ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{DeviceType}};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ A\ Device\ has\ a\ type\ (station\ or\ switch),\ a\ MAC\ address\ and\ a\ union\ of\ either\ a\ station\ or\ a\ switch}}
+\DoxyCodeLine{00095\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_device}{Device}}}
+\DoxyCodeLine{00096\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{types_8h_ad258d4c51629346fceac4679b3209ad9}{DeviceType}}\ \mbox{\hyperlink{struct_device_a9f84bfb9fcab772dc4a1a817d7f2d97f}{type}};}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}}\ \mbox{\hyperlink{struct_device_afe0346872e94753ab0f141e200093c38}{mac\_address}};}
+\DoxyCodeLine{00099\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_device_a852b86a2eaee9852ada7a43e61e311a2}{index}};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{union}}
+\DoxyCodeLine{00101\ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_station}{Station}}\ \mbox{\hyperlink{struct_device_af4462e8df9c4a0581ed8387216b84243}{station\_info}};}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ IT\ SEEMS\ THAT\ SWITCH\ IS\ A\ RESERVED\ WORD\ IN\ C\ SO\ I\ CHANGED\ IT\ TO\ switch\_info}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_switch}{Switch}}\ \mbox{\hyperlink{struct_device_a90027f8d9aa6ffb4d71bdb4468bbca88}{switch\_info}};}
+\DoxyCodeLine{00105\ \ \ \ \ \};}
+\DoxyCodeLine{00106\ \}\ \mbox{\hyperlink{types_8h_a33b368418b6d04ff10d8eda0810269ed}{Device}};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{//\ A\ link\ is\ a\ connection\ between\ two\ devices\ "{}SIMILAR\ TO\ AN\ EDGE\ "{}ARETE"{}\ IN\ A\ GRAPH"{}}}
+\DoxyCodeLine{00109\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_link}{Link}}}
+\DoxyCodeLine{00110\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//\ device\ 1\ and\ device\ 2\ are\ the\ devices\ that\ are\ connected\ by\ the\ link}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ SHOULD\ WE\ USE\ POINTERS\ TO\ THE\ DEVICES\ OR\ JUST\ THE\ DEVICES\ INDEXES\ IN\ THE\ NETWORK\ ??}}
+\DoxyCodeLine{00113\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_link_a5c7e9769ef04c59a7fd203776129b9ae}{device1\_index}};}
+\DoxyCodeLine{00114\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_link_a5a7d386bc7f439d2e9176a62b3511a46}{device2\_index}};}
+\DoxyCodeLine{00115\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_link_a3c304b42c785c4cc5fa46842e2845a6b}{weight}};}
+\DoxyCodeLine{00116\ \}\ \mbox{\hyperlink{types_8h_a1228b3911a2b6c63936223c2606f8b6a}{Link}};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ A\ network\ has\ an\ array\ of\ devices\ and\ an\ array\ of\ links}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_network}{Network}}}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{struct_device}{Device}}\ *\mbox{\hyperlink{struct_network_abb596e3e577180f9dd054592265cc54f}{devices}};}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{struct_link}{Link}}\ *\mbox{\hyperlink{struct_network_a98efcd999532943d30b590292bc893d9}{links}};}
+\DoxyCodeLine{00123\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_network_acee5317ed5fb62fcea391085955b16a4}{link\_capacity}};}
+\DoxyCodeLine{00124\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_network_af3c7bae3d43f602491ff89964f4e88a5}{device\_capacity}};}
+\DoxyCodeLine{00125\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_network_a2f8d150f0b32cabb19ea9685922faf14}{num\_devices}};}
+\DoxyCodeLine{00126\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_network_aae56e82cc851580d8401ade6061b91b7}{num\_links}};}
+\DoxyCodeLine{00127\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_network_a221b718aaba772f3c068c035ffed5231}{num\_stations}};}
+\DoxyCodeLine{00128\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_network_a7287b7c44435c8d867278321b3a0acc4}{num\_switches}};}
+\DoxyCodeLine{00129\ \}\ \mbox{\hyperlink{types_8h_a5e783e42eddc16b9eb807fe441e845e9}{Network}};}
+
+\end{DoxyCode}

@@ -1,0 +1,79 @@
+\doxysection{headers/spanning\+\_\+tree\+\_\+protocol.h File Reference}
+\hypertarget{spanning__tree__protocol_8h}{}\label{spanning__tree__protocol_8h}\index{headers/spanning\_tree\_protocol.h@{headers/spanning\_tree\_protocol.h}}
+{\ttfamily \#include "{}types.\+h"{}}\newline
+{\ttfamily \#include "{}device.\+h"{}}\newline
+{\ttfamily \#include "{}utils.\+h"{}}\newline
+{\ttfamily \#include "{}frame.\+h"{}}\newline
+{\ttfamily \#include "{}network.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{spanning__tree__protocol_8h_a2bbdee60b416b157e8a44048446c1c95}{spanning\+\_\+tree\+\_\+protocol}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em This function activates the Spanning Tree Protocol. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spanning__tree__protocol_8h_a18014f02c05ec80764236c45d2890547}{elect\+\_\+root\+\_\+bridge}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Elects the root bridge. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spanning__tree__protocol_8h_a753760bc55631931fc4d33ca8c5d667b}{set\+\_\+block\+\_\+ports}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Blocks the ports of non-\/root bridges that are not root ports. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{spanning__tree__protocol_8h_a1d2b7a1f66f329b70f74f7fd3a1281ba}{set\+\_\+designated\+\_\+ports}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Set the designated ports of the non-\/root bridges. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{spanning__tree__protocol_8h_a18014f02c05ec80764236c45d2890547}\index{spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}!elect\_root\_bridge@{elect\_root\_bridge}}
+\index{elect\_root\_bridge@{elect\_root\_bridge}!spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}}
+\doxysubsubsection{\texorpdfstring{elect\_root\_bridge()}{elect\_root\_bridge()}}
+{\footnotesize\ttfamily \label{spanning__tree__protocol_8h_a18014f02c05ec80764236c45d2890547} 
+void elect\+\_\+root\+\_\+bridge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Elects the root bridge. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{spanning__tree__protocol_8h_a753760bc55631931fc4d33ca8c5d667b}\index{spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}!set\_block\_ports@{set\_block\_ports}}
+\index{set\_block\_ports@{set\_block\_ports}!spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}}
+\doxysubsubsection{\texorpdfstring{set\_block\_ports()}{set\_block\_ports()}}
+{\footnotesize\ttfamily \label{spanning__tree__protocol_8h_a753760bc55631931fc4d33ca8c5d667b} 
+void set\+\_\+block\+\_\+ports (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Blocks the ports of non-\/root bridges that are not root ports. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{spanning__tree__protocol_8h_a1d2b7a1f66f329b70f74f7fd3a1281ba}\index{spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}!set\_designated\_ports@{set\_designated\_ports}}
+\index{set\_designated\_ports@{set\_designated\_ports}!spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}}
+\doxysubsubsection{\texorpdfstring{set\_designated\_ports()}{set\_designated\_ports()}}
+{\footnotesize\ttfamily \label{spanning__tree__protocol_8h_a1d2b7a1f66f329b70f74f7fd3a1281ba} 
+void set\+\_\+designated\+\_\+ports (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Set the designated ports of the non-\/root bridges. 
+
+\Hypertarget{spanning__tree__protocol_8h_a2bbdee60b416b157e8a44048446c1c95}\index{spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}!spanning\_tree\_protocol@{spanning\_tree\_protocol}}
+\index{spanning\_tree\_protocol@{spanning\_tree\_protocol}!spanning\_tree\_protocol.h@{spanning\_tree\_protocol.h}}
+\doxysubsubsection{\texorpdfstring{spanning\_tree\_protocol()}{spanning\_tree\_protocol()}}
+{\footnotesize\ttfamily \label{spanning__tree__protocol_8h_a2bbdee60b416b157e8a44048446c1c95} 
+void spanning\+\_\+tree\+\_\+protocol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+This function activates the Spanning Tree Protocol. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function should be called after the network has been initialized and the devices have been added to the network 
+\end{DoxyNote}

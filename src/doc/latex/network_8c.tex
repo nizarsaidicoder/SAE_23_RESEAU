@@ -1,0 +1,322 @@
+\doxysection{network.\+c File Reference}
+\hypertarget{network_8c}{}\label{network_8c}\index{network.c@{network.c}}
+{\ttfamily \#include "{}headers/network.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{network_8c_abc29155cbf8d3ba92a8cb487bbabdc66}{MAX\+\_\+\+CAPACITY}}~10
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{network_8c_a296ae936e858c7ba7ccd45b670ea4e8f}{network\+\_\+init}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Initializes a network. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{network_8c_ad6669758bde2e3d2048b6e62d3cefa94}{network\+\_\+free}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Frees the memory allocated for a network. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{network_8c_a837bd10ec75a856ec1990ed53193de8b}{network\+\_\+num\+\_\+devices}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Returns the number of devices in the network. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{network_8c_a85fd7414039178666ca14bc7e103817a}{network\+\_\+num\+\_\+stations}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Returns the number of stations in the network. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{network_8c_a49a42966ee857f2ef88a55a78723b2ac}{network\+\_\+num\+\_\+switches}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Returns the number of switches in the network. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{network_8c_a9948d257e0d22da90d5d4f17c2720f22}{network\+\_\+num\+\_\+links}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Returns the number of links in the network. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{network_8c_a2a08fa75867793b323bd266969516a9d}{network\+\_\+add\+\_\+device}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}device)
+\begin{DoxyCompactList}\small\item\em Adds a device to the network. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{network_8c_aac41e8680a863e14f564805674f2b85c}{network\+\_\+link\+\_\+exists}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_link}{Link}} \texorpdfstring{$\ast$}{*}link)
+\begin{DoxyCompactList}\small\item\em Checks if a link already exists in the network. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{network_8c_ab232e575f46a3a2541fb7827c2b67ca9}{network\+\_\+link\+\_\+index}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_link}{Link}} \texorpdfstring{$\ast$}{*}link)
+\begin{DoxyCompactList}\small\item\em Returns the index of a link in the network. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{network_8c_a98d272bb3250bea69f46eee9f114db36}{network\+\_\+link\+\_\+weight}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, uint8\+\_\+t device1\+\_\+index, uint8\+\_\+t device2\+\_\+index)
+\begin{DoxyCompactList}\small\item\em Returns the weight of the link between two devices. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{network_8c_a86d1c3ef51c263bde42c85fddeb34cb6}{network\+\_\+add\+\_\+link}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_link}{Link}} \texorpdfstring{$\ast$}{*}link)
+\begin{DoxyCompactList}\small\item\em Adds a link to the network. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{network_8c_aafc3bb06b7613e487a9d815a0aaec7b2}{network\+\_\+print}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network)
+\begin{DoxyCompactList}\small\item\em Prints the network structure. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{network_8c_a50808c3676754ec5b9dd1e23bf6ced85}{network\+\_\+find\+\_\+device}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, \mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}mac\+\_\+address)
+\begin{DoxyCompactList}\small\item\em Finds a device in the network by its MAC address. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{network_8c_acd51b350953cd3b4eedd68c1368073bd}{find\+\_\+connected\+\_\+devices}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, uint16\+\_\+t device\+\_\+index, \mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}connected\+\_\+devices\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Finds the devices connected to a device. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{network_8c_a093cd84e935b741eead33f7117de76fb}{network\+\_\+from\+\_\+config}} (\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}network, char \texorpdfstring{$\ast$}{*}filename)
+\begin{DoxyCompactList}\small\item\em Configure a network structure from a file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{network_8c_abc29155cbf8d3ba92a8cb487bbabdc66}\index{network.c@{network.c}!MAX\_CAPACITY@{MAX\_CAPACITY}}
+\index{MAX\_CAPACITY@{MAX\_CAPACITY}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_CAPACITY}{MAX\_CAPACITY}}
+{\footnotesize\ttfamily \label{network_8c_abc29155cbf8d3ba92a8cb487bbabdc66} 
+\#define MAX\+\_\+\+CAPACITY~10}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{network_8c_acd51b350953cd3b4eedd68c1368073bd}\index{network.c@{network.c}!find\_connected\_devices@{find\_connected\_devices}}
+\index{find\_connected\_devices@{find\_connected\_devices}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{find\_connected\_devices()}{find\_connected\_devices()}}
+{\footnotesize\ttfamily \label{network_8c_acd51b350953cd3b4eedd68c1368073bd} 
+uint16\+\_\+t find\+\_\+connected\+\_\+devices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{uint16\+\_\+t}]{device\+\_\+index}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{connected\+\_\+devices}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Finds the devices connected to a device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em device\+\_\+index} & The index of the device \\
+\hline
+{\em connected\+\_\+devices} & The array of connected devices to fill \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of connected devices 
+\end{DoxyReturn}
+\Hypertarget{network_8c_a2a08fa75867793b323bd266969516a9d}\index{network.c@{network.c}!network\_add\_device@{network\_add\_device}}
+\index{network\_add\_device@{network\_add\_device}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_add\_device()}{network\_add\_device()}}
+{\footnotesize\ttfamily \label{network_8c_a2a08fa75867793b323bd266969516a9d} 
+void network\+\_\+add\+\_\+device (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*}}]{device}{}\end{DoxyParamCaption})}
+
+
+
+Adds a device to the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em device} & The device to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The device should be already initialized 
+\end{DoxyNote}
+\Hypertarget{network_8c_a86d1c3ef51c263bde42c85fddeb34cb6}\index{network.c@{network.c}!network\_add\_link@{network\_add\_link}}
+\index{network\_add\_link@{network\_add\_link}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_add\_link()}{network\_add\_link()}}
+{\footnotesize\ttfamily \label{network_8c_a86d1c3ef51c263bde42c85fddeb34cb6} 
+bool network\+\_\+add\+\_\+link (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_link}{Link}} \texorpdfstring{$\ast$}{*}}]{link}{}\end{DoxyParamCaption})}
+
+
+
+Adds a link to the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em link} & The link to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the link was added successfully 
+\end{DoxyReturn}
+\Hypertarget{network_8c_a50808c3676754ec5b9dd1e23bf6ced85}\index{network.c@{network.c}!network\_find\_device@{network\_find\_device}}
+\index{network\_find\_device@{network\_find\_device}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_find\_device()}{network\_find\_device()}}
+{\footnotesize\ttfamily \label{network_8c_a50808c3676754ec5b9dd1e23bf6ced85} 
+\mbox{\hyperlink{struct_device}{Device}} \texorpdfstring{$\ast$}{*} network\+\_\+find\+\_\+device (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_m_a_c_address}{MACAddress}} \texorpdfstring{$\ast$}{*}}]{mac\+\_\+address}{}\end{DoxyParamCaption})}
+
+
+
+Finds a device in the network by its MAC address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em mac\+\_\+address} & The MAC address of the device to find \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the device if found, NULL otherwise 
+\end{DoxyReturn}
+\Hypertarget{network_8c_ad6669758bde2e3d2048b6e62d3cefa94}\index{network.c@{network.c}!network\_free@{network\_free}}
+\index{network\_free@{network\_free}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_free()}{network\_free()}}
+{\footnotesize\ttfamily \label{network_8c_ad6669758bde2e3d2048b6e62d3cefa94} 
+void network\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Frees the memory allocated for a network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network to free \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8c_a093cd84e935b741eead33f7117de76fb}\index{network.c@{network.c}!network\_from\_config@{network\_from\_config}}
+\index{network\_from\_config@{network\_from\_config}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_from\_config()}{network\_from\_config()}}
+{\footnotesize\ttfamily \label{network_8c_a093cd84e935b741eead33f7117de76fb} 
+bool network\+\_\+from\+\_\+config (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Configure a network structure from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network to read into \\
+\hline
+{\em filename} & The name of the file to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the network was read successfully 
+\end{DoxyReturn}
+\Hypertarget{network_8c_a296ae936e858c7ba7ccd45b670ea4e8f}\index{network.c@{network.c}!network\_init@{network\_init}}
+\index{network\_init@{network\_init}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_init()}{network\_init()}}
+{\footnotesize\ttfamily \label{network_8c_a296ae936e858c7ba7ccd45b670ea4e8f} 
+void network\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Initializes a network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network to initialize \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8c_aac41e8680a863e14f564805674f2b85c}\index{network.c@{network.c}!network\_link\_exists@{network\_link\_exists}}
+\index{network\_link\_exists@{network\_link\_exists}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_link\_exists()}{network\_link\_exists()}}
+{\footnotesize\ttfamily \label{network_8c_aac41e8680a863e14f564805674f2b85c} 
+bool network\+\_\+link\+\_\+exists (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_link}{Link}} \texorpdfstring{$\ast$}{*}}]{link}{}\end{DoxyParamCaption})}
+
+
+
+Checks if a link already exists in the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em link} & The link to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the link already exists in the network 
+\end{DoxyReturn}
+\Hypertarget{network_8c_ab232e575f46a3a2541fb7827c2b67ca9}\index{network.c@{network.c}!network\_link\_index@{network\_link\_index}}
+\index{network\_link\_index@{network\_link\_index}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_link\_index()}{network\_link\_index()}}
+{\footnotesize\ttfamily \label{network_8c_ab232e575f46a3a2541fb7827c2b67ca9} 
+uint8\+\_\+t network\+\_\+link\+\_\+index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{\mbox{\hyperlink{struct_link}{Link}} \texorpdfstring{$\ast$}{*}}]{link}{}\end{DoxyParamCaption})}
+
+
+
+Returns the index of a link in the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em link} & The link to find \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The index of the link in the network 
+\end{DoxyReturn}
+\Hypertarget{network_8c_a98d272bb3250bea69f46eee9f114db36}\index{network.c@{network.c}!network\_link\_weight@{network\_link\_weight}}
+\index{network\_link\_weight@{network\_link\_weight}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_link\_weight()}{network\_link\_weight()}}
+{\footnotesize\ttfamily \label{network_8c_a98d272bb3250bea69f46eee9f114db36} 
+uint16\+\_\+t network\+\_\+link\+\_\+weight (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{, }\item[{uint8\+\_\+t}]{device1\+\_\+index}{, }\item[{uint8\+\_\+t}]{device2\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Returns the weight of the link between two devices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+{\em device1\+\_\+index} & The index of the first device \\
+\hline
+{\em device2\+\_\+index} & The index of the second device \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The weight of the link between the two devices 
+\end{DoxyReturn}
+\Hypertarget{network_8c_a837bd10ec75a856ec1990ed53193de8b}\index{network.c@{network.c}!network\_num\_devices@{network\_num\_devices}}
+\index{network\_num\_devices@{network\_num\_devices}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_num\_devices()}{network\_num\_devices()}}
+{\footnotesize\ttfamily \label{network_8c_a837bd10ec75a856ec1990ed53193de8b} 
+uint8\+\_\+t network\+\_\+num\+\_\+devices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Returns the number of devices in the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8c_a9948d257e0d22da90d5d4f17c2720f22}\index{network.c@{network.c}!network\_num\_links@{network\_num\_links}}
+\index{network\_num\_links@{network\_num\_links}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_num\_links()}{network\_num\_links()}}
+{\footnotesize\ttfamily \label{network_8c_a9948d257e0d22da90d5d4f17c2720f22} 
+uint16\+\_\+t network\+\_\+num\+\_\+links (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Returns the number of links in the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8c_a85fd7414039178666ca14bc7e103817a}\index{network.c@{network.c}!network\_num\_stations@{network\_num\_stations}}
+\index{network\_num\_stations@{network\_num\_stations}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_num\_stations()}{network\_num\_stations()}}
+{\footnotesize\ttfamily \label{network_8c_a85fd7414039178666ca14bc7e103817a} 
+uint8\+\_\+t network\+\_\+num\+\_\+stations (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Returns the number of stations in the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8c_a49a42966ee857f2ef88a55a78723b2ac}\index{network.c@{network.c}!network\_num\_switches@{network\_num\_switches}}
+\index{network\_num\_switches@{network\_num\_switches}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_num\_switches()}{network\_num\_switches()}}
+{\footnotesize\ttfamily \label{network_8c_a49a42966ee857f2ef88a55a78723b2ac} 
+uint8\+\_\+t network\+\_\+num\+\_\+switches (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Returns the number of switches in the network. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network \\
+\hline
+\end{DoxyParams}
+\Hypertarget{network_8c_aafc3bb06b7613e487a9d815a0aaec7b2}\index{network.c@{network.c}!network\_print@{network\_print}}
+\index{network\_print@{network\_print}!network.c@{network.c}}
+\doxysubsubsection{\texorpdfstring{network\_print()}{network\_print()}}
+{\footnotesize\ttfamily \label{network_8c_aafc3bb06b7613e487a9d815a0aaec7b2} 
+void network\+\_\+print (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_network}{Network}} \texorpdfstring{$\ast$}{*}}]{network}{}\end{DoxyParamCaption})}
+
+
+
+Prints the network structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em network} & The network to print \\
+\hline
+\end{DoxyParams}
