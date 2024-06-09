@@ -2,15 +2,15 @@
 
 ## Aperçu
 
-Cette SAE 23 m'a permis de mieux comprendre la structure des réseaux et de la programmation en C :
+Cette SAE 23 m'a permis de mieux comprendre la structure des réseaux et de la programmation en C, notament:
 
-- J'ai pu apprendre à manipuler des structures de données complexes et à les utiliser pour simuler un réseau simple composée de commutateurs et de stations.
-- L'envoi des trqames entre les stations et les commutateurs m'a permis de mieux comprendre le fonctionnement des réseaux et des protocoles de communication.
+- La manipulation des structures de données complexes et leurs utilisations pour simuler un réseau simple composée de commutateurs et de stations.
+- L'envoi des trames entre les stations et les commutateurs m'a permis de mieux comprendre le fonctionnement des réseaux et des protocoles de communication.
 - Implémentation de l'algorithme de spanning tree pour éviter les boucles dans le réseau.
-- J'ai également appris à utiliser des pointeurs et des allocations dynamiques pour gérer la mémoire de manière efficace.
-- J'ai également appris à utiliser des outils de débogage pour identifier et corriger les erreurs dans mon code comme **valgrind**
+- L'utilisation des pointeurs et des allocations dynamiques pour gérer la mémoire de manière efficace.
+- L'utilisation des outils de débogage pour identifier et corriger les erreurs dans mon code comme **valgrind**
 - J'ai également appris à utiliser des outils de gestion de versions comme **git** pour gérer mon code et collaborer avec mes collègues.
-- J'ai également appris à utiliser des outils de documentation comme **Doxygen** pour générer une documentation de mon code.
+- Enfin, j'ai utiliser des outils de documentation comme **Doxygen** pour générer une documentation de mon code.
 
 ## Difficultés rencontrées
 
@@ -20,4 +20,4 @@ Cette SAE 23 m'a permis de mieux comprendre la structure des réseaux et de la p
 
 ## Améliorations possibles
 
-- L'utilisation du langage C pour simuler un réseau est un excellent moyen pour cette SAE, mais il serait intéressant d'utiliser C++ pour bénéficier de ses fonctionnalités orientées objet.
+- L'utilisation du langage C pour simuler un réseau est un excellent moyen pour cette SAE, mais il serait intéressant d'utiliser C++ ou Rust pour bénéficier de ses fonctionnalités comme l'orientée objet et les tableaux dynamiques <vector> ainsi que d'autres utilités.
