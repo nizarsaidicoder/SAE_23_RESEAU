@@ -1,0 +1,13 @@
+digraph network {
+	switch1 -> switch2 [label=4 dir=both color="blue:blue"]
+	switch1 -> switch3 [label=4 dir=both color="blue:blue"]
+	switch1 -> switch6 [label=4 dir=both color="blue:blue"]
+	switch2 -> switch4 [label=4 dir=both color="blue:blue"]
+	switch2 -> switch5 [label=4 dir=both color="blue:blue"]
+	switch2 -> switch6 [label=4 dir=both color="blue:blue"]
+	switch3 -> switch5 [label=4 dir=both color="blue:blue"]
+	switch3 -> switch7 [label=4 dir=both color="blue:blue"]
+	switch4 -> switch7 [label=4 dir=both color="blue:blue"]
+	switch2 -> station13 [label=0]
+	station8 -> switch7 [label=0]
+}

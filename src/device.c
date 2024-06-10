@@ -48,7 +48,7 @@ void switch_init(Device *device, MACAddress mac_address, uint16_t priority, uint
     for (int i = 0; i < num_ports; i++)
     {
         device->switch_info.ports[i].state = 'F';
-        device->switch_info.ports[i].role = 'D';
+        device->switch_info.ports[i].role = 'U';
     }
     device->switch_info.switching_table_entries = 0;
     assign_bpdu(device);
@@ -271,6 +271,12 @@ void switch_print_ports(Switch switch_)
         {
             printf("\033[1;31m");
             printf("%c", switch_.ports[i].role);
+            printf("\033[0m");
+        }
+        if (switch_.ports[i].role == 'U')
+        {
+            printf("\033[1;35m");
+            printf(" ");
             printf("\033[0m");
         }
         printf("   |\n");

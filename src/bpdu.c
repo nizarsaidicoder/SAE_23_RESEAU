@@ -152,6 +152,13 @@ bool update_bpdu(Network *network, Device *device, Device *previous_device, BPDU
  */
 void send_bpdu(Network *network, Device *device)
 {
+    // COLOR BLUE
+    printf("\033[0;34m");
+    printf("Sending BPDU from ");
+    printf("\033[0m");
+    print_device(device);
+    printf("Current ");
+    print_bpdu(&device->switch_info.bpdu);
     Device *connected_devices[256];
     uint16_t nb = find_connected_devices(network, device->index, connected_devices);
     for (int i = 0; i < nb; i++)

@@ -9,4 +9,12 @@
 - Functions that are there, but shouldn't be called directly, or have obscure uses, or whatever: one or more - underscores at the beginning: **\_refrobnicate_data_tables()**, **\_destroy_cache()**.
 
 ## To Compile and Execute:
-` make | ./bin/main `
+
+`make | ./bin/main`
+
+## What we accomplished:
+
+- Vous trouverez dans le dossier diagram, le diagramme de structure de notre projet.
+- On échange les données entre les différents équipements du réseau.
+- On a implémenté le STP (Spanning Tree Protocol) pour éviter les boucles dans le réseau.
+- On arrive à afficher des trames en mode utilisateur et en mode Hexadécimal.
