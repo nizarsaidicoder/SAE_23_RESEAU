@@ -44,7 +44,7 @@ void set_block_ports(Network *network)
 {
     for (int i = 0; i < network->num_switches; i++)
     {
-        if (network->devices[i].switch_info.bpdu.root_bridge_priority == network->devices[i].switch_info.priority && compare_mac_address(&network->devices[i].switch_info.bpdu.root_bridge_mac_address, &network->devices[i].mac_address) == 0)
+        if (compare_mac_address(&network->devices[i].switch_info.bpdu.root_bridge_mac_address, &network->devices[i].mac_address) == 0)
             continue;
         for (int j = 0; j < network->devices[i].switch_info.num_ports; j++)
         {
@@ -64,7 +64,7 @@ void set_designated_ports(Network *network)
 {
     for (int i = 0; i < network->num_switches; i++)
     {
-        if (network->devices[i].switch_info.bpdu.root_bridge_priority == network->devices[i].switch_info.priority && compare_mac_address(&network->devices[i].switch_info.bpdu.root_bridge_mac_address, &network->devices[i].mac_address) == 0)
+        if (compare_mac_address(&network->devices[i].switch_info.bpdu.root_bridge_mac_address, &network->devices[i].mac_address) == 0)
             continue;
         Device *connected_devices[256];
         uint16_t nb = find_connected_devices(network, i, connected_devices);
